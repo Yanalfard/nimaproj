@@ -1,0 +1,95 @@
+﻿@model IEnumerable<DataLayer.Models.TblColor>
+<div class="modal-header">
+    <h6 class="modal-title" id="modalCenterTitle">
+        بررسی موجودی
+    </h6>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <table class="table fixed">
+        <thead class="thead-light">
+            <tr>
+                <th>رنگ</th>
+                <th>تعداد موجودی</th>
+                <th>تایید</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="form-row ">
+                            <label class="mr-2"> @item.Name </label>
+                            <div class=" uk-border-rounded mr-2 color-box" style="background:@item.ColorCode;"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" id="ColorId-@item.ColorId" class="form-control form-control-sm col-md-4" placeholder="مثال:3" value="@item.Count">
+                    </td>
+                    <td>
+                        <button onclick="EditStoke(@item.ColorId)" class="btn btn-sm btn-success">ثبت</button>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer justify-content-end">
+    <label>قیمت:</label>
+    @if (Model.First().Product.PriceAfterDiscount != 0)
+    {
+        @*<input id="Price-@Model.First().Product.ProductId" class="ProductId form-control form-control-sm col-md-2 PriceInput" placeholder="مثال:50000 تومان" value="@Model.First().Product.PriceAfterDiscount" maxlength="10">*@
+
+
+        <input type="text" id="Price-@Model.First().ProductId" class="form-control form-control-sm col-md-2 PriceInput" data-type='currency' placeholder="مثال:50000 تومان" value="@Model.First().Product.PriceAfterDiscount" maxlength="15" required />
+        <input type="hidden" class="ProductId" value="@Model.First().Product.PriceAfterDiscount" />
+
+    }
+    else
+    {
+        @*<input id="Price-@Model.First().ProductId" class="ProductId form-control form-control-sm col-md-2 PriceInput" placeholder="مثال:50000" value="@Model.First().Product.PriceBeforeDiscount" maxlength="10">*@
+        <input type="text" id="Price-@Model.First().ProductId" class="form-control form-control-sm col-md-2 PriceInput" data-type='currency' placeholder="مثال:50000 تومان" value="@Model.First().Product.PriceBeforeDiscount" maxlength="15" required />
+        <input type="hidden" class="ProductId" value="@Model.First().Product.PriceBeforeDiscount" />
+    }
+
+    <button onclick="EditPrice(@Model.First().ProductId)" class="btn btn-sm btn-success ml-md-4">ثبت</button>
+</div>
+
+<script src="~/js/Auto_Formatting_Currency.js"></script>
+<script>
+    $('.PriceInput').change(function () {
+        var price = $(this).val().replaceAll(',', "");
+        $('.ProductId').val(price);
+    })
+</script>
+<script src="~/js/Input_Formatting_Currency.js"></script>
+<script>
+    function EditStoke(id) {
+        var count = $('#ColorId-' + id).val();
+        $.post("/Admin/Product/EditStoke?Id=" + id + "&count=" + count, function () {
+            UIkit.notification("موجودی بروز شد");
+        });
+    }
+    function EditPrice(Id) {
+        var Price = $('.ProductId').val();
+        if (Price == "" || Price == "0") {
+            UIkit.notification("قیمت محصول خالی است");
+        }
+        else {
+            $.post("/Admin/Product/EditPrice?Id=" + Id + "&Price=" + Price, function () {
+                UIkit.notification("قیمت محصول بروز شد");
+            });
+        }
+    }
+
+    //$(".PriceInput").change(function () {
+    //    $(this).val($(this).val().replaceAll(",", ""));
+    //});
+
+</script>

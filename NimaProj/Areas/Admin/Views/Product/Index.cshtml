@@ -1,0 +1,366 @@
+﻿@model IEnumerable<DataLayer.Models.TblProduct>
+@using NimaProj.Utilities
+@{
+    ViewData["Title"] = "محصولات";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="row flex-div">
+    <div class="col-md-12 flex-div pb-3 pt-3">
+        <div class="card flex-div border-0 main-shadow">
+            <div class="card-header bg-white">
+                <div class="pr-1 pt-2">
+                    <div class="card-form form-row">
+
+                        <div class="form-input">
+                            <div class="form-inline">
+                                <div class="form-group mx-sm-1 mb-2 mr-1 mr-md-0 mt-1 mt-md-0">
+                                    <input id="SearchInput" class="form-control uk-text-small" type="text" placeholder="متن جستجو" value="@ViewBag.Search">
+                                    <input id="CatagoryId" type="hidden" value="@ViewBag.CatagoryId" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-toolbar mr-md-3 mr-1 mt-1 mt-md-0">
+                            <button onclick="BtnSearch()" type="button" class="btn btn-primary btn-sm">جستجو<span class="icon-holder uk-margin-small-right" uk-icon="search-outline"></span></button>
+                        </div>
+                        <div class="form-group pb-0 mb-0 mr-1 mr-md-3 mt-1 mt-md-0">
+                            <a id="Create" href="/Admin/Product/Create" class="btn btn-success btn-sm"> افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></a>
+                        </div>
+                        <div class="form-group pb-0 mb-0 mr-1 mr-md-3 mt-1 mt-md-0">
+                            <a id="Create" href="/Admin/Product/StopSales/@Convert.ToBoolean(ViewData["isStop"])" class="btn @(Convert.ToBoolean(ViewData["isStop"]) ? "btn-warning" : "btn-info") btn-sm">@(Convert.ToBoolean(ViewData["isStop"]) ? "توقف فروش" : "شروع فروش") <span class="icon-holder uk-margin-small-right" uk-icon="@(Convert.ToBoolean(ViewData["isStop"]) ? "stop-circle-outline" : "play-circle-outline")"></span></a>
+                        </div>
+                        <div class="form-group pb-0 mb-0 mr-1 mr-md-3 mt-1 mt-md-0">
+                            <a id="Category" data-toggle="modal" data-target="#modalCategory" class="btn btn-secondary btn-sm text-white"> انتخاب دسته<span class="icon-holder uk-margin-small-right" uk-icon="file-tray-stacked"></span></a>
+
+                            <a href="/Admin/Product" class="btn btn-danger btn-sm text-white">حذف جستجو<span class="icon-holder uk-margin-small-right" uk-icon="file-tray-stacked"></span></a>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="card-table" class="card-body flex-div">
+                <div class="table-responsive flex">
+                    <table class="table fixed">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>کد محصول</th>
+                                <th>نام محصول</th>
+                                <th>قیمت</th>
+                                <th>تاریخ افزودن</th>
+                                <th>پیشنهاد ویژه</th>
+                                <th>وضعیت موجودی</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OrderByDescending(i => i.DateCreated))
+                            {
+                                <tr id="productId_@item.ProductId">
+                                    <td>@item.ProductId</td>
+                                    <td>@item.Name</td>
+                                    <td>
+                                        <span>@item.PriceBeforeDiscount.ToString("#,0 تومان")</span>
+
+                                    </td>
+                                    <td>@item.DateCreated.Value.AllToShamsi()</td>
+                                    <td>
+                                        @if (item.TblSpecialOffers.Count == 0)
+                                        {
+                                            <span data-placement="top" data-toggle="tooltip" title="" data-original-title="افزودن به پیشنهاد ویژه">
+                                                <a onclick="SpecialOffer(@item.ProductId)" class="text-primary" data-toggle="modal" data-target="#modalSave" uk-icon="bookmark-outline"></a>
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger" data-placement="top" data-toggle="tooltip" title="" data-original-title="به پیشنهاد ویژه">
+                                                @item.TblSpecialOffers.First().Discount% تا تاریخ @item.TblSpecialOffers.First().ValidTill.AllToShamsi()
+                                            </span>
+                                            <span onclick="CancelSpecialOffer(@item.ProductId)" class="btn btn-danger btn-sm text-white" data-placement="top" data-toggle="tooltip" title="" data-original-title="به پیشنهاد ویژه">
+                                                لغو پیشنهاد ویژه
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="افزودن ویژگی">
+                                            <a href="/Admin/Product/AddProperty/@item.ProductId" class="text-info" uk-icon="add-circle"></a>
+                                        </span>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="گالری ">
+                                            <a href="/Admin/Product/AddGallery/@item.ProductId" class="text-primary" uk-icon="images"></a>
+                                        </span>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
+                                            <a href="/Admin/Product/Edit/@item.ProductId" class="text-primary" uk-icon="create-outline"></a>
+                                        </span>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="حذف">
+                                            <a onclick="Delete(@item.ProductId)" class="text-danger" uk-icon="trash-outline"></a>
+                                        </span>
+                                        @if (item.IsDeleted)
+                                        {
+                                            <span data-placement="top" data-toggle="tooltip" title="" data-original-title="شروع فروش">
+                                                <a onclick="Selling(@item.ProductId)" class="text-success" uk-icon="checkmark-outline"></a>
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span data-placement="top" data-toggle="tooltip" title="" data-original-title="توقف فروش">
+                                                <a onclick="Selling(@item.ProductId)" class="text-danger" uk-icon="ban-outline"></a>
+                                            </span>
+                                        }
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="افزودن رنگ">
+                                            <a onclick="AddColor(@item.ProductId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="add-circle-outline"></a>
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white">
+                <nav aria-label="Page navigation example">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-end">
+
+                            @if (ViewBag.PageId == 1)
+                            {
+                                <li class="page-item d-none">
+                                    <a class="page-link" onclick="Page(@((int)ViewBag.PageId-1))">قبلی</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="/Admin/Product?pageId=@(ViewBag.PageId-1)&InPageCount=@ViewBag.InPageCount&Search=@ViewBag.Search&CatagoryId=@ViewBag.CatagoryId">قبلی</a>
+                                </li>
+
+                            }
+
+                            <li class="page-item">
+                                <select id="pageNumber" class="custom-select custom-select-sm">
+                                    @for (int i = 1; i <= (ViewBag.PageCount + 1); i++)
+                                    {
+                                        if (ViewBag.pageId == i)
+                                        {
+                                            <option class="page-item" selected value="@i">صفحه @i از @((int)ViewBag.PageCount + 1)</option>
+                                        }
+                                        else
+                                        {
+                                            <option class="page-item" value="@i">صفحه @i از @((int)ViewBag.PageCount + 1)</option>
+
+                                        }
+                                    }
+                                </select>
+                            </li>
+
+
+                            @if ((int)ViewBag.PageId > (int)ViewBag.PageCount)
+                            {
+                                <li class="page-item d-none">
+                                    <a class="page-link" onclick="Page(@((int)ViewBag.PageId + 1))">بعدی</a>
+                                </li>
+                            }
+                            else
+
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="/Admin/Product?pageId=@(ViewBag.PageId+1)&InPageCount=@ViewBag.InPageCount&Search=@ViewBag.Search&CatagoryId=@ViewBag.CatagoryId">بعدی</a>
+                                </li>
+
+                            }
+                            <li>
+                                <select id="InPageCount" class="custom-select custom-select-sm">
+                                    @if (ViewBag.InPageCount == 0)
+                                    {
+                                        <option value="0" selected>18 در هر صفحه</option>
+                                        <option value="20">20 در هر صفحه</option>
+                                        <option value="30">30 در هر صفحه</option>
+                                        <option value="40">40 در هر صفحه</option>
+
+                                    }
+
+                                    @if (ViewBag.InPageCount == 20)
+                                    {
+                                        <option value="0">18 در هر صفحه</option>
+                                        <option value="20" selected>20 در هر صفحه</option>
+                                        <option value="30">30 در هر صفحه</option>
+                                        <option value="40">40 در هر صفحه</option>
+
+                                    }
+                                    else if (ViewBag.InPageCount == 30)
+                                    {
+                                        <option value="0">18 در هر صفحه</option>
+                                        <option value="20">20 در هر صفحه</option>
+                                        <option value="30" selected>30 در هر صفحه</option>
+                                        <option value="40">40 در هر صفحه</option>
+
+                                    }
+                                    else if (ViewBag.InPageCount == 40)
+                                    {
+                                        <option value="0">18 در هر صفحه</option>
+                                        <option value="20">20 در هر صفحه</option>
+                                        <option value="30">30 در هر صفحه</option>
+                                        <option value="40" selected>40 در هر صفحه</option>
+                                    }
+
+
+                                </select>
+                            </li>
+                        </ul>
+                    </nav>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalCategory" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="modalCenterTitle">
+                    انتخاب دسته بندی
+                </h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <ul uk-accordion class="mt-3 pt-3 pb-3 uk-text-small uk-border-rounded">
+                @{
+                    IEnumerable<DataLayer.Models.TblCatagory> Parentcatagories = ViewBag.Catagory;
+                }
+                @foreach (var item in Parentcatagories)
+                {
+                    <li class="col-md-4">
+                        <a class="uk-accordion-title uk-text-small" href="#">@item.Name</a>
+                        <div class="uk-accordion-content">
+                            <ul class="uk-margin-right" uk-accordion>
+                                @await Component.InvokeAsync("ShowChildsCatagoryInCreateProduct", new { Id = item.CatagoryId })
+                            </ul>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+@section Script{
+
+    <script>
+        function deleteCountProduct(id) {
+            if (confirm('آیا از صفر کردن موجودی کالای  مورد نظر مطمئن هستید؟')) {
+                $("#overlay").fadeIn(300);
+                $.post("/Admin/Product/DeleteCountProduct/" + id, function (result) {
+                    window.location.reload();
+                });
+            } else {
+                // Do nothing!
+            }
+
+        }
+        function AddColor(id) {
+            $("#modalCategory").modal("hide");
+            $("#modalSave .modal-dialog .modal-content").html("");
+            $.get("/Admin/Product/CreateColor/" + id, function (result) {
+                $("#modalSave .modal-dialog .modal-content").html(result);
+            });
+        }
+
+
+
+        function Stock(Id) {
+            $("#modalSave .modal-dialog .modal-content").html("");
+            $.get("/Admin/Product/Stock/" + Id, function (result) {
+                $("#modalSave .modal-dialog .modal-content").html(result);
+            });
+        }
+
+        function BtnSearch() {
+            $("#overlay").fadeIn(300);
+            var pageId = $("#pageNumber option:selected").val();
+            var InPageCount = $("#InPageCount option:selected").val();
+            var Search = $("#SearchInput").val();
+            var CatagoryId = $("#CatagoryId").val();
+
+            window.location.href = "/Admin/Product?pageId=" + pageId + "&InPageCount=" + InPageCount + "&Search=" + Search + "&CatagoryId=" + CatagoryId;
+        }
+
+        function SpecialOffer(id) {
+            $.get("/Admin/Product/SpecialOffer/" + id, function (result) {
+                $("#modalSave .modal-dialog  .modal-content").html(result);
+            });
+        }
+
+        function CancelSpecialOffer(id) {
+            $.post("/Admin/SpecialOffer/Remove/" + id, function () {
+                window.location.reload();
+            });
+        }
+
+        function Delete(id) {
+            if (confirm('آیا از حذف کالای  مورد نظر مطمئن هستید؟')) {
+                $.post("/Admin/Product/Delete/" + id, function (result) {
+                    if (result == "true") {
+                        $('#productId_' + id).addClass('text-danger');
+                        $("#productId_" + id).hide('slow');
+                        //window.location.reload();
+                    } else {
+                        UIkit.notification({ message: result });
+                    }
+                });
+            } else {
+                // Do nothing!
+            }
+
+        }
+
+        function Selling(id) {
+            $("#overlay").fadeIn(300);
+            $.post("/Admin/Product/Selling/" + id, function () {
+                window.location.reload();
+            });
+        }
+
+        $("#pageNumber").change(function () {
+            $("#overlay").fadeIn(300);
+            var pageId = $("#pageNumber option:selected").val();
+            var InPageCount = $("#InPageCount option:selected").val();
+            var Search = $("#SearchInput").val();
+            var CatagoryId = $("#CatagoryId").val();
+
+            window.location.href = "/Admin/Product?pageId=" + pageId + "&InPageCount=" + InPageCount + "&Search=" + Search + "&CatagoryId=" + CatagoryId;
+
+
+
+        });
+
+
+        $("#InPageCount").change(function () {
+            $("#overlay").fadeIn(300);
+            var pageId = $("#pageNumber option:selected").val();
+            var InPageCount = $("#InPageCount option:selected").val();
+            var Search = $("#SearchInput").val();
+            var CatagoryId = $("#CatagoryId").val();
+
+            window.location.href = "/Admin/Product?pageId=" + pageId + "&InPageCount=" + InPageCount + "&Search=" + Search + "&CatagoryId=" + CatagoryId;
+
+        });
+
+
+        function SelectCatagory(id) {
+            $("#overlay").fadeIn(300);
+            var pageId = $("#pageNumber option:selected").val();
+            var InPageCount = $("#InPageCount option:selected").val();
+            var Search = $("#SearchInput").val();
+
+            window.location.href = "/Admin/Product?pageId=" + pageId + "&InPageCount=" + InPageCount + "&Search=" + Search + "&CatagoryId=" + id;
+
+        }
+
+    </script>
+}
