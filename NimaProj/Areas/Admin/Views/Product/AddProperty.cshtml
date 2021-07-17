@@ -22,7 +22,7 @@
             <form id="myFormProperty" action="AddProperty" method="post" class="overflow-auto mb-3 mt-2">
                 <input id="id" name="id" type="hidden" value="@ViewBag.id" />
                 <aside id="PropertyPanel">
-                    @foreach (var item in Model.TblProductPropertyRel.OrderBy(i => i.ProductPropertyRelId))
+                    @foreach (var item in Model.TblProductPropertyRels.OrderBy(i => i.ProductPropertyRelId))
                     {
         <div id="PropertyInCreate-@item.PropertyId" class="form-inline col-md-7 mt-2">
             <label class="ml-5 p-0 col-md-2 uk-text-right justify-content-start">@item.Property.Name:</label>
@@ -60,8 +60,7 @@
 @section Script{
     <script src="~/js/bootstrap-tagsinput.js"></script>
     <script src="~/js/Auto_Formatting_Currency.js"></script>
-    <script>
-        function saveProperty() {
+    <script>function saveProperty() {
             $("#overlay").fadeIn(300);
             document.getElementById("myFormProperty").submit();
         }
@@ -80,7 +79,6 @@
             //    $("#PropertyInCreate-" + id).remove();
             //    $("#overlay").fadeOut(300);
             //}
-        }
-    </script>
+        }</script>
 
 }

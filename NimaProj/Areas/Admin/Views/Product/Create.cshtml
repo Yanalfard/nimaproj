@@ -147,9 +147,8 @@
             $("#CatagoryId").val(Id);
             var CatagoryId = $("#CatagoryId").val();
             var BrandId = $("#BrandId option:selected").val();
-            var GalleryPanel = $("#ColorPanel").children();
-            if (CatagoryId == null || CatagoryId == "" || BrandId == 0 || GalleryPanel.length == 0) {
-                $("#SubmitErorr").html("دسته بندی , برند و رنگ اجباری است");
+            if (CatagoryId == null || CatagoryId == "" || BrandId == 0) {
+                $("#SubmitErorr").html("دسته بندی , برند اجباری است");
                 $("#SubmitCreateProduct").attr("disabled", "disabled");
             } else {
                 $("#SubmitErorr").html("");
