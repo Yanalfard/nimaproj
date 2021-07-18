@@ -25,15 +25,6 @@
                         <div class="form-group pb-0 mb-0 mr-1 mr-md-3 mt-1 mt-md-0">
                             <a id="Create" href="/Admin/Product/Create" class="btn btn-success btn-sm"> افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></a>
                         </div>
-                        <div class="form-group pb-0 mb-0 mr-1 mr-md-3 mt-1 mt-md-0">
-                            <a id="Create" href="/Admin/Product/StopSales/@Convert.ToBoolean(ViewData["isStop"])" class="btn @(Convert.ToBoolean(ViewData["isStop"]) ? "btn-warning" : "btn-info") btn-sm">@(Convert.ToBoolean(ViewData["isStop"]) ? "توقف فروش" : "شروع فروش") <span class="icon-holder uk-margin-small-right" uk-icon="@(Convert.ToBoolean(ViewData["isStop"]) ? "stop-circle-outline" : "play-circle-outline")"></span></a>
-                        </div>
-                        <div class="form-group pb-0 mb-0 mr-1 mr-md-3 mt-1 mt-md-0">
-                            <a id="Category" data-toggle="modal" data-target="#modalCategory" class="btn btn-secondary btn-sm text-white"> انتخاب دسته<span class="icon-holder uk-margin-small-right" uk-icon="file-tray-stacked"></span></a>
-
-                            <a href="/Admin/Product" class="btn btn-danger btn-sm text-white">حذف جستجو<span class="icon-holder uk-margin-small-right" uk-icon="file-tray-stacked"></span></a>
-
-                        </div>
                     </div>
 
                 </div>
@@ -48,7 +39,6 @@
                                 <th>قیمت</th>
                                 <th>تاریخ افزودن</th>
                                 <th>پیشنهاد ویژه</th>
-                                <th>وضعیت موجودی</th>
                                 <th>عملیات</th>
                             </tr>
                         </thead>
@@ -59,8 +49,7 @@
                                     <td>@item.ProductId</td>
                                     <td>@item.Name</td>
                                     <td>
-                                        <span>@item.PriceBeforeDiscount.ToString("#,0 تومان")</span>
-
+                                        <span>@item.Price.Value.ToString("#,0 تومان")</span>
                                     </td>
                                     <td>@item.DateCreated.Value.AllToShamsi()</td>
                                     <td>
@@ -72,9 +61,6 @@
                                         }
                                         else
                                         {
-                                            <span class="text-danger" data-placement="top" data-toggle="tooltip" title="" data-original-title="به پیشنهاد ویژه">
-                                                @item.TblSpecialOffers.First().Discount% تا تاریخ @item.TblSpecialOffers.First().ValidTill.AllToShamsi()
-                                            </span>
                                             <span onclick="CancelSpecialOffer(@item.ProductId)" class="btn btn-danger btn-sm text-white" data-placement="top" data-toggle="tooltip" title="" data-original-title="به پیشنهاد ویژه">
                                                 لغو پیشنهاد ویژه
                                             </span>
@@ -105,9 +91,20 @@
                                                 <a onclick="Selling(@item.ProductId)" class="text-danger" uk-icon="ban-outline"></a>
                                             </span>
                                         }
-                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="افزودن رنگ">
-                                            <a onclick="AddColor(@item.ProductId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="add-circle-outline"></a>
-                                        </span>
+                                        @if (item.IsOfflineOrder)
+                                        {
+
+
+                                            <span data-placement="top" data-toggle="tooltip" title="" data-original-title="فروش بصورت سفارش گیری">
+                                                <a onclick="IsOfflineOrder(@item.ProductId)" class="text-danger" uk-icon="card-outline"></a>
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span data-placement="top" data-toggle="tooltip" title="" data-original-title="فروش آنلاین">
+                                                <a onclick="IsOfflineOrder(@item.ProductId)" class="text-success" uk-icon="cash-outline"></a>
+                                            </span>
+                                        }
 
                                     </td>
 
@@ -118,135 +115,15 @@
                 </div>
             </div>
 
+            <!--end list region-->
             <div class="card-footer bg-white">
                 <nav aria-label="Page navigation example">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-end">
-
-                            @if (ViewBag.PageId == 1)
-                            {
-                                <li class="page-item d-none">
-                                    <a class="page-link" onclick="Page(@((int)ViewBag.PageId-1))">قبلی</a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="page-item">
-                                    <a class="page-link" href="/Admin/Product?pageId=@(ViewBag.PageId-1)&InPageCount=@ViewBag.InPageCount&Search=@ViewBag.Search&CatagoryId=@ViewBag.CatagoryId">قبلی</a>
-                                </li>
-
-                            }
-
-                            <li class="page-item">
-                                <select id="pageNumber" class="custom-select custom-select-sm">
-                                    @for (int i = 1; i <= (ViewBag.PageCount + 1); i++)
-                                    {
-                                        if (ViewBag.pageId == i)
-                                        {
-                                            <option class="page-item" selected value="@i">صفحه @i از @((int)ViewBag.PageCount + 1)</option>
-                                        }
-                                        else
-                                        {
-                                            <option class="page-item" value="@i">صفحه @i از @((int)ViewBag.PageCount + 1)</option>
-
-                                        }
-                                    }
-                                </select>
-                            </li>
-
-
-                            @if ((int)ViewBag.PageId > (int)ViewBag.PageCount)
-                            {
-                                <li class="page-item d-none">
-                                    <a class="page-link" onclick="Page(@((int)ViewBag.PageId + 1))">بعدی</a>
-                                </li>
-                            }
-                            else
-
-                            {
-                                <li class="page-item">
-                                    <a class="page-link" href="/Admin/Product?pageId=@(ViewBag.PageId+1)&InPageCount=@ViewBag.InPageCount&Search=@ViewBag.Search&CatagoryId=@ViewBag.CatagoryId">بعدی</a>
-                                </li>
-
-                            }
-                            <li>
-                                <select id="InPageCount" class="custom-select custom-select-sm">
-                                    @if (ViewBag.InPageCount == 0)
-                                    {
-                                        <option value="0" selected>18 در هر صفحه</option>
-                                        <option value="20">20 در هر صفحه</option>
-                                        <option value="30">30 در هر صفحه</option>
-                                        <option value="40">40 در هر صفحه</option>
-
-                                    }
-
-                                    @if (ViewBag.InPageCount == 20)
-                                    {
-                                        <option value="0">18 در هر صفحه</option>
-                                        <option value="20" selected>20 در هر صفحه</option>
-                                        <option value="30">30 در هر صفحه</option>
-                                        <option value="40">40 در هر صفحه</option>
-
-                                    }
-                                    else if (ViewBag.InPageCount == 30)
-                                    {
-                                        <option value="0">18 در هر صفحه</option>
-                                        <option value="20">20 در هر صفحه</option>
-                                        <option value="30" selected>30 در هر صفحه</option>
-                                        <option value="40">40 در هر صفحه</option>
-
-                                    }
-                                    else if (ViewBag.InPageCount == 40)
-                                    {
-                                        <option value="0">18 در هر صفحه</option>
-                                        <option value="20">20 در هر صفحه</option>
-                                        <option value="30">30 در هر صفحه</option>
-                                        <option value="40" selected>40 در هر صفحه</option>
-                                    }
-
-
-                                </select>
-                            </li>
-                        </ul>
-                    </nav>
+                    @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
                 </nav>
             </div>
         </div>
     </div>
 </div>
-
-
-<div class="modal fade" id="modalCategory" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="modal-title" id="modalCenterTitle">
-                    انتخاب دسته بندی
-                </h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <ul uk-accordion class="mt-3 pt-3 pb-3 uk-text-small uk-border-rounded">
-                @{
-                    IEnumerable<DataLayer.Models.TblCatagory> Parentcatagories = ViewBag.Catagory;
-                }
-                @foreach (var item in Parentcatagories)
-                {
-                    <li class="col-md-4">
-                        <a class="uk-accordion-title uk-text-small" href="#">@item.Name</a>
-                        <div class="uk-accordion-content">
-                            <ul class="uk-margin-right" uk-accordion>
-                                @await Component.InvokeAsync("ShowChildsCatagoryInCreateProduct", new { Id = item.CatagoryId })
-                            </ul>
-                        </div>
-                    </li>
-                }
-            </ul>
-        </div>
-    </div>
-</div>
-
 
 
 @section Script{
@@ -322,6 +199,12 @@
         function Selling(id) {
             $("#overlay").fadeIn(300);
             $.post("/Admin/Product/Selling/" + id, function () {
+                window.location.reload();
+            });
+        }
+        function IsOfflineOrder(id) {
+            $("#overlay").fadeIn(300);
+            $.post("/Admin/Product/IsOfflineOrder/" + id, function () {
                 window.location.reload();
             });
         }

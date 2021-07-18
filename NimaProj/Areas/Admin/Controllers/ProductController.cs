@@ -10,7 +10,6 @@ using Services.Services;
 using Microsoft.AspNetCore.Http;
 using NimaProj.Utilities;
 using System.IO;
-using NimaProj.Utilities;
 
 namespace NimaProj.Areas.Admin.Controllers
 {
@@ -24,27 +23,15 @@ namespace NimaProj.Areas.Admin.Controllers
         {
             try
             {
+                IEnumerable<TblProduct> data = _core.Product.Get();
 
-                IEnumerable<TblProduct> products = _core.Product.Get(c => c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.ProductId);
-                int count = products.Count();
-                var skip = 0;
+                if (!string.IsNullOrEmpty(productsInAdmin.Search))
+                {
+                    data = data.Where(c => c.Name.Contains(productsInAdmin.Search) || c.SearchText.Contains(productsInAdmin.Search));
+                }
                 ViewBag.pageid = productsInAdmin.PageId;
-                ViewBag.InPageCount = productsInAdmin.InPageCount;
-                ViewBag.CatagoryId = productsInAdmin.CatagoryId;
-                ViewData["isStop"] = products.Any(i => !i.IsDeleted);
-                ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
-                if (productsInAdmin.InPageCount == 0)
-                {
-                    skip = (productsInAdmin.PageId - 1) * 18;
-                    ViewBag.PageCount = count / 18;
-                    return View(products.Skip(skip).Take(18));
-                }
-                else
-                {
-                    skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
-                    ViewBag.PageCount = count / productsInAdmin.InPageCount;
-                    return View(products.Skip(skip).Take(productsInAdmin.InPageCount));
-                }
+                ViewBag.Search = productsInAdmin.Search;
+                return View(PagingList.Create(data.OrderByDescending(b => b.ProductId), 20, productsInAdmin.PageId));
 
             }
             catch
@@ -60,9 +47,6 @@ namespace NimaProj.Areas.Admin.Controllers
             try
             {
                 ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
-                //ViewBag.Brands = _core.Brand.Get();
-                List<string> keywords = new List<string>();
-                ViewBag.keywords = keywords;
                 return View();
             }
             catch
@@ -82,12 +66,16 @@ namespace NimaProj.Areas.Admin.Controllers
             try
             {
                 ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
-                //ViewBag.Brands = _core.Brand.Get();
                 if (ModelState.IsValid)
                 {
-                    if (MainImage == null && MainImage.IsImages())
+                    if (MainImage == null)
                     {
-                        ModelState.AddModelError("MainImage", "تصویر الزامی میباشد . لطفا موارد را بررسی کنید");
+                        ModelState.AddModelError("MainImage", "تصویر الزامی میباشد");
+                        return await Task.FromResult(View(product));
+                    }
+                    else if (MainImage != null && !MainImage.IsImages())
+                    {
+                        ModelState.AddModelError("MainImage", " نوع فایل مشکل دارد");
                         return await Task.FromResult(View(product));
                     }
                     else
@@ -125,15 +113,13 @@ namespace NimaProj.Areas.Admin.Controllers
                                 /// #endregion
 
                             }
-                            NewProduct.PriceBeforeDiscount = product.PriceBeforeDiscount;
+                            NewProduct.Price = product.Price;
                             NewProduct.DescriptionShortHtml = product.DescriptionShortHtml;
                             NewProduct.DescriptionLongHtml = product.DescriptionLongHtml;
                             NewProduct.CatagoryId = product.CatagoryId;
                             NewProduct.DateCreated = DateTime.Now;
                             NewProduct.SearchText = product.SearchText;
-                            NewProduct.IsFractional = product.IsFractional;
-                            //NewProduct.BrandId = product.BrandId;
-
+                            NewProduct.IsOfflineOrder = product.IsOfflineOrder;
                             _core.Product.Add(NewProduct);
                             _core.Save();
                             //New Prodcut
@@ -277,21 +263,6 @@ namespace NimaProj.Areas.Admin.Controllers
 
         }
 
-        public void EditPrice(int Id, long Price)
-        {
-            TblProduct product = _core.Product.GetById(Id);
-            if (product.PriceAfterDiscount != 0)
-            {
-                product.PriceAfterDiscount = Price;
-            }
-            else
-            {
-                product.PriceBeforeDiscount = Price;
-            }
-            _core.Product.Update(product);
-            _core.Save();
-        }
-
         public string RemoveAlbumImage(int id)
         {
             var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", _core.Image.GetById(id).ImageUrl);
@@ -314,8 +285,6 @@ namespace NimaProj.Areas.Admin.Controllers
             try
             {
                 ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
-                //ViewBag.Brands = _core.Brand.Get();
-                ViewBag.CatagoryName = _core.Product.GetById(id).Catagory.Name;
                 return View(_core.Product.GetById(id));
             }
             catch
@@ -390,11 +359,11 @@ namespace NimaProj.Areas.Admin.Controllers
                         imgResizer.Image_resize(savePath, thumbPath, 300);
                         /// #endregion
                     }
-   
+
                     EditProduct.Name = product.Name;
-                    EditProduct.PriceBeforeDiscount = product.PriceBeforeDiscount;
+                    EditProduct.Price = product.Price;
                     EditProduct.SearchText = product.SearchText;
-                    EditProduct.IsFractional = product.IsFractional;
+                    EditProduct.IsOfflineOrder = product.IsOfflineOrder;
                     //EditProduct.BrandId = product.BrandId;
                     EditProduct.DescriptionShortHtml = product.DescriptionShortHtml;
                     EditProduct.DescriptionLongHtml = product.DescriptionLongHtml;
@@ -493,7 +462,13 @@ namespace NimaProj.Areas.Admin.Controllers
             _core.Product.Update(product);
             _core.Save();
         }
-
+        public void IsOfflineOrder(int id)
+        {
+            TblProduct product = _core.Product.GetById(id);
+            product.IsOfflineOrder = !product.IsOfflineOrder;
+            _core.Product.Update(product);
+            _core.Save();
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

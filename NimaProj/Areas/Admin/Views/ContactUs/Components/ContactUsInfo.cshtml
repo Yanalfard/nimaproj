@@ -1,0 +1,31 @@
+﻿@model DataLayer.Models.TblContactU
+<div class="modal-header">
+    <h6 class="modal-title" id="modalCenterTitle">
+        جزئیات
+    </h6>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div id="card-table" class="card-body flex-div">
+        <div class="form-row ">
+            <div class="form-group col-md-4">
+                <label>نام کاربر: </label>
+                <span>@Model.Name</span>
+            </div>
+            <div class="form-group col-md-4">
+                <label>شماره تماس: </label>
+                <span>@Model.TellNo</span>
+            </div>
+
+            <div class="form-group col-12">
+                <label>متن:</label>
+                <div class="bg-light p-3 uk-border-rounded">
+                    @Model.Message
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

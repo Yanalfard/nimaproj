@@ -13,11 +13,11 @@ namespace DataLayer.Models
     {
         [Key]
         public int RegularQuestionId { get; set; }
-        [Required]
-        [StringLength(4000)]
+        [Required(ErrorMessage = "سوال اجباری میباشد")]
+        [StringLength(2000, ErrorMessage = "سوال مناسب وارد کنید")]
         public string Question { get; set; }
-        [Required]
-        [StringLength(4000)]
+        [Required(ErrorMessage = "جواب اجباری میباشد")]
+        [StringLength(2000, ErrorMessage = "جواب مناسب وارد کنید")]
         public string Answer { get; set; }
     }
 }

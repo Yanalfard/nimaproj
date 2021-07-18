@@ -14,28 +14,29 @@ namespace DataLayer.Models
         public TblBlog()
         {
             TblBlogCommentRels = new HashSet<TblBlogCommentRel>();
-            TblBlogKeywordRels = new HashSet<TblBlogKeywordRel>();
         }
 
         [Key]
         public int BlogId { get; set; }
         [StringLength(200)]
         public string MainImage { get; set; }
-        [Required]
-        [StringLength(200)]
+        [Required(ErrorMessage = "عنوان پست را وارد کنید")]
+        [StringLength(200, ErrorMessage = "عنوان کوتاه تری وارد کنید")]
         public string Title { get; set; }
-        [StringLength(500)]
+        [Required(ErrorMessage = "لطفا توضبحات  را وارد کنید")]
+        [StringLength(500, ErrorMessage = "توضیحات کوتاه پست را وارد کنید")]
         public string Description { get; set; }
-        [Required]
+        [Required(ErrorMessage = "توضیحات کامل پست را وارد کنید")]
         public string BodyHtml { get; set; }
         public int LikeCount { get; set; }
         public int ViewCount { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime DateCreated { get; set; }
+        [Required(ErrorMessage = "لطفا کلمات کلیدی  را وارد کنید")]
+        [StringLength(500, ErrorMessage = "توضیحات کوتاه پست را وارد کنید")]
+        public string SearchText { get; set; }
 
         [InverseProperty(nameof(TblBlogCommentRel.Blog))]
         public virtual ICollection<TblBlogCommentRel> TblBlogCommentRels { get; set; }
-        [InverseProperty(nameof(TblBlogKeywordRel.Blog))]
-        public virtual ICollection<TblBlogKeywordRel> TblBlogKeywordRels { get; set; }
     }
 }

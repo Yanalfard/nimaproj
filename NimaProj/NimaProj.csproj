@@ -29,9 +29,10 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Brand\" />
     <Folder Include="ViewComponents\User\" />
     <Folder Include="ViewComponents\View\" />
+    <Folder Include="wwwroot\Images\Blogs\thumb\" />
+    <Folder Include="wwwroot\Images\Slider\" />
     <Folder Include="wwwroot\Images\ProductAlbum\thumb\" />
     <Folder Include="wwwroot\Images\ProductMain\thumb\" />
   </ItemGroup>

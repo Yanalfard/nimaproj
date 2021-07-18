@@ -14,7 +14,6 @@ namespace DataLayer.Models
         [Key]
         public int SpecialOfferId { get; set; }
         public int ProductId { get; set; }
-        public int Discount { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime ValidTill { get; set; }
 

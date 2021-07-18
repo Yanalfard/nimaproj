@@ -42,22 +42,6 @@
                 <input type="hidden" asp-for="CatagoryId" />
                 <span id="CatagoryIdErorr" asp-validation-for="CatagoryId" class="text-danger"></span>
                 <hr />
-                <div class="form-row">
-                    @*<div class="form-group col-md-3">
-                        <select asp-for="BrandId" class="form-control form-control-sm">
-                            @{
-                                IEnumerable<DataLayer.Models.TblBrand> Brands = ViewBag.Brands;
-                            }
-                            <option value="0">لطفا برند خود را مشخص کنید</option>
-                            @foreach (var item in Brands)
-                            {
-                                <option value="@item.BrandId">@item.Name</option>
-                            }
-                        </select>
-                        <input type="hidden" asp-for="BrandId" />
-                        <span id="BrandIdErorr" asp-validation-for="BrandId" class="text-danger"></span>
-                    </div>*@
-                </div>
                 <div class="form-row mt-3">
                     <div class="form-group col-md-3">
                         <label>نام محصول</label>
@@ -67,8 +51,11 @@
                     <div class="form-group col-md-2">
                         <label>قیمت</label>
                         <input data-type='currency' class="form-control form-control-sm PriceInput" placeholder="مثال : 80,000 تومان">
-                        <input type="hidden" asp-for="PriceBeforeDiscount" />
-                        <span asp-validation-for="PriceBeforeDiscount" class="text-danger"></span>
+                        <input type="hidden" asp-for="Price" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class=" col-md-2 mt-4 pt-3 mr-3">
+                        <input asp-for="IsOfflineOrder" type="checkbox"> فروش آفلاین
                     </div>
                 </div>
 
@@ -82,12 +69,10 @@
                 <div class="form-row mt-3">
                     <div class="form-group col-md-3">
                         <label>متن جستجو</label>
-                        <input asp-for="SearchText" class="form-control form-control-sm" placeholder="مثال : ...">
+                        <input asp-for="SearchText" class="form-control form-control-sm" placeholder="کلمات کلیدی را با ، از ه جدا کنید">
                         <span class="text-danger" asp-validation-for="SearchText"></span>
                     </div>
-                    <div class=" col-md-2 mt-4 pt-3 mr-3">
-                        <input asp-for="IsFractional" type="checkbox"> فروش اقساطی
-                    </div>
+                
                 </div>
               
 
@@ -146,8 +131,7 @@
             $("#Cat-" + Id).css('font-weight', 'bold');
             $("#CatagoryId").val(Id);
             var CatagoryId = $("#CatagoryId").val();
-            var BrandId = $("#BrandId option:selected").val();
-            if (CatagoryId == null || CatagoryId == "" || BrandId == 0) {
+            if (CatagoryId == null || CatagoryId == "" ) {
                 $("#SubmitErorr").html("دسته بندی , برند اجباری است");
                 $("#SubmitCreateProduct").attr("disabled", "disabled");
             } else {
@@ -186,7 +170,7 @@
         $(".PriceInput").change(function () {
             var price = $(this).val().replaceAll(",", "");
             if ($.isNumeric(price)) {
-                $("#PriceBeforeDiscount").val($(this).val().replaceAll(",", ""));
+                $("#Price").val($(this).val().replaceAll(",", ""));
             } else {
                 $(this).val("");
             }

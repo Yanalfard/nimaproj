@@ -16,7 +16,6 @@ namespace DataLayer.Models
             TblComments = new HashSet<TblComment>();
             TblOfflineOrders = new HashSet<TblOfflineOrder>();
             TblOrders = new HashSet<TblOrder>();
-            TblRates = new HashSet<TblRate>();
         }
 
         [Key]
@@ -47,7 +46,5 @@ namespace DataLayer.Models
         public virtual ICollection<TblOfflineOrder> TblOfflineOrders { get; set; }
         [InverseProperty(nameof(TblOrder.Client))]
         public virtual ICollection<TblOrder> TblOrders { get; set; }
-        [InverseProperty(nameof(TblRate.Client))]
-        public virtual ICollection<TblRate> TblRates { get; set; }
     }
 }

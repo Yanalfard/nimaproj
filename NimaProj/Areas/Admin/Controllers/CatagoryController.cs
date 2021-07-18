@@ -35,17 +35,14 @@ namespace NimaProj.Areas.Admin.Controllers
             {
                 if (catagory.ParentId == null)
                 {
-                    catagory.IsOnFirstPage = true;
+                    
                     _core.Catagory.Add(catagory);
                     _core.Save();
                     return Redirect("/Admin/Catagory");
                 }
                 else
                 {
-
-                    TblCatagory ParentCatagory = _core.Catagory.GetById(catagory.ParentId);
-                    ParentCatagory.IsOnFirstPage = false;
-                    _core.Catagory.Update(ParentCatagory);
+                    catagory.IsOnFirstPage = true;
                     _core.Catagory.Add(catagory);
                     _core.Save();
                     return Redirect("/Admin/Catagory");
