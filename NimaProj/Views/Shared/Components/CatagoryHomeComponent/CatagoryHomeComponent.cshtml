@@ -1,0 +1,39 @@
+﻿@model IEnumerable<TblCatagory>
+
+@{
+    int skip = 1;
+}
+@foreach (var item in Model)
+{
+    <div class="col-12 col-sm-6 col-md-4 col-category">
+        @{
+            var nameClass = "0";
+            if (skip == 1)
+            {
+                nameClass = "bounceInRight";
+            }
+            else if (skip == 2)
+            {
+                nameClass = "flipInX";
+
+            }
+            else if (skip == 3)
+            {
+                nameClass = "bounceInLeft";
+
+            }
+        }
+        <div class="wow  box-category @nameClass " data-wow-duration="2.5s">
+            @{
+                skip++;
+            }
+            <img src="~/Images/Catagory/@item.ImageUrl" class="img-fluid" alt="@item.Name" />
+            <div class="area-title-category">
+                <span class="title-category">@item.Name</span>
+            </div>
+            <a href="shop-left-sidebar.html">مشاهده دسته بندی</a>
+        </div>
+    </div>
+
+
+}

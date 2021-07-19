@@ -20,6 +20,7 @@
                         <thead class="thead-light">
                             <tr>
                                 <th>نام دسته بندی</th>
+                                <th>عکس </th>
                                 <th>زیر مجموعه</th>
                                 <th>عملیات</th>
                             </tr>
@@ -37,8 +38,14 @@
                             {
                                 @foreach (var item in Model)
                                 {
-                                    <tr class="userId_@item.CatagoryId">
+                                    <tr class="catId_@item.CatagoryId">
                                         <td>@item.Name</td>
+                                        <td>
+                                            @if (item.ImageUrl != null)
+                                            {
+                                                <img src="~/Images/Catagory/thumb/@item.ImageUrl" style="max-width:50px;" alt="@item.Name" />
+                                            }
+                                        </td>
                                         <td>
                                             <span data-placement="top" data-toggle="tooltip" title="" data-original-title="مشاهده زیر مجموعه">
                                                 <a onclick="ShowChildsCatagory(@item.CatagoryId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="albums-outline"></a>
@@ -103,11 +110,12 @@
 
         function Delete(id) {
             if (confirm('آیا از حذف   مورد نظر مطمئن هستید؟')) {
+                $("#overlay").fadeIn(300);
                 $.get("/Admin/Catagory/Delete/" + id, function (result) {
                     if (result == "true") {
-
-                        $('.userId_' + id).addClass('uk-text-danger');
-                        $(".userId_" + id).hide('slow');
+                        $("#overlay").fadeOut(300);
+                        $('.catId_' + id).addClass('uk-text-danger');
+                        $(".catId_" + id).hide('slow');
 
                     } else if (result == "false") {
                         UIkit.notification('این دسته بندی نمیتواند حذف شود');

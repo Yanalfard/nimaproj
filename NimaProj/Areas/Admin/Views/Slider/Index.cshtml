@@ -23,6 +23,7 @@
                             <tr>
                                 <th>نام</th>
                                 <th>عکس</th>
+                                <th>بنر پایین سایت</th>
                                 <th>تاریخ انقضا</th>
                                 <th>عملیات</th>
                             </tr>
@@ -30,10 +31,29 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr  id="sliderId_@item.BannerAndSlideId">
+                                <tr id="sliderId_@item.BannerAndSlideId">
                                     <td>@item.Name</td>
                                     <td>
                                         <img src="~/Images/Slider/@item.ImageUrl" style="max-width:100px" alt="@item.Name" />
+                                    </td>
+                                    <td>
+                                        @if (item.IsBanner)
+                                        {
+
+                                            <span data-placement="top" id="IsActive" data-toggle="tooltip" title="" data-original-title="فعال">
+                                                <a onclick="activeBaner(@item.BannerAndSlideId)">
+                                                    <span class="text-success" uk-icon="toggle"></span>
+                                                </a>
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span data-placement="top" id="IsActive" data-toggle="tooltip" title="" data-original-title="غیر فعال">
+                                                <a onclick="activeBaner(@item.BannerAndSlideId)">
+                                                    <span class="text-secondary gly-rotate-180" uk-icon="toggle"></span>
+                                                </a>
+                                            </span>
+                                        }
                                     </td>
                                     <td>@item.ActiveTill.AllToShamsi()</td>
                                     <td>
@@ -61,7 +81,15 @@
 </div>
 @section Script{
     <script>
-
+        function activeBaner(id) {
+            $("#overlay").fadeIn(300);
+            $.get("/Admin/Slider/ActiveBaner/" + id, function (result) {
+                //$('#listUser').html(result);
+                //$("#overlay").fadeOut(300);
+                location.reload();
+            });
+            $("#overlay").fadeOut(300);
+        }
         $("#Create").click(function () {
             $(".modal-content").html("");
             $.get("/Admin/Slider/Create", function (result) {

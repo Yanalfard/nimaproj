@@ -7,6 +7,8 @@ using DataLayer.Models;
 using Services.Services;
 using ReflectionIT.Mvc.Paging;
 using NimaProj.Utilities;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace NimaProj.Areas.Admin.Controllers
 {
@@ -17,7 +19,7 @@ namespace NimaProj.Areas.Admin.Controllers
         Core _core = new Core();
         public IActionResult Index(int page = 1)
         {
-            IEnumerable<TblCatagory> catagories = PagingList.Create(_core.Catagory.Get(c => c.ParentId == null), 10, page);
+            IEnumerable<TblCatagory> catagories = PagingList.Create(_core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false), 10, page);
             return View(catagories);
         }
 
@@ -29,13 +31,29 @@ namespace NimaProj.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(TblCatagory catagory)
+        public async Task<IActionResult> Create(TblCatagory catagory, IFormFile ImageUrl)
         {
             if (ModelState.IsValid)
             {
+                if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
+                {
+                    catagory.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
+                    string savePath = Path.Combine(
+                                            Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory", catagory.ImageUrl
+                                        );
+                    using (var stream = new FileStream(savePath, FileMode.Create))
+                    {
+                        await ImageUrl.CopyToAsync(stream);
+                    };
+                    /// #region resize Image
+                    ImageConvertor imgResizer = new ImageConvertor();
+                    string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory/thumb", catagory.ImageUrl);
+                    imgResizer.Image_resize(savePath, thumbPath, 300);
+                    /// #endregion
+                }
                 if (catagory.ParentId == null)
                 {
-                    
+
                     _core.Catagory.Add(catagory);
                     _core.Save();
                     return Redirect("/Admin/Catagory");
@@ -59,10 +77,43 @@ namespace NimaProj.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(TblCatagory catagory)
+        public async Task<IActionResult> Edit(TblCatagory catagory, IFormFile ImageUrl)
         {
             if (ModelState.IsValid)
             {
+                if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
+                {
+                    try
+                    {
+                        var deleteImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory", catagory.ImageUrl);
+                        if (System.IO.File.Exists(deleteImagePath))
+                        {
+                            System.IO.File.Delete(deleteImagePath);
+                        }
+                        var deleteImagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory/thumb", catagory.ImageUrl);
+                        if (System.IO.File.Exists(deleteImagePath2))
+                        {
+                            System.IO.File.Delete(deleteImagePath2);
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                    catagory.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
+                    string savePath = Path.Combine(
+                                               Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory", catagory.ImageUrl
+                                           );
+                    using (var stream = new FileStream(savePath, FileMode.Create))
+                    {
+                        await ImageUrl.CopyToAsync(stream);
+                    };
+                    /// #region resize Image
+                    ImageConvertor imgResizer = new ImageConvertor();
+                    string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory/thumb", catagory.ImageUrl);
+                    imgResizer.Image_resize(savePath, thumbPath, 300);
+                    /// #endregion
+                }
                 _core.Catagory.Update(catagory);
                 _core.Save();
                 return Redirect("/Admin/Catagory");
@@ -84,6 +135,20 @@ namespace NimaProj.Areas.Admin.Controllers
             }
             else
             {
+                TblCatagory selectedCategory = _core.Catagory.GetById(id);
+                if (selectedCategory.ImageUrl != null)
+                {
+                    var deleteImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory", selectedCategory.ImageUrl);
+                    if (System.IO.File.Exists(deleteImagePath))
+                    {
+                        System.IO.File.Delete(deleteImagePath);
+                    }
+                    var deleteImagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory", selectedCategory.ImageUrl);
+                    if (System.IO.File.Exists(deleteImagePath2))
+                    {
+                        System.IO.File.Delete(deleteImagePath);
+                    }
+                }
                 _core.Catagory.DeleteById(id);
                 _core.Save();
                 return "true";

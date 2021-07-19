@@ -7,7 +7,7 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<form asp-action="Edit" asp-controller="Catagory" asp-area="Admin"
+<form asp-action="Edit" asp-controller="Catagory" asp-area="Admin" enctype="multipart/form-data"
       data-ajax="true"
       data-ajax-method="POST"
       data-ajax-mode="replace"
@@ -17,6 +17,7 @@
     @Html.AntiForgeryToken()
     <input type="hidden" asp-for="CatagoryId" />
     <input type="hidden" asp-for="ParentId" />
+    <input type="hidden" asp-for="ImageUrl" />
     <div class="modal-body">
         <div class="form-row">
             <div class="form-group col-md-4">
@@ -24,6 +25,23 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
         </div>
+        @if (ViewBag.ParentId == null)
+        {
+            <div class="form-row">
+                @if (Model.ImageUrl != null)
+                {
+                    <img src="~/Images/Catagory/thumb/@Model.ImageUrl" style="max-width:50px;display:block;margin: auto" alt="@Model.Name" />
+                }
+
+            </div>
+            <div class="form-row">
+                <div class="custom-file col-md-7">
+                    <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" asp-for="ImageUrl" onchange="inputChanged(this)">
+                    <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">انتخاب تصویر</label>
+                </div>
+
+            </div>
+        }
     </div>
     <div class="modal-footer justify-content-end">
         <span id="Erorr" class="text-danger"></span>

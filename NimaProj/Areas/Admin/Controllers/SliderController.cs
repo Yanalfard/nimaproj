@@ -39,7 +39,7 @@ namespace NimaProj.Areas.Admin.Controllers
                 TblBannerAndSlide NewSlider = new TblBannerAndSlide();
                 NewSlider.Name = slider.Name;
                 NewSlider.ActiveTill = DateTime.Now.AddDays(SliderTime);
-                NewSlider.IsActive = true;
+                NewSlider.IsBanner = slider.IsBanner;
                 NewSlider.Link = slider.Link;
                 if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
                 {
@@ -71,7 +71,7 @@ namespace NimaProj.Areas.Admin.Controllers
         {
             TblBannerAndSlide FirstSlider = _core.BannerAndSlide.GetById(slider.BannerAndSlideId);
             FirstSlider.Name = slider.Name;
-            FirstSlider.IsActive = true;
+            FirstSlider.IsBanner = slider.IsBanner;
             FirstSlider.Link = slider.Link;
             FirstSlider.ActiveTill = DateTime.Now.AddDays(SliderTime);
             if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
@@ -117,7 +117,14 @@ namespace NimaProj.Areas.Admin.Controllers
             _core.Save();
             return "true";
         }
-
+        public ActionResult ActiveBaner(int id)
+        {
+            TblBannerAndSlide updateUser = _core.BannerAndSlide.GetById(id);
+            updateUser.IsBanner = !updateUser.IsBanner;
+            _core.BannerAndSlide.Update(updateUser);
+            _core.Save();
+            return RedirectToAction("Index");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

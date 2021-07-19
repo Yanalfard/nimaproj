@@ -39,18 +39,19 @@ namespace DataLayer.Models
         public virtual DbSet<TblRole> TblRoles { get; set; }
         public virtual DbSet<TblSpecialOffer> TblSpecialOffers { get; set; }
         public virtual DbSet<TblVisit> TblVisits { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    => optionsBuilder
-   .UseLazyLoadingProxies()
-   .UseSqlServer("Data Source=103.216.62.27;Initial Catalog=NimaProj;User ID=Yanal;Password=1710ahmad.fard");
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseSqlServer("Data Source=103.216.62.27;Initial Catalog=NimaProj;User ID=Yanal;Password=1710ahmad.fard");
-//            }
-//        }
+     => optionsBuilder
+    .UseLazyLoadingProxies()
+    .UseSqlServer("Data Source=103.216.62.27;Initial Catalog=NimaProj;User ID=Yanal;Password=1710ahmad.fard");
+        //        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //        {
+        //            if (!optionsBuilder.IsConfigured)
+        //            {
+        //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        //                optionsBuilder.UseSqlServer("Data Source=103.216.62.27;Initial Catalog=NimaProj;User ID=Yanal;Password=1710ahmad.fard");
+        //            }
+        //        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -59,6 +60,11 @@ namespace DataLayer.Models
             modelBuilder.Entity<TblBlog>(entity =>
             {
                 entity.Property(e => e.DateCreated).HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.Catagory)
+                    .WithMany(p => p.TblBlogs)
+                    .HasForeignKey(d => d.CatagoryId)
+                    .HasConstraintName("FK_TblBlog_TblCatagory");
             });
 
             modelBuilder.Entity<TblBlogCommentRel>(entity =>

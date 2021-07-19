@@ -1,0 +1,25 @@
+﻿@model IEnumerable<TblSpecialOffer>
+@if (Model.Any())
+{
+    <section class="mb-2 mb-md-3  mb-lg-4 mb-xl-5">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <h2 class="wow fadeInUp title-site">
+                    محصولات پیشهنادی
+                    <span>محصولات پیشهنادی</span>
+                </h2>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="owl-carousel slider_product">
+                        @foreach (var item in Model)
+                        {
+                            <partial name="_productBlock" model="item" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+}

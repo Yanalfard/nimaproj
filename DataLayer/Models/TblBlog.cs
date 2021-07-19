@@ -35,7 +35,11 @@ namespace DataLayer.Models
         [Required(ErrorMessage = "لطفا کلمات کلیدی  را وارد کنید")]
         [StringLength(500, ErrorMessage = "توضیحات کوتاه پست را وارد کنید")]
         public string SearchText { get; set; }
+        public int? CatagoryId { get; set; }
 
+        [ForeignKey(nameof(CatagoryId))]
+        [InverseProperty(nameof(TblCatagory.TblBlogs))]
+        public virtual TblCatagory Catagory { get; set; }
         [InverseProperty(nameof(TblBlogCommentRel.Blog))]
         public virtual ICollection<TblBlogCommentRel> TblBlogCommentRels { get; set; }
     }

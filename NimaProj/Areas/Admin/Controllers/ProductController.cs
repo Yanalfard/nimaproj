@@ -46,7 +46,7 @@ namespace NimaProj.Areas.Admin.Controllers
         {
             try
             {
-                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
+                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false);
                 return View();
             }
             catch
@@ -65,7 +65,7 @@ namespace NimaProj.Areas.Admin.Controllers
 
             try
             {
-                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
+                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false);
                 if (ModelState.IsValid)
                 {
                     if (MainImage == null)
@@ -284,7 +284,7 @@ namespace NimaProj.Areas.Admin.Controllers
         {
             try
             {
-                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
+                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false);
                 return View(_core.Product.GetById(id));
             }
             catch
@@ -311,8 +311,7 @@ namespace NimaProj.Areas.Admin.Controllers
         {
             try
             {
-                ViewBag.CatagoryName = _core.Catagory.GetById(product.CatagoryId).Name;
-                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
+                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false);
                 //ViewBag.Brands = _core.Brand.Get();
                 if (ModelState.IsValid)
                 {

@@ -20,7 +20,7 @@ namespace DataLayer.Models
         [Required(ErrorMessage = "لینک اسلایدر الزامی میباشد")]
         [StringLength(4000, ErrorMessage = "لینک اسلایدر مناسب وارد کنید")]
         public string Link { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsBanner { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime ActiveTill { get; set; }
     }
