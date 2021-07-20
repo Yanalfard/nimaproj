@@ -1,0 +1,63 @@
+﻿@model TblProduct
+
+    <div class="col-12 col-md-4 col-xl-3 p-0">
+        <div class="imgproduct-TabListContentShop">
+            <a href="#">
+                <div class="d-flex justify-content-center align-items-center ">
+                    <img src="~/Images/ProductMain/thumb/@Model.MainImage" class="img1-product img-fluid" />
+                    @if (Model.TblProductImageRels.Any())
+                    {
+                        var imageName = Model.TblProductImageRels.FirstOrDefault().Image.ImageUrl;
+                        <img src="~/Images/ProductAlbum/thumb/@imageName" class=" img2-product img-fluid" />
+                    }
+                    else
+                    {
+                        <img src="~/Images/ProductMain/thumb/@Model.MainImage" class="img1-product img-fluid" />
+                    }
+
+                </div>
+            </a>
+
+            <div class="magnifier-product">
+                <button type="button" class="btn-magnifier-add" data-toggle="modal"
+                        data-target="#quick-produtDitails">
+                    <i class="fal fa-search-plus"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-8 col-xl-9 p-0">
+        <div class="contentproduct-TabListContentShop area-details-product p-4 p-xl-5">
+            <h3 class="product-title mb-3">
+                <a href="/ViewProduct/@Model.ProductId/@Model.Name.Replace(" ","-")">@Model.Name </a>
+            </h3>
+            <div class="d-sm-flex justify-content-between align-items-center  mb-3">
+                <div class="area-price-Product d-flex  mb-3 mb-sm-0">
+                    @if (Model.IsOfflineOrder)
+                    {
+                        <span>
+                            سفارش گیری
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="ml-2"> قیمت: </span>
+                        <del class="price-discount ml-3 "> @Model.Price  تومان</del>
+                    }
+
+                    <span class="price mb-0">120000 تومان</span>
+                </div>
+            </div>
+            <p class="mb-3">
+              @Html.Raw(Model.DescriptionShortHtml)
+            </p>
+            <div class="d-flex align-items-center">
+                <button type="submit" class="btn-animate1">
+                    افزودن به سبد خرید<i class="fal fa-cart-arrow-down mr-3"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+

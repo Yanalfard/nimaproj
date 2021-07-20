@@ -1,12 +1,13 @@
-﻿@model IEnumerable<TblSpecialOffer>
+﻿@model IEnumerable<TblProduct>
 @if (Model.Any())
 {
+
     <section class="mb-2 mb-md-3  mb-lg-4 mb-xl-5">
         <div class="container">
             <div class="row justify-content-center mb-5">
-                <h2 class="wow fadeInUp title-site">
-                    محصولات پیشهنادی
-                    <span>محصولات پیشهنادی</span>
+                <h2 class="wow  fadeInUp title-site">
+                    محصولات
+                    <span>محصولات</span>
                 </h2>
             </div>
             <div class="row">
@@ -15,7 +16,7 @@
                         @foreach (var item in Model)
                         {
                             <div class="wow bounceIn item_slider_product-new" data-wow-duration="2s">
-                            <partial name="_productBlock" model="item.Product" />
+                                <partial name="_productBlock" model="item" />
                             </div>
 
 
@@ -25,5 +26,4 @@
             </div>
         </div>
     </section>
-
 }

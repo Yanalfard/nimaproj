@@ -1,4 +1,8 @@
 ﻿@model DataLayer.Models.TblBlog
+@{
+    ViewData["Title"] = " ویرایش کردن مقاله  ";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
 <div class="modal-header">
     <h6 class="modal-title" id="modalCenterTitle">
         ویرایش پست
@@ -36,7 +40,7 @@
         </div>
         <label class="mt-2">تصویر پست</label>
         <br />
-        <div >
+        <div>
             <img style="display:block;margin:auto auto;padding:10px;" src="/Images/Blogs/thumb/@Model.MainImage" alt="Alternate Text" />
         </div>
         <div class="custom-file col-md-7">

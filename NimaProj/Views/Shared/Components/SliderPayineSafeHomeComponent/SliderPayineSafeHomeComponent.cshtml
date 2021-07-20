@@ -1,0 +1,54 @@
+﻿@model IEnumerable<TblBannerAndSlide>
+
+@if (Model.Any())
+{
+    <section class="mb-4  mb-lg-5 pb-lg-4 pb-xl-5">
+        <div class="container">
+            <div class="row baner-site one">
+                @{
+                    int skip = 1;
+                }
+                @foreach (var item in Model)
+                {
+
+                    var nameClass = "0";
+                    if (skip == 1)
+                    {
+                        nameClass = "rubberBand";
+                    }
+                    else if (skip == 2)
+                    {
+                        nameClass = "flipInX";
+
+                    }
+                    else if (skip == 3)
+                    {
+                        nameClass = "flipInX";
+
+                    }
+                    else if (skip == 4)
+                    {
+                        nameClass = "rubberBand  d-lg-none d-xl-block";
+
+                    }
+
+                    skip++;
+
+                    <div class="wow  col-12 col-sm-6 col-lg-4 col-xl-3 item-baner @nameClass" data-wow-duration="2s">
+                        <div class="box-baner">
+                            <a href="@item.Link" target="_blank">
+                                <img class="img-fluid " src="~/Images/Slider/@item.ImageUrl"
+                                     alt="بنر سایت" />
+                            </a>
+                        </div>
+                    </div>
+
+
+
+                }
+
+            </div>
+        </div>
+    </section>
+
+}

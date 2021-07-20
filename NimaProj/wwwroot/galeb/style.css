@@ -1776,12 +1776,12 @@ h2.title-post a:hover {
     display: inline-block;
     padding-right: .5rem;
     padding-left: .5rem;
-    color: #dfdfdf;
+    color: black;
     content: "/";
 }
 
 li.breadcrumb-item a {
-    color: #dfdfdf;
+    color: black;
     transition: all 0.3s ease-in-out;
     -webkit-transition: all 0.3s ease-in-out;
 }

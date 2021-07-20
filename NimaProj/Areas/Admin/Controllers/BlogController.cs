@@ -39,7 +39,8 @@ namespace NimaProj.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return ViewComponent("BlogCreateAdmin");
+            ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == true);
+            return View();
         }
 
         [HttpPost]
@@ -74,12 +75,14 @@ namespace NimaProj.Areas.Admin.Controllers
                 _core.Save();
                 return await Task.FromResult(Redirect("/Admin/Blog"));
             }
+            ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == true);
             return View(blog);
         }
 
         public IActionResult Edit(int id)
         {
-            return ViewComponent("BlogEditAdmin", new { id = id });
+            ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == true);
+            return View(_core.Blog.GetById(id));
         }
 
         [HttpPost]
@@ -112,7 +115,7 @@ namespace NimaProj.Areas.Admin.Controllers
                     {
 
                     }
-
+                    blog.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
                     string savePathAlbum = Path.Combine(
                                         Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs", blog.MainImage
                                     );
@@ -128,13 +131,17 @@ namespace NimaProj.Areas.Admin.Controllers
                     /// #endregion
                 }
 
+                Editblog.CatagoryId = blog.CatagoryId;
                 Editblog.Title = blog.Title;
                 Editblog.Description = blog.Description;
                 Editblog.BodyHtml = blog.BodyHtml;
+                Editblog.MainImage = blog.MainImage;
                 _core.Blog.Update(Editblog);
                 _core.Save();
                 return await Task.FromResult(Redirect("/Admin/Blog"));
             }
+            ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == true);
+
             return await Task.FromResult(View(blog));
         }
 

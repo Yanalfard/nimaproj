@@ -190,14 +190,44 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item active">
-                            <a href="/Admin/Comment" class="LoadingDiv">
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
-                                    <i uk-icon="chatbubble-ellipses"></i>
+                                    <i uk-icon="newspaper"></i>
                                 </span>
-                                <span class="title">نظرات</span>
+                                <span class="title">اخبار و مقاله ها </span>
+                                <span class="arrow" uk-icon="chevron-forward">
+                                </span>
                             </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item active">
+                                    <a href="/Admin/Blog" class="LoadingDiv">
+                                        <span class="icon-holder">
+                                            <i uk-icon="newspaper"></i>
+                                        </span>
+                                        <span class="title">مقالات  </span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item active">
+                                    <a href="/Admin/CatagoryBlog" class="LoadingDiv">
+                                        <span class="icon-holder">
+                                            <i uk-icon="file-tray-stacked"></i>
+                                        </span>
+                                        <span class="title">دسته بندی مقالات  </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a href="/Admin/Comment" class="LoadingDiv">
+                                        <span class="icon-holder">
+                                            <i uk-icon="chatbubble-ellipses"></i>
+                                        </span>
+                                        <span class="title">نظرات</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
+                      
                         @*<li class="nav-item active">
             <a href="/Admin/Bank" class="LoadingDiv">
                 <span class="icon-holder">
@@ -222,7 +252,7 @@
                                 <span class="title">کاربران</span>
                             </a>
                         </li>
-                       
+
                         <li class="nav-item active">
                             <a href="/Admin/Slider" class="LoadingDiv">
                                 <span class="icon-holder">
@@ -231,14 +261,7 @@
                                 <span class="title">اسلایدر</span>
                             </a>
                         </li>
-                        <li class="nav-item active">
-                            <a href="/Admin/Blog" class="LoadingDiv">
-                                <span class="icon-holder">
-                                    <i uk-icon="newspaper"></i>
-                                </span>
-                                <span class="title">اخبار و اطلاعیه ها</span>
-                            </a>
-                        </li>
+
                         @*<li class="nav-item active">
             <a href="/Admin/Delivery" class="LoadingDiv">
                 <span class="icon-holder">

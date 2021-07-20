@@ -1,5 +1,8 @@
 ﻿@model DataLayer.Models.TblBlog
-
+@{
+    ViewData["Title"] = " اضافه کردن مقاله  ";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
 
 <div class="modal-header">
     <h6 class="modal-title" id="modalCenterTitle">
@@ -9,7 +12,7 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<form asp-action="Create" asp-controller="Blog" asp-area="Admin" method="post" enctype="multipart/form-data"
+<form style="overflow:auto" asp-action="Create" asp-controller="Blog" asp-area="Admin" method="post" enctype="multipart/form-data"
       data-ajax="true"
       data-ajax-method="POST"
       data-ajax-mode="replace"
@@ -52,7 +55,6 @@
         </ul>
         <input type="hidden" asp-for="CatagoryId" />
         <span id="CatagoryIdErorr" asp-validation-for="CatagoryId" class="text-danger"></span>
-        <input type="hidden" asp-for="CatagoryId" />
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label>عنوان</label>
@@ -92,26 +94,26 @@
         <span asp-validation-for="BodyHtml" class="text-danger"></span>
     </div>
     <div class="modal-footer justify-content-end">
-        <span class="text-danger" id="SubmitErorr"></span>
-        <button id="SubmitCreateProduct" type="submit" class="btn btn-success btn-sm text-white">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
+        <span class="text-danger" id="SubmitErorr">دسته بندی   اجباری است</span>
+        <button disabled id="SubmitCreateProduct" type="submit" class="btn btn-success btn-sm text-white">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
     </div>
 </form>
 
-<script src="~/js/bootstrap-tagsinput.js"></script>
-<script src="~/Validate/jquery.validate.min.js"></script>
-<script src="~/Validate/jquery.validate.unobtrusive.js"></script>
-<script>
-    function inputChanged(sender) {
-        var fileName = sender.files[0].name;
-        sender.parentElement.querySelector('.custom-file-label').innerHTML = fileName;
-    }
-
-    $(function () {
-        $('#DescriptionLongHtml').ckeditor();
-    });
-</script>
 
 @section Script{
+    <script src="~/js/bootstrap-tagsinput.js"></script>
+    <script src="~/Validate/jquery.validate.min.js"></script>
+    <script src="~/Validate/jquery.validate.unobtrusive.js"></script>
+    <script>
+        function inputChanged(sender) {
+            var fileName = sender.files[0].name;
+            sender.parentElement.querySelector('.custom-file-label').innerHTML = fileName;
+        }
+
+        $(function () {
+            $('#DescriptionLongHtml').ckeditor();
+        });
+    </script>
 
     <script src="~/js/bootstrap-tagsinput.js"></script>
     <script src="~/js/Auto_Formatting_Currency.js"></script>
@@ -126,7 +128,7 @@
             $("#CatagoryId").val(Id);
             var CatagoryId = $("#CatagoryId").val();
             if (CatagoryId == null || CatagoryId == "") {
-                $("#SubmitErorr").html("دسته بندی   اجباری است");
+                $("#SubmitErorr").html("دسته بندی , برند اجباری است");
                 $("#SubmitCreateProduct").attr("disabled", "disabled");
             } else {
                 $("#SubmitErorr").html("");

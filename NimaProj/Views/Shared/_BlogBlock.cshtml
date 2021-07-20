@@ -1,0 +1,33 @@
+﻿@model TblBlog
+@using NimaProj.Utilities
+<div class="wow  pulse item_slider-Related-posts" data-wow-duration="2s">
+    <div class="card card-post">
+        <div class="hover01 column">
+            <figure>
+                <img class="card-img-top" src="~/Images/Blogs/thumb/@Model.MainImage" alt="تصویر پست">
+            </figure>
+        </div>
+        <div class="card-body">
+            <div class="meta-post d-flex mb-3">
+                <div class="date-post item-meta-post  ml-3">
+                    <a href="#" class="data-link">
+                        @Model.DateCreated.DateToShamsi()
+                    </a>
+                </div>
+            </div>
+            <div class="content-post">
+                <h2 class="title-post mb-3">
+                    <a href="single-left.html">
+                        @Model.Title
+                    </a>
+                </h2>
+                <p class="card-text mb-3">
+                    @Model.Description
+                </p>
+                <div class="btn-post-cart">
+                    <a href="single-left.html">بیشتر بخوانید</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

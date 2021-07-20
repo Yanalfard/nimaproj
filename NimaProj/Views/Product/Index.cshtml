@@ -1,0 +1,245 @@
+﻿@model IEnumerable<TblProduct>
+@{
+    ViewData["Title"] = ViewBag.name;
+}
+
+
+<main class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="area-topbar-shop d-md-flex justify-content-between align-items-center mb-5 ">
+                    <div class="box-select-sort d-flex mb-4 mb-md-0">
+                        <nav aria-label="breadcrumb" class="mb-4 mb-lg-3">
+                            <ol class="breadcrumb breadcrumb-singleProduct ">
+                                <li class="breadcrumb-item" ><a href="/">خانه</a></li>
+                                <li class="breadcrumb-item"><a href="/Product">فروشگاه</a></li>
+                                <li class="breadcrumb-item active">@ViewBag.name</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="d-flex align-items-center ">
+                        <ul class="nav nav-pills nav-pills-productShop" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-iconColumnFour" data-toggle="tab" href="#contentShop4"
+                                   role="tab" aria-controls="home" aria-selected="true">
+
+                                    <span class="icon-column icon-listproduct">
+
+                                        <span class="d-flex justify-content-between layer-icon-column  layer-first">
+                                            <span></span>
+                                            <span></span>
+
+                                        </span>
+
+                                        <span class="d-flex justify-content-between layer-icon-column layer-middle">
+                                            <span></span>
+                                            <span></span>
+
+                                        </span>
+
+                                        <span class="d-flex justify-content-between layer-icon-column layer-last">
+                                            <span></span>
+                                            <span></span>
+
+                                        </span>
+                                    </span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item ">
+                                <a class="nav-link active" id="tab-iconColumnThree" data-toggle="tab"
+                                   href="#contentShop3" role="tab" aria-controls="home" aria-selected="true">
+                                    <span class="icon-column">
+                                        <span class="d-flex justify-content-between layer-icon-column layer-first">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </span>
+
+                                        <span class="d-flex justify-content-between layer-icon-column layer-middle">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </span>
+
+                                        <span class="d-flex justify-content-between layer-icon-column layer-last">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-iconColumnTwo" data-toggle="tab" href="#contentShop2"
+                                   role="tab" aria-controls="home" aria-selected="true">
+
+                                    <span class="icon-column">
+
+                                        <span class="d-flex justify-content-between layer-icon-column layer-first">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </span>
+
+                                        <span class="d-flex justify-content-between layer-icon-column layer-middle">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </span>
+
+                                        <span class="d-flex justify-content-between layer-icon-column layer-last">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-iconColumnOne" data-toggle="tab" href="#contentShop1"
+                                   role="tab" aria-controls="home" aria-selected="true">
+                                    <span class="icon-column">
+
+                                        <span class="d-flex justify-content-between layer-icon-column layer-first">
+                                            <span></span>
+                                            <span></span>
+                                        </span>
+
+                                        <span class="d-flex justify-content-between layer-icon-column layer-middle">
+                                            <span></span>
+                                            <span></span>
+                                        </span>
+
+                                        <span class="d-flex justify-content-between layer-icon-column layer-last">
+                                            <span></span>
+                                            <span></span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div class="tab-content tab-content-shop" id="myTabContent">
+                    <div class="tab-pane fade" id="contentShop1" role="tabpanel"
+                         aria-labelledby="tab-iconColumnOne">
+
+                        <div class="row">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-12 col-sm-6 ">
+                                    <partial name="_productBlock" model="item" />
+                                </div>
+                            }
+                        </div>
+                        @*<div class="area-pageination-shop  mt-5">
+                            <ul class="pagination page-numbers d-flex justify-content-center order-2 order-md-1">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item "><a class="page-link " href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </div>*@
+                    </div>
+
+                    <div class="tab-pane fade " id="contentShop2" role="tabpanel"
+                         aria-labelledby="tab-iconColumnTwo">
+
+                        <div class="row">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <partial name="_productBlock" model="item" />
+                                </div>
+                            }
+                        </div>
+                        @*<div class="area-pageination-shop  mt-5">
+                            <ul class="pagination page-numbers d-flex justify-content-center order-2 order-md-1">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item "><a class="page-link " href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </div>*@
+                    </div>
+
+                    <div class="tab-pane fade show active" id="contentShop3" role="tabpanel"
+                         aria-labelledby="tab-iconColumnThree">
+                        <div class="row">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <partial name="_productBlock" model="item" />
+                                </div>
+                            }
+                        </div>
+                        @*<div class="area-pageination-shop  mt-5">
+                            <ul class="pagination page-numbers d-flex justify-content-center order-2 order-md-1">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item "><a class="page-link " href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>*@
+                    </div>
+
+                    <div class="tab-pane fade px-3 " id="contentShop4" role="tabpanel"
+                         aria-labelledby="tab-iconColumnFour">
+                        @foreach (var item in Model)
+                        {
+                            <div class="row box-TabListContentShop mb-4">
+                                <partial name="_productInlineBlock" model="item" />
+                            </div>
+                        }
+
+
+                        <!--end list region-->
+                        @*<div class="card-footer bg-white">
+            <nav aria-label="Page navigation example">
+                @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
+            </nav>
+        </div>*@
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
