@@ -12,5 +12,6 @@ namespace NimaProj.Controllers
         {
             return View();
         }
+
     }
 }

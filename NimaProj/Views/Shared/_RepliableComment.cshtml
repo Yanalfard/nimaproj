@@ -1,0 +1,44 @@
+﻿@model TblComment
+
+
+        <div class="porofile_customers-comment d-flex">
+            <div class="area-img-comment">
+                @if (Model.Client.MainImage != null)
+                {
+                    <img src="~/Images/User/@Model.Client.MainImage" class="img-fluid">
+
+                }
+                else
+                {
+                    <img src="~/Images/noImg.png" class="img-fluid">
+
+                }
+            </div>
+            <div class="mr-3 mr-md-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="porofileName ">
+                        <h6>@Model.Client.Name</h6>
+                        <span>@Model.DateCreated.Value.DateToShamsi() </span>
+                    </div>
+                    <div class="area-btn-peply">
+                        <a href="#replayComment" class="btn-peply" onclick="setParentId(@Model.CommentId)"> پاسخ</a>
+                    </div>
+                </div>
+                <p>
+                    @Model.Body
+                </p>
+
+                <!-- #region ansver  -->
+                @if (Model.InverseParent.Any())
+                {
+                    foreach (var replay in Model.InverseParent)
+                    {
+                        <partial name="_RepliableComment" model="replay" />
+
+                    }
+                }
+                <!-- #endregion -->
+            </div>
+
+        </div>
+

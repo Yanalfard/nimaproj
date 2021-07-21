@@ -1,0 +1,35 @@
+﻿@model SendCommentVm
+
+
+    <div class="area-form-reviews" >
+        <h3 class="h4 mb-4 heading-style1 mt-5">ارسال نظرات</h3>
+        <!-- Default form contact -->
+        <form class="form-row form-reviews"
+              id="ajaxresultSendComment" action="/Product/SendComment" method="post"
+              data-ajax="true"
+              data-ajax-method="POST"
+              data-ajax-mode="replace"
+              data-ajax-complete="SendComment()"
+              data-ajax-update="#ajaxresultSendComment">
+            <input type="hidden" id="ParentId" asp-for="ParentId" name="ParentId" />
+            <input type="hidden" id="ProductId" asp-for="ProductId" name="ProductId" />
+            <input type="hidden" id="BlogId" asp-for="BlogId" name="BlogId" />
+            <!-- Message -->
+            <div class="form-group mb-4 col-12">
+                <textarea required class="form-control" id="textarea-form" rows="6" asp-for="Body" maxlength="300"
+                          placeholder="نظر شما *"></textarea>
+                <span class="text-danger" asp-validation-for="Body"></span>
+            </div>
+            <button type="submit" class="btn-animate1">ارسال نظر</button>
+        </form>
+        <!-- Default form contact -->
+    </div>
+
+
+<script>
+    function SendComment() {
+        $("textarea").val("");
+        alert('پیام شما ثبت شد');
+        LoadingEnd();
+    }
+</script>

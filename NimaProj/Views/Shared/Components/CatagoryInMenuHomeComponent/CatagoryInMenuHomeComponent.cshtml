@@ -1,0 +1,38 @@
+﻿@model IEnumerable<TblCatagory>
+
+<ul class="sub-menu">
+    @foreach (var item in Model)
+    {
+        <li>
+
+            @if (item.InverseParent.Any())
+            {
+                <a asp-controller="Product"
+                   asp-action="Index"
+                   asp-route-id="@item.CatagoryId" asp-route-name="@item.Name"> @item.Name <i class="fal fa-angle-left"></i></a>
+
+                <ul class="sub-menu">
+
+                    @foreach (var j in item.InverseParent)
+                    {
+                        <li>
+                            <a asp-controller="Product"
+                               asp-action="Index"
+                               asp-route-id="@j.CatagoryId" asp-route-name="@j.Name"> @j.Name </a>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <a asp-controller="Product"
+                   asp-action="Index"
+                   asp-route-id="@item.CatagoryId" asp-route-name="@item.Name"> @item.Name </a>
+
+            }
+
+        </li>
+
+    }
+
+</ul>

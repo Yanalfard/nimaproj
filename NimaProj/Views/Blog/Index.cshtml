@@ -1,0 +1,57 @@
+﻿@model IEnumerable<TblBlog>
+@{
+    ViewData["Title"] = "Index";
+}
+<main class="content">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="area-topbar-shop d-md-flex justify-content-between align-items-center mb-5 ">
+                    <div class="box-select-sort d-flex mb-4 mb-md-0">
+                        <nav aria-label="breadcrumb" class="mb-4 mb-lg-3">
+                            <ol class="breadcrumb breadcrumb-singleProduct ">
+                                <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                                <li class="breadcrumb-item"><a href="/Blog">مقاله ها</a></li>
+                                <li class="breadcrumb-item active">@ViewBag.name</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            @foreach (var item in Model)
+            {
+
+                <div class="col-12 col-md-6 col-lg-4 ">
+                    <partial name="_BlogBlock" model="item" />
+                </div>
+            }
+
+        </div>
+
+        @*<ul class="pagination page-numbers d-flex justify-content-center order-2 order-md-1 mt-4">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item "><a class="page-link " href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+            </li>
+        </ul>*@
+
+
+    </div>
+
+</main>

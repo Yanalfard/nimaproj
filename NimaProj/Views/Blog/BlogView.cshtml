@@ -1,0 +1,119 @@
+﻿@model TblBlog
+@{
+    ViewData["Title"] = Model.Title;
+    List<TblComment> listComments = Model.TblBlogCommentRels.Where(i => i.Comment.IsValid && i.Comment.Parent == null).Select(i => i.Comment).ToList();
+    var searchKey = Model.SearchText.Split('،');
+}
+
+
+<main class="content">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="area-topbar-shop d-md-flex justify-content-between align-items-center mb-5 ">
+                    <div class="box-select-sort d-flex mb-4 mb-md-0">
+                        <nav aria-label="breadcrumb" class="mb-4 mb-lg-3">
+                            <ol class="breadcrumb breadcrumb-singleProduct ">
+                                <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                                <li class="breadcrumb-item"><a href="/Blog">مقاله ها</a></li>
+                                <li class="breadcrumb-item active">@Model.Title</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-12 post-single-left ">
+                <article class="content-post single">
+                    <h1 class="title-post">روش های انتخاب لوازم آرایش مناسب</h1>
+                    <div class="meta-post single d-flex mb-4">
+                        <div class="date-post   item-meta-post  ml-3">
+                            <a href="#" class="data-link">
+                                @Model.DateCreated.DateToShamsi()
+                            </a>
+                        </div>
+                        <div class="count-comment-post  item-meta-post  ml-3">
+                            <a class="message-link" href="#">
+                                @listComments.Count()
+                            </a>
+                        </div>
+                    </div>
+                    <div class="blog-img mb-3">
+                        <img src="~/Images/Blogs/@Model.MainImage" class="img-fluid" alt="@Model.Title" />
+                    </div>
+                    <div class="post-content">
+                        <p>
+                            @Html.Raw(Model.Description)
+                        </p>
+                    </div>
+                    <div class="post-content">
+                        <p>
+                            @Html.Raw(Model.BodyHtml)
+                        </p>
+                    </div>
+                    <div class="row post-blog-footer d-flex  align-items-center justify-content-md-between">
+                        <div class="col-12 col-md-8 mb-4 mb-md-0">
+                            <div class="area-tags-blog d-flex flex-wrap justify-content-start align-items-center">
+                                @foreach (var item in searchKey)
+                                {
+                                    if (item != "" && item != " ")
+                                    {
+
+                                        <div class="tag-blog"><a href="#">@item </a></div>
+                                    }
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <div class="border-bottom"></div>
+                @foreach (var item in listComments)
+                {
+
+                    <div class="box-comments">
+                        <h2 class="heading-style1 my-5"><span> @listComments.Count()</span> دیدگاه</h2>
+                        <div class="item-comment pb-5 pb-md-1 mb-4">
+                            <partial name="_RepliableComment" model="item" />
+                        </div>
+                    </div>
+
+                }
+
+                <div class="area-form-wrap single mb-5 mb-lg-0">
+                    @await Component.InvokeAsync("SendCommentHomeComponent")
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts{
+
+    <!--refrence carousel-->
+    <script type="text/javascript" src="~/galeb/js/price-range-slider.js"></script>
+    <script src="~/Validate/jquery.validate.min.js"></script>
+    <script src="~/Validate/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Validate/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Validate/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script src="~/galeb/js/jquery.elevatezoom.js"></script>
+
+    <script>
+        $('#BlogId').val(@Model.BlogId);
+
+        function setParentId(id) {
+
+            $("textarea").css("border", "2px solid #d1a04d");
+            $('#ParentId').val(id);
+        }
+    </script>
+
+
+}
+

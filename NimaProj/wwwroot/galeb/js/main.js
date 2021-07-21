@@ -814,7 +814,7 @@ $(window).scroll(function () {
 /***************************************  modal reload homepage js***************************************/
 
 $(document).ready(function () {
-    $('#Modal-subscribe').modal('show');
+    //$('#Modal-subscribe').modal('show');
 });
 
 $(document).ready(function () {

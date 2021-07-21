@@ -3,7 +3,7 @@
 
 <div class="product_cart">
     <div class="cart-img-product mb-3">
-        <a href="#">
+        <a href="/ViewProduct/@Model.ProductId/@Model.Name.Replace(" ","-")">
             <div class="d-flex justify-content-center align-items-center h-100">
                 <img src="~/Images/ProductMain/thumb/@Model.MainImage" class="img2-product img-fluid" />
                 @if (Model.TblProductImageRels.Any())
@@ -44,7 +44,7 @@
                 </span>
             }
         </div>
-        <a href="#">
+        <a href="/ViewProduct/@Model.ProductId/@Model.Name.Replace(" ","-")">
             <h3 class="title-product mb-2">@Model.Name </h3>
         </a>
     </div>

@@ -2,7 +2,7 @@
 
     <div class="col-12 col-md-4 col-xl-3 p-0">
         <div class="imgproduct-TabListContentShop">
-            <a href="#">
+            <a href="/ViewProduct/@Model.ProductId/@Model.Name.Replace(" ","-")">
                 <div class="d-flex justify-content-center align-items-center ">
                     <img src="~/Images/ProductMain/thumb/@Model.MainImage" class="img1-product img-fluid" />
                     @if (Model.TblProductImageRels.Any())

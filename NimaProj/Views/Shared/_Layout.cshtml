@@ -9,18 +9,18 @@
 
     <title>@(ViewData["Title"] ?? "تجهیزات پزشکی")</title>
 
-    <link href="~/css/uikit.min.css" rel="stylesheet" />
-    <link href="~/css/Controls.min.css" rel="stylesheet" />
+    @*<link href="~/css/uikit.min.css" rel="stylesheet" />
+    <link href="~/css/Controls.min.css" rel="stylesheet" />*@
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon.png">
+    <!--<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 
     <link rel="manifest" type="application/json+oembed" href="~/manifest.json" />
 
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="theme-color" content="#810081">
+    <meta name="theme-color" content="#810081">-->
 
     @RenderSection("Styles", false)
 
@@ -38,10 +38,10 @@
 </head>
 
 <body id="body-homepage">
-    <div id="Modal-subscribe" class="modal fade subscribe-popup" role="dialog">
-        <div class="modal-dialog">
+    <!--<div id="Modal-subscribe" class="modal fade subscribe-popup" role="dialog">
+        <div class="modal-dialog">-->
             <!-- Modal content-->
-            <div class="modal-content">
+            <!--<div class="modal-content">
                 <div class="modal-body py-0">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <div class="row">
@@ -80,7 +80,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     <div class="bg-close">
     </div>
     <div class="bg-searchform">
@@ -158,76 +158,19 @@
                                     <a href="/">صفحه اصلی</a>
                                 </li>
                                 <li>
-                                    <a href="#">صفحات<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <ul class="sub-menu">
-                                        <li><a href="about.html">درباره ما</a></li>
-                                        <li>
-                                            <a href="contact.html">تماس با ما</a>
-                                        </li>
-                                        <li><a href="login.html">ورود</a></li>
-                                        <li><a href="signup.html">ثبت نام</a></li>
-                                        <li><a href="404.html">خطا 404</a></li>
-                                    </ul>
+                                    <a href="/Product">محصولات<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <!-- #region Category Product -->
+                                    @await Component.InvokeAsync("CatagoryInMenuHomeComponent")
+
+                                    <!-- #endregion Category Product -->
+
                                 </li>
                                 <li>
-                                    <a href="#">وبلاگ<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <ul class="sub-menu">
-                                        <li>
-                                            <a href="#">شبکه ای <i class="fal fa-angle-left"></i></a>
-                                            <ul class="sub-menu">
-                                                <li><a href="blog-three-columns.html">سه ستون </a></li>
-                                                <li>
-                                                    <a href="blog-four-columns.html">چهار ستون </a>
-                                                </li>
-                                                <li><a href="blog-left-sidebar.html">نوار کناری سمت چپ </a></li>
-                                                <li><a href="blog-right-sidebar.html">نوار کناری سمت راست </a></li>
-                                                <li>
-                                                    <a href="blog-standard-left-sidebar.html">
-                                                        نوار کناری استاندارد چپ
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="blog-standard-right-sidebar.html">
-                                                        نوار کناری استاندارد راست
-                                                        </i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                ساختمانی <i class="fal fa-angle-left"></i>
-                                            </a>
-                                            <ul class="sub-menu">
-                                                <li><a href="blog-masonry-three-columns.html">سه ستون </a></li>
-                                                <li>
-                                                    <a href="blog-masonry-four-columns.html">چهار ستون </a>
-                                                </li>
-                                                <li><a href="blog-masonry-left-sidebar.html">نوار کناری سمت چپ </a></li>
-                                                <li>
-                                                    <a href="blog-masonry-right-sidebar.html">نوار کناری سمت راست </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">جزییات وبلاگ <i class="fal fa-angle-left"></i></a>
-                                            <ul class="sub-menu">
-                                                <li><a href="single-left.html">پیش فرض</a></li>
-                                                <li>
-                                                    <a href="single-right.html">نوار کناری سمت راست</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">لیستی <i class="fal fa-angle-left"></i></a>
-                                            <ul class="sub-menu">
-                                                <li><a href="blog-list-left-sidebar.html">نوار کناری سمت چپ</a></li>
-                                                <li>
-                                                    <a href="blog-list-right-sidebar.html">نوار کناری سمت راست</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                                    <a href="/Blog">مقاله ها<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <!-- #region Category Product -->
+                                    @await Component.InvokeAsync("CatagoryInMenuBlogHomeComponent")
+
+                                    <!-- #endregion Category Product -->
                                 </li>
                                 <li class="container-mega-menu">
                                     <a href="shop-left-sidebar.html">
@@ -902,7 +845,7 @@
 
 
 
-    <script src="~/Jquery/jquery-3.4.1.min.js"></script>
+    @*<script src="~/Jquery/jquery-3.4.1.min.js"></script>*@
 
 
     @*<script src="~/Validate/jquery.validate.min.js"></script>
