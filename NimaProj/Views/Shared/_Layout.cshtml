@@ -10,7 +10,7 @@
     <title>@(ViewData["Title"] ?? "تجهیزات پزشکی")</title>
 
     @*<link href="~/css/uikit.min.css" rel="stylesheet" />
-    <link href="~/css/Controls.min.css" rel="stylesheet" />*@
+        <link href="~/css/Controls.min.css" rel="stylesheet" />*@
 
     <!-- Favicon -->
     <!--<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon.png">
@@ -35,13 +35,15 @@
     <link rel="stylesheet" href="~/galeb/css/all.min.css">
     <link rel="stylesheet" href="~/galeb/css/respansive.css">
     <link rel="stylesheet" href="~/galeb/css/animate.min.css">
+
+    <link href="~/css/Load.css" rel="stylesheet" />
 </head>
 
 <body id="body-homepage">
     <!--<div id="Modal-subscribe" class="modal fade subscribe-popup" role="dialog">
         <div class="modal-dialog">-->
-            <!-- Modal content-->
-            <!--<div class="modal-content">
+    <!-- Modal content-->
+    <!--<div class="modal-content">
                 <div class="modal-body py-0">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <div class="row">
@@ -127,7 +129,7 @@
                     <div class="col-6">
                         <div class="d-flex align-items-center justify-content-end">
                             <div class="user-account d-none d-md-block">
-                                <a href="account.html">
+                                <a href="/Login">
                                     <span>حساب کاربری</span>
                                     <i class="fal fa-user"></i>
                                 </a>
@@ -830,6 +832,14 @@
         </div>
     </footer>
 
+    <!--Loading-->
+    <div id="overlay">
+        <div class="cv-spinner">
+            <span class="spinner"></span>
+        </div>
+    </div>
+    <!--Loading-->
+
 
 
     <a class="scrollTo scroll-To-top " href=".topbar-site"></a>
@@ -842,6 +852,17 @@
     <script type="text/javascript" src="~/galeb/js/wow.min.js"></script>
 
 
+    <script>
+        //function LoadingRun(form) {
+        //    if (!$(form).valid()) return;
+        //    $("#overlay").fadeIn(300);
+        //}
+        //function LoadingEnd(form) {
+        //    $("#overlay").fadeOut(300);
+        //    $(form)[0].reset();
+        //}
+    </script>
+
 
 
 
@@ -849,9 +870,9 @@
 
 
     @*<script src="~/Validate/jquery.validate.min.js"></script>
-        <script src="~/Validate/jquery.validate.unobtrusive.min.js"></script>
-        <script src="~/Validate/jquery.validate.unobtrusive.js"></script>
-        <script src="~/Validate/jquery.unobtrusive-ajax.min.js"></script>*@
+    <script src="~/Validate/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Validate/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Validate/jquery.unobtrusive-ajax.min.js"></script>*@
 
     @RenderSection("Scripts", false)
 

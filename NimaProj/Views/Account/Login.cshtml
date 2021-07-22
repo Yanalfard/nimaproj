@@ -1,0 +1,89 @@
+﻿@model LoginVm
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+
+<main class="content">
+    <section class="mb-5 pb-sm-2 pb-md-3  pb-lg-4 pb-xl-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-10 col-md-9 col-lg-8  col-xl-6">
+                    <div class="login login-register-wrap">
+                        <div class="area-form-login area-form-login-register p-3 p-sm-4 p-md-5 ">
+                            <h3 class="heading-style1 mb-3">ورود</h3>
+                            <form asp-action="Login" method="post" id="loginForm" asp-area="" class="form-block col"
+                                  data-ajax="true"
+                                  data-ajax-method="POST"
+                                  data-ajax-mode="replace"
+                                  data-ajax-complete="LoadingEnd()">
+                                <partial name="_CaptchaInput" />
+                                @if (Context.Request.Query["Active"].ToString() == "true")
+                                {
+                                    <div class="alert alert-success">
+                                        <p class="help-block">حساب کاربری شما فعال شد می توانید وارد حساب خود شوید</p>
+                                    </div>
+                                }
+                                @if (Context.Request.Query["ChangePassword"].ToString() == "true")
+                                {
+                                    <div class="alert alert-success">
+                                        <p class="help-block">رمز شما تغییر یافت می توانید وارد حساب خود شوید</p>
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    <label>شماره تلفن <span class="text-danger ">*</span></label>
+                                    <input type="tel" placeholder="09123456789" asp-for="TellNo"
+                                           class="form-control">
+                                    <span class="text-danger" asp-validation-for="TellNo"></span>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="Password">پسورد <span class="text-danger ">*</span></label>
+                                    <input type="password" asp-for="Password"
+                                           class="form-control input-password" placeholder="رمز عبور را وارد کنید"
+                                           aria-label="Enter Password" aria-describedby="basic-addon2">
+                                    <span class="icon-eye-password" id="basic-addon2">
+                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                    </span>
+                                    <span class="text-danger" asp-validation-for="Password"></span>
+                                </div>
+                                <div class=" d-sm-flex justify-content-between">
+                                    <div class="form-check form-check-custom ">
+                                        <label class="checkbox-container">
+                                            مرا به خاطر بسپار
+                                            <input type="checkbox" asp-for="RememberMe">
+                                            <span class="checkmark" asp-validation-for="RememberMe"></span>
+                                        </label>
+                                    </div>
+                                    <div class="forget_password">
+                                        <a href="/ForgotPassword">
+                                            رمز عبور را فراموش کرده اید؟
+                                        </a>
+                                    </div>
+                                </div> <button class="btn-animate1 mt-4" >ورود</button>
+
+                                <div class="form-note mt-4" onclick="LoadingRun()">
+                                    حساب کاربری ندارید؟ <a href="/Register">
+                                        ثبت نام
+                                        کنید
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@section Scripts
+{
+
+
+    <partial name="_CaptchaScripts" />
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}
