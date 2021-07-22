@@ -20,7 +20,8 @@ namespace NimaProj.Controllers
             TblClient selectUser = _core.Client.GetById(userId);
             return selectUser;
         }
-        public IActionResult Index(int page = 1, int id = 0, string name = "")
+        [Route("Product/{id?}/{name?}")]
+        public IActionResult Index(int page = 1, int? id = 0, string name = "")
         {
 
             List<TblProduct> list = new List<TblProduct>();
@@ -35,6 +36,11 @@ namespace NimaProj.Controllers
                 ViewBag.name = "محصولات";
                 list.AddRange(_core.Product.Get(i => i.IsDeleted == false,
                     orderBy: i => i.OrderByDescending(i => i.ProductId)));
+            }
+            if (!string.IsNullOrEmpty(name))
+            {
+                ViewBag.name = name;
+                list = list.Where(i => i.Name.Contains(name) || i.SearchText.Contains(name)).ToList();
             }
             //    return View(PagingList.Create(list, 2, page));
             return View(list);

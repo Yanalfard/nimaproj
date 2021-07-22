@@ -42,7 +42,12 @@ namespace DataLayer.Models
         public string SearchText { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsOfflineOrder { get; set; }
+        public int? BrandId { get; set; }
 
+
+        [ForeignKey(nameof(BrandId))]
+        [InverseProperty(nameof(TblBrand.TblProducts))]
+        public virtual TblBrand Brand { get; set; }
         [ForeignKey(nameof(CatagoryId))]
         [InverseProperty(nameof(TblCatagory.TblProducts))]
         public virtual TblCatagory Catagory { get; set; }

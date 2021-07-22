@@ -11,6 +11,11 @@ namespace DataLayer.Models
     [Table("TblBrand")]
     public partial class TblBrand
     {
+        public TblBrand()
+        {
+            TblProducts = new HashSet<TblProduct>();
+        }
+
         [Key]
         public int BrandId { get; set; }
         [Required]
@@ -19,5 +24,8 @@ namespace DataLayer.Models
         [Required]
         [StringLength(500)]
         public string ImageUrl { get; set; }
+
+        [InverseProperty(nameof(TblProduct.Brand))]
+        public virtual ICollection<TblProduct> TblProducts { get; set; }
     }
 }

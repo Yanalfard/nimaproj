@@ -20,6 +20,7 @@ namespace DataLayer.Models
         public virtual DbSet<TblBannerAndSlide> TblBannerAndSlides { get; set; }
         public virtual DbSet<TblBlog> TblBlogs { get; set; }
         public virtual DbSet<TblBlogCommentRel> TblBlogCommentRels { get; set; }
+        public virtual DbSet<TblBrand> TblBrands { get; set; }
         public virtual DbSet<TblCatagory> TblCatagories { get; set; }
         public virtual DbSet<TblClient> TblClients { get; set; }
         public virtual DbSet<TblComment> TblComments { get; set; }
@@ -179,6 +180,11 @@ namespace DataLayer.Models
             modelBuilder.Entity<TblProduct>(entity =>
             {
                 entity.Property(e => e.DateCreated).HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.Brand)
+                    .WithMany(p => p.TblProducts)
+                    .HasForeignKey(d => d.BrandId)
+                    .HasConstraintName("FK_TblProduct_TblBrand");
 
                 entity.HasOne(d => d.Catagory)
                     .WithMany(p => p.TblProducts)

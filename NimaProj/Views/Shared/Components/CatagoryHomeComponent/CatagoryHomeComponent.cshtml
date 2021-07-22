@@ -31,10 +31,7 @@
             <div class="area-title-category">
                 <span class="title-category">@item.Name</span>
             </div>
-            <a
-               asp-controller="Product"
-               asp-action="Index"
-               asp-route-id="@item.CatagoryId" asp-route-name="@item.Name" >مشاهده دسته بندی</a>
+            <a href="/Product/@item.CatagoryId/@item.Name.Replace(" ","-")" >مشاهده دسته بندی</a>
         </div>
     </div>
 

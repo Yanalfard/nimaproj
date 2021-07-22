@@ -20,6 +20,7 @@ namespace NimaProj.Controllers
             TblClient selectUser = _core.Client.GetById(userId);
             return selectUser;
         }
+        [Route("Blog/{id}/{name}")]
         public IActionResult Index(int page = 1, int id = 0, string name = "")
         {
 
