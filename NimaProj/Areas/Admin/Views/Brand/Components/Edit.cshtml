@@ -1,0 +1,50 @@
+﻿@model DataLayer.Models.TblBrand
+<div class="modal-header">
+    <h6 class="modal-title" id="modalCenterTitle">
+        ویرایش  برند @Model.Name
+    </h6>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form asp-action="Edit" asp-controller="Brand" asp-area="Admin" enctype="multipart/form-data"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="EndCatagoryCreate()"
+      data-ajax-update="#ajaxresult">
+
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="BrandId" />
+    <input type="hidden" asp-for="ImageUrl" />
+    <div class="modal-body">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <input asp-for="Name" class="form-control form-control-sm" placeholder="نام" required>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+            @if (Model.ImageUrl != null)
+            {
+                <img src="~/Images/Brand/thumb/@Model.ImageUrl" style="max-width:50px;display:block;margin: auto" alt="@Model.Name" />
+            }
+
+        </div>
+        <div class="form-row">
+            <div class="custom-file col-md-7">
+                <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" asp-for="ImageUrl" onchange="inputChanged(this)">
+                <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">انتخاب تصویر</label>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer justify-content-end">
+        <span id="Erorr" class="text-danger"></span>
+        <button type="submit" class="btn btn-success btn-sm text-white">ویرایش<span class="icon-holder uk-margin-small-right" uk-icon="create-outline"></span></button>
+    </div>
+</form>
+
+<script src="~/Validate/jquery.validate.min.js"></script>
+<script src="~/Validate/jquery.validate.unobtrusive.js"></script>

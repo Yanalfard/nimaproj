@@ -13,7 +13,7 @@ using NimaProj.Utilities;
 namespace NimaProj.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[PermissionChecker("admin")]
+    [PermissionChecker("admin")]
     public class SliderController : Controller
     {
         Core _core = new Core();

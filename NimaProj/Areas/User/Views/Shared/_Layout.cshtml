@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="@(ViewData["Description"] ?? "سایت خرید و فروش آنلاین گوشی های موبایل به صورت اقساطی")">
+    <meta name="keywords" content="@(ViewData["Keywords"] ?? "قصر موبایل، گوشی، تلفن، خرید، آنلاین، اقساطی")">
+    <meta name="author" content="صدرا محمدی، ینال احمدزاده، مهدی سهندی">
+
+    <title>@(ViewData["Title"] ?? "تجهیزات پزشکی")</title>
+
+    @*<link href="~/css/uikit.min.css" rel="stylesheet" />
+        <link href="~/css/Controls.min.css" rel="stylesheet" />*@
+
+    <!-- Favicon -->
+    <!--<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <link rel="manifest" type="application/json+oembed" href="~/manifest.json" />
+
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#810081">-->
+
+    @RenderSection("Styles", false)
+
+
+
+    <link rel="stylesheet" href="~/galeb/css/bootstrap-rtl.min.css">
+    <!--refrence carousel-->
+    <link rel="stylesheet" href="~/galeb/css/owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/galeb/css/owlcarousel/owl.theme.default.min.css">
+    <!--refrence carousel-->
+    <link href="~/galeb/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/galeb/css/all.min.css">
+    <link rel="stylesheet" href="~/galeb/css/respansive.css">
+    <link rel="stylesheet" href="~/galeb/css/animate.min.css">
+
+    <link href="~/css/Load.css" rel="stylesheet" />
+</head>
+
+<body id="body-homepage">
+    <main class="content">
+        <section class="mb-5 pb-sm-2 pb-md-3  pb-lg-4 pb-xl-5">
+            <div class="container container-Page-account">
+                <div class="row">
+
+                    <div class="col-12 col-lg-3 container-sidebar-account ">
+                        <div class="sidebar-account">
+
+                            @await Component.InvokeAsync("InfoUserComponent", new { tell = User.Identity.Name })
+
+                            <div class="account-menu">
+                                <div class="list-group  flex-column">
+
+
+                                    <a class="list-group-item " href="/User/Home" id="orders-tab">
+                                        <i class="fal fa-cart-arrow-down ml-3"></i>سفارش ها
+                                    </a>
+
+
+
+
+                                    <a class="list-group-item" href="/User/OfflineOrder" id="comment-tab">
+                                        <i class="fal fa-comment-alt ml-3"></i>سفارش های آفلاین
+
+                                    </a>
+
+
+
+
+                                    <a class="list-group-item" href="/User/Account/Info" id="infoprofile-tab">
+                                        <i class="fal fa-clipboard-list-check ml-3"></i>جزییات حساب
+                                    </a>
+
+
+
+
+                                    <a class="list-group-item" href="/User/Account/ChangePassword" id="userChangePassword">
+                                        <i class="fal fa-lock-alt ml-3"></i>تغییر
+                                        رمز عبور
+                                    </a>
+
+
+
+
+                                    <a class="list-group-item" href="/LogOut">
+                                        <i class="fal fa-sign-out-alt  ml-3"></i>خروج
+                                    </a>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-xl-9 container-content-account">
+                        <div class="account-header d-flex justify-content-between justify-content-xl-end">
+                            <div class="icon_meni_bar d-block d-xl-none">
+                                <a><img src="~/galeb/img/menu.png"></a>
+                            </div>
+
+                            <a class="link-back-home" href="/">صفحه نخست <i class="far fa-home"></i></a>
+
+                        </div>
+
+                        @RenderBody()
+
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+
+
+
+    <!--Loading-->
+    <div id="overlay">
+        <div class="cv-spinner">
+            <span class="spinner"></span>
+        </div>
+    </div>
+    <!--Loading-->
+
+
+
+    <a class="scrollTo scroll-To-top " href=".topbar-site"></a>
+    <script src="~/galeb/js/jquery-3.5.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="~/galeb/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/galeb/js/main.js"></script>
+
+    <script>
+                        //function LoadingRun(form) {
+                        //    if (!$(form).valid()) return;
+                        //    $("#overlay").fadeIn(300);
+                        //}
+                        //function LoadingEnd(form) {
+                        //    $("#overlay").fadeOut(300);
+                        //    $(form)[0].reset();
+                        //}
+
+    </script>
+
+
+
+
+    @RenderSection("Scripts", false)
+
+</body>
+</html>

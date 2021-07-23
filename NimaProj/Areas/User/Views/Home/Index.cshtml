@@ -1,0 +1,127 @@
+﻿@model IEnumerable<TblOrder>
+@{
+    ViewData["Title"] = "فاکتورها";
+}
+<div class="account-content content-Orders-account">
+
+
+    <div class="header-tab-content-account  mb-4">
+
+        <h1 class="title-tabcontent-account mb-3 mb-sm-0">
+            آخرین سفارش ها
+        </h1>
+    </div>
+    @if (Model.Any())
+    {
+        <div class="main-content-account">
+            <div id="accordionone" class="area-Orders-account ">
+
+                @foreach (var item in Model)
+                {
+                    <div class="card card-Orders-account mb-3">
+                        <div class="card-header">
+                            <div class="header-content-orders  d-sm-flex align-items-center justify-content-between"
+                                 data-toggle="collapse" data-target="#collapsefour_@item.OrdeId"
+                                 aria-expanded="false" aria-controls="collapsefour_@item.OrdeId" id="headingfour">
+                                <div class="id-product-order item-header-orders">شماره فالکتور: @item.OrdeId</div>
+                                <div class="date-order item-header-orders">
+                                    <i class="fal fa-clock ml-1"></i>@item.DateSubmited.ToShortDateString()
+                                </div>
+                                @if (item.Status == -1)
+                                {
+                                    <div class="stutus-order stutus-order-danger item-header-orders">
+                                        لغو
+                                        شده
+                                    </div>
+                                }
+                                else if (item.Status == 0)
+                                {
+                                    <div class="stutus-order stutus-order-blue item-header-orders">
+                                        درحال
+                                        پردازش
+                                    </div>
+                                }
+                                else if (item.Status == 1)
+                                {
+                                    <div class="stutus-order stutus-order-success item-header-orders">
+                                        تحویل
+                                        داده
+                                    </div>
+                                }
+
+
+                                <div class="price-product-order item-header-orders">
+                                    @item.FinalPrice.ToString("#,0") تومان
+                                </div>
+                            </div>
+                        </div>
+                        <div id="collapsefour_@item.OrdeId" class="collapse collapse-content-orders"
+                             aria-labelledby="headingfour" data-parent="#accordionfour">
+                            <div class="card-body">
+                                <div class="area-content-orders d-sm-flex align-items-center justify-content-between mb-4 mb-sm-3">
+                                    @foreach (var j in item.TblOrderDetails)
+                                    {
+
+                                        <div class="area-ditails_product-orders d-flex align-items-center flex-column flex-sm-row">
+                                            <img src="~/Images/ProductMain/thumb/@j.Product.MainImage" class="mb-3 mb-sm-0">
+                                            <div class="ditails_product-orders mr-3  text-center">
+                                                <a href="/ViewProduct/@j.ProductId/@j.Product.Name.Replace(" ","-")" class="nameproduct-orders mb-1">
+                                                    نام
+                                                    محصول:
+                                                    <div>
+
+                                                    </div> @j.Product.Name
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-row flex-sm-column justify-content-center align-items-center">
+                                            تعداد:
+                                            <span>@j.Count</span>
+                                        </div>
+                                        <div class="d-flex flex-row flex-sm-column justify-content-center align-items-center">
+                                            جمع کل:
+                                            <span>@(j.Count *j.Price)</span>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="area-details-bottom-orders d-sm-flex justify-content-between align-items-center  border-top py-4">
+
+                                    <div class="details-bottom-content-orders details-bottom-content ml-3">
+                                        <span>جمع کل: </span>
+                                        <span>@item.FinalPrice تومان</span>
+                                    </div>
+                                    <div class="details-bottom-content-orders details-bottom-content ml-3">
+                                        <span>حمل و نقل: </span>
+                                        <span>@item.SendPrice تومان</span>
+                                    </div>
+                                    <div class="details-bottom-content-orders details-bottom-content ml-3">
+                                        <span>کل مبلغ واریز: </span>
+                                        <span>@(item.FinalPrice+ item.SendPrice) تومان</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+
+    }
+
+
+
+</div>
+
+
+
+@section Scripts{
+
+    <script>
+    $('.list-group-item').removeClass('active');
+        $('#orders-tab').addClass('active');
+
+    </script>
+}

@@ -20,9 +20,11 @@ function showPassword() {
     if (key_attr != 'text') {
         $('.checkbox').addClass('show');
         $('.inputpassword').attr('type', 'text');
+        $('.inputpassword-repetition').attr('type', 'text');
     } else {
         $('.checkbox').removeClass('show');
         $('.inputpassword').attr('type', 'password');
+        $('.inputpassword-repetition').attr('type', 'password');
     }
 };
 

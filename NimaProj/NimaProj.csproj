@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -20,6 +20,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="ReflectionIT.Mvc.Paging" Version="3.1.0" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+    <PackageReference Include="ZarinPalSandbox" Version="2.0.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,11 +31,14 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="ViewComponents\User\" />
+    <Folder Include="Areas\User\Data\" />
+    <Folder Include="Areas\User\Models\" />
     <Folder Include="wwwroot\Images\Blogs\thumb\" />
+    <Folder Include="wwwroot\Images\Brand\thumb\" />
     <Folder Include="wwwroot\Images\Catagory\thumb\" />
     <Folder Include="wwwroot\Images\ProductAlbum\thumb\" />
     <Folder Include="wwwroot\Images\ProductMain\thumb\" />
+    <Folder Include="wwwroot\Images\User\thumb\" />
   </ItemGroup>
 
   <ItemGroup>

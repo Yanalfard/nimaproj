@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using DataLayer.Models;
 using Services.Services;
 using DataLayer.ViewModels;
+using NimaProj.Utilities;
 
 namespace NimaProj.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[PermissionChecker("admin,employee")]
+    [PermissionChecker("admin")]
     public class HomeController : Controller
     {
         [HttpGet]

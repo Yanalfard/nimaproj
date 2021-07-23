@@ -14,7 +14,7 @@ using System.IO;
 namespace NimaProj.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[PermissionChecker("admin,employee")]
+    [PermissionChecker("admin")]
     public class ProductController : Controller
     {
         Core _core = new Core();
@@ -46,6 +46,7 @@ namespace NimaProj.Areas.Admin.Controllers
         {
             try
             {
+                ViewBag.Brands = _core.Brand.Get();
                 ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false);
                 return View();
             }
@@ -65,7 +66,7 @@ namespace NimaProj.Areas.Admin.Controllers
 
             try
             {
-                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false);
+             
                 if (ModelState.IsValid)
                 {
                     if (MainImage == null)
@@ -117,6 +118,7 @@ namespace NimaProj.Areas.Admin.Controllers
                             NewProduct.DescriptionShortHtml = product.DescriptionShortHtml;
                             NewProduct.DescriptionLongHtml = product.DescriptionLongHtml;
                             NewProduct.CatagoryId = product.CatagoryId;
+                            NewProduct.BrandId = product.BrandId;
                             NewProduct.DateCreated = DateTime.Now;
                             NewProduct.SearchText = product.SearchText;
                             NewProduct.IsOfflineOrder = product.IsOfflineOrder;
@@ -132,7 +134,8 @@ namespace NimaProj.Areas.Admin.Controllers
 
 
                 }
-
+                ViewBag.Brands = _core.Brand.Get();
+                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false);
                 return await Task.FromResult(View(product));
             }
             catch
@@ -284,6 +287,7 @@ namespace NimaProj.Areas.Admin.Controllers
         {
             try
             {
+                ViewBag.Brands = _core.Brand.Get();
                 ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false);
                 return View(_core.Product.GetById(id));
             }
@@ -311,8 +315,7 @@ namespace NimaProj.Areas.Admin.Controllers
         {
             try
             {
-                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false);
-                //ViewBag.Brands = _core.Brand.Get();
+              
                 if (ModelState.IsValid)
                 {
                     TblProduct EditProduct = _core.Product.GetById(product.ProductId);
@@ -367,11 +370,13 @@ namespace NimaProj.Areas.Admin.Controllers
                     EditProduct.DescriptionShortHtml = product.DescriptionShortHtml;
                     EditProduct.DescriptionLongHtml = product.DescriptionLongHtml;
                     EditProduct.CatagoryId = product.CatagoryId;
+                    EditProduct.BrandId = product.BrandId;
                     _core.Product.Update(EditProduct);
                     _core.Save();
                     return await Task.FromResult(Redirect("/Admin/Product"));
                 }
-
+                ViewBag.Brands = _core.Brand.Get();
+                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false);
                 return View(product);
             }
             catch

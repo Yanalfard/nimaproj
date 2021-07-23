@@ -151,11 +151,6 @@ namespace DataLayer.Models
                     .HasForeignKey(d => d.ClientId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TblOrder_TblClient1");
-
-                entity.HasOne(d => d.Discount)
-                    .WithMany(p => p.TblOrders)
-                    .HasForeignKey(d => d.DiscountId)
-                    .HasConstraintName("FK_TblOrder_TblDiscount");
             });
 
             modelBuilder.Entity<TblOrderDetail>(entity =>

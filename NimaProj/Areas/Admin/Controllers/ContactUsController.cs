@@ -11,7 +11,7 @@ using NimaProj.Utilities;
 namespace NimaProj.Areas.Admin.Controllers
 {
     [Area("admin")]
-    //[PermissionChecker("admin")]
+    [PermissionChecker("admin")]
     public class ContactUsController : Controller
     {
         Core _core = new Core();

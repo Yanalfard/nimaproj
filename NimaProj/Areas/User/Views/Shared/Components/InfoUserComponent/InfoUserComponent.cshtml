@@ -1,0 +1,17 @@
+﻿@model InfoVm
+<div class="avatar-user d-flex flex-column justify-content-center align-items-center mb-5">
+
+    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
+        <img src="~/Images/User/@Model.ImageUrl" class="img-avatar-user">
+
+    }
+    else
+    {
+        <img src="~/Images/noImg.png" class="img-avatar-user">
+
+    }
+    <div class="name-avatar-user">
+        <h4>@Model.Name</h4>
+    </div>
+</div>

@@ -14,6 +14,7 @@ namespace Services.Services
         private MainRepo<TblBlog> _blog;
         private MainRepo<TblBlogCommentRel> _blogCommentRel;
         private MainRepo<TblCatagory> _catagory;
+        private MainRepo<TblBrand> _brand;
         private MainRepo<TblClient> _client;
         private MainRepo<TblComment> _comment;
         private MainRepo<TblConfig> _config;
@@ -38,6 +39,7 @@ namespace Services.Services
         public MainRepo<TblBlog> Blog => _blog ??= new MainRepo<TblBlog>(_context);
         public MainRepo<TblBlogCommentRel> BlogCommentRel => _blogCommentRel ??= new MainRepo<TblBlogCommentRel>(_context);
         public MainRepo<TblCatagory> Catagory => _catagory ??= new MainRepo<TblCatagory>(_context);
+        public MainRepo<TblBrand> Brand => _brand ??= new MainRepo<TblBrand>(_context);
         public MainRepo<TblClient> Client => _client ??= new MainRepo<TblClient>(_context);
         public MainRepo<TblComment> Comment => _comment ??= new MainRepo<TblComment>(_context);
         public MainRepo<TblConfig> Config => _config ??= new MainRepo<TblConfig>(_context);

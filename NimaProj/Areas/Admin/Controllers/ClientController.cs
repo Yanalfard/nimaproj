@@ -10,11 +10,12 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+using NimaProj.Utilities;
 
 namespace NimaProj.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[PermissionChecker("admin,employee")]
+    [PermissionChecker("admin")]
     public class ClientController : Controller
     {
         Core _core = new Core();

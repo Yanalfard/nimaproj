@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ShopCartItemVm>
+
+@if (Model.Any())
+{
+
+    <div class="header-add-to-cart d-flex justify-content-between align-items-center">
+        <div class="count-product-addtocart">
+            <span>تعداد کالا :</span>
+            <span>@Model.Count()</span>
+        </div>
+        <div class="link-show-cart"><a href="/ShopCart">مشاهده سبد خرید</a></div>
+    </div>
+    <div class="body-add-to-cart p-4">
+        @foreach (var item in Model)
+        {
+            <div class="row  mb-4" >
+                <div class="col-10">
+                    <div class="details_product_addtocart">
+                        <div class="title_product_addtocart mb-2 d-flex justify-content-start">
+                            محصول @(Model.ToList().IndexOf(item)+1)
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="img_product_addtocart h-100 d-flex align-items-center">
+                                <img class="img-fluid" src="~/Images/ProductMain/thumb/@item.ImageName" />
+                            </div>
+                            <div class="details_price_addtocart d-flex align-items-center">
+                                <input name="input" type="number" rea value="@item.Count" class="ml-2">
+                                <div class="price_product_addtocart d-flex align-items-center">
+                                    <span class="order-2"> @item.Price تومان</span>
+                                    @*<span class="order-1 ml-2">x</span>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2 d-flex align-items-center justify-content-center">
+                    <div class="close_product_addtocart">
+                        <a href="#"  onclick="window.location.href = '/ShopCart/UpDownCount/@item.ProductID?command=delete&&ReturnUrl=' + window.location.href" class="d-flex p-1">
+                            <i class="fas fa-trash-alt"></i><span class="tooltip-site">حذف</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+    <div class="footer_addtocart d-flex flex-column align-items-center justify-content-center">
+        <div class="area_total_modal_addtocart mb-3  d-flex justify-content-between w-100">
+            <span>مجموع کل :</span>
+            <span> @Model.Sum(i => i.Sum) تومان</span>
+        </div>
+
+    </div>
+}

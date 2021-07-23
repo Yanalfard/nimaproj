@@ -36,6 +36,8 @@
                             <tr>
                                 <th>کد محصول</th>
                                 <th>نام محصول</th>
+                                <th>برند محصول</th>
+                                <th>دسته محصول</th>
                                 <th>قیمت</th>
                                 <th>تاریخ افزودن</th>
                                 <th>پیشنهاد ویژه</th>
@@ -48,6 +50,8 @@
                                 <tr id="productId_@item.ProductId">
                                     <td>@item.ProductId</td>
                                     <td>@item.Name</td>
+                                    <td>@item.Brand.Name</td>
+                                    <td>@item.Catagory.Name</td>
                                     <td>
                                         <span>@item.Price.Value.ToString("#,0 تومان")</span>
                                     </td>

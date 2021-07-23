@@ -13,7 +13,7 @@ using System.IO;
 namespace NimaProj.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[PermissionChecker("admin")]
+    [PermissionChecker("admin")]
     public class CatagoryController : Controller
     {
         Core _core = new Core();

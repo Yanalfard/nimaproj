@@ -20,8 +20,9 @@ namespace DataLayer.Models
 
         [Key]
         public int CatagoryId { get; set; }
-        [Required]
-        [StringLength(256)]
+        [Required(ErrorMessage = "نام  را وارد کنید")]
+        [MaxLength(100, ErrorMessage = "نام محصول را معتبر وارد کنید")]
+        [MinLength(3, ErrorMessage = "نام محصول را معتبر وارد کنید")]
         public string Name { get; set; }
         public int? ParentId { get; set; }
         public bool IsOnFirstPage { get; set; }

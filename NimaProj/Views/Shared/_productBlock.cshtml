@@ -23,9 +23,18 @@
                 مشاهده
                 محصول
             </a>
-            <a href="#" class="add-to-cart">
-                +
-            </a>
+            @if (Model.IsOfflineOrder)
+            {
+
+            }
+            else
+            {
+                <a class="add-to-cart" onclick="AddToCart(@Model.ProductId)">
+                    +
+                </a>
+            }
+
+
         </div>
     </div>
     <div class="content_product text-center">

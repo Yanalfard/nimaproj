@@ -1,0 +1,112 @@
+﻿@model IEnumerable<ShopCartItemVm>
+@{
+    ViewData["Title"] = "نهایی سازی ";
+}
+
+
+<main class="content checkout">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="area-topbar-shop d-md-flex justify-content-between align-items-center mb-5 ">
+                    <div class="box-select-sort d-flex mb-4 mb-md-0">
+                        <nav aria-label="breadcrumb" class="mb-4 mb-lg-3">
+                            <ol class="breadcrumb breadcrumb-singleProduct ">
+                                <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                                <li class="breadcrumb-item"><a href="#">نهایی سازی </a></li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <section class="mb-5 pb-sm-2 pb-md-3  pb-lg-4 pb-xl-5">
+        <div class="container">
+            <div class="row area-details-checkout ">
+                <div class="col-12 col-lg-6">
+                    <div class="area-form-wrap">
+                        <!-- Default form contact -->
+                        <form action="/ShopCart/Payment" method="post">
+                            <h4 class="mb-4 heading-style1"> جزئیات صورتحساب</h4>
+                            <div class="form-group mb-4">
+                                <label for="Input-address">
+                                    آدرس <span class="text-danger ">*</span>
+                                </label>
+                                <input required  maxlength="150" type="text" class="form-control" name="address" id="address">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="Input-codeposty">
+                                    کد پستی <span class="text-danger ">*</span>
+                                </label>
+                                <input required type="text" maxlength="15" class="form-control" name="postalCode" id="postalCode">
+                            </div>
+
+
+                            <div class="payment_method">
+                                <h4 class="mb-4 heading-style1">پرداخت</h4>
+
+                            </div>
+                            @if (Model.Any())
+                            {
+                                <div class="area-btn-animate-S2 mt-5">
+                                    <button type="submit" class="btn-animate1">ادامه فرآیند</button>
+                                </div>
+                            }
+
+                        </form>
+                        <!-- Default form contact -->
+                    </div>
+
+
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <h4 class="mb-4 heading-style1">سفارشات شما</h4>
+                    <div class="area-order-review">
+
+                        <div class="table-wrapper-review-order mb-4">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>محصول</th>
+                                        <th>جمع</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.Name <span class="product-qty"> @item.Count x</span></td>
+                                            <td>@item.Sum تومان</td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>جمع</th>
+                                        <td class="product-subtotal">@Model.Sum(i => i.Sum) تومان</td>
+                                    </tr>
+                                    <tr>
+                                        <th>هزینه ارسال</th>
+                                        <td>ارسال رایگان</td>
+                                    </tr>
+                                    <tr>
+                                        <th>جمع</th>
+                                        <td class="product-subtotal">@Model.Sum(i => i.Sum) تومان</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

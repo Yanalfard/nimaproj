@@ -21,7 +21,7 @@ namespace NimaProj.Controllers
             return selectUser;
         }
         [Route("Product/{id?}/{name?}")]
-        public IActionResult Index(int page = 1, int? id = 0, string name = "")
+        public IActionResult Index(int page = 1, int? id = 0, string name = "",string nameSearch="")
         {
 
             List<TblProduct> list = new List<TblProduct>();
@@ -37,10 +37,10 @@ namespace NimaProj.Controllers
                 list.AddRange(_core.Product.Get(i => i.IsDeleted == false,
                     orderBy: i => i.OrderByDescending(i => i.ProductId)));
             }
-            if (!string.IsNullOrEmpty(name))
+            if (!string.IsNullOrEmpty(nameSearch))
             {
-                ViewBag.name = name;
-                list = list.Where(i => i.Name.Contains(name) || i.SearchText.Contains(name)).ToList();
+                ViewBag.name = nameSearch;
+                list = list.Where(i => i.Name.Contains(nameSearch) || i.SearchText.Contains(nameSearch)).ToList();
             }
             //    return View(PagingList.Create(list, 2, page));
             return View(list);

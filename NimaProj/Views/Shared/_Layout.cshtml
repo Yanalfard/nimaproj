@@ -91,7 +91,7 @@
                 <a href="#"><i class="fal fa-times"></i></a>
             </div>
             <form class="search-form d-flex w-100" action="/Product" method="get">
-                <input type="text" name="name" class="form-control input_search" placeholder="دنبال چه میگردید">
+                <input type="text" name="nameSearch" class="form-control input_search" placeholder="دنبال چه میگردید">
                 <button type="submit">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
                          xmlns="http://www.w3.org/2000/svg">
@@ -134,6 +134,17 @@
                                     <i class="fal fa-user"></i>
                                 </a>
                             </div>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <div class="user-account d-none d-md-block">
+
+
+                                    <a href="/LogOut">
+                                        <span>خروج </span>
+                                        <i class="fal  fa-sign-out"></i>
+                                    </a>
+                                </div>
+                            }
                             <ul class="serv-socialicon d-flex align-items-center">
                                 <li><a href="#"><i class="fab fa-twitter"></i></a></li>
                                 <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
@@ -610,85 +621,12 @@
 
                             </div>
                             <div class="icon-shooping-cart item_widget_navbar">
-                                <a href="#">
+                                <a href="#" onclick="showListProduct()">
                                     <i class="fal fa-shopping-cart"></i>
-                                    <span class="badge_count">0</span>
+                                    <span id="countShopCart" class="badge_count"></span>
                                 </a>
-                                <div class="box-add-to-cart-header">
-                                    <div class="header-add-to-cart d-flex justify-content-between align-items-center">
-                                        <div class="count-product-addtocart">
-                                            <span>تعداد کالا :</span>
-                                            <span>2</span>
-                                        </div>
-                                        <div class="link-show-cart"><a href="#">مشاهده سبد خرید</a></div>
-                                    </div>
-                                    <div class="body-add-to-cart p-4">
-                                        <div class="row  mb-4">
-                                            <div class="col-10">
-                                                <div class="details_product_addtocart">
-                                                    <div class="title_product_addtocart mb-2 d-flex justify-content-start">
-                                                        محصول 1
-                                                    </div>
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <div class="img_product_addtocart h-100 d-flex align-items-center">
-                                                            <img class="img-fluid" src="~/galeb/img/img71.jpg" />
-                                                        </div>
-                                                        <div class="details_price_addtocart d-flex align-items-center">
-                                                            <input name="input" type="number" value="1" class="ml-2">
-                                                            <div class="price_product_addtocart d-flex align-items-center">
-                                                                <span class="order-2"> 20000 تومان</span>
-                                                                <span class="order-1 ml-2">x</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-2 d-flex align-items-center justify-content-center">
-                                                <div class="close_product_addtocart">
-                                                    <a href="#" class="d-flex p-1">
-                                                        <i class="fas fa-trash-alt"></i><span class="tooltip-site">حذف</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row  mb-4">
-                                            <div class="col-10">
-                                                <div class="details_product_addtocart">
-                                                    <div class="title_product_addtocart mb-2 d-flex justify-content-start">
-                                                        محصول 2
-                                                    </div>
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <div class="img_product_addtocart h-100 d-flex align-items-center">
-                                                            <img class="img-fluid" src="~/galeb/img/img70.jpg" />
-                                                        </div>
-                                                        <div class="details_price_addtocart d-flex align-items-center">
-                                                            <input name="input" type="number" value="1" class="ml-2">
-                                                            <div class="price_product_addtocart d-flex align-items-center">
-                                                                <span class="order-2"> 20000 تومان</span>
-                                                                <span class="order-1 ml-2">x</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-2 d-flex align-items-center justify-content-center">
-                                                <div class="close_product_addtocart">
-                                                    <a href="#" class="d-flex p-1">
-                                                        <i class="fas fa-trash-alt"></i><span class="tooltip-site">حذف</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="footer_addtocart d-flex flex-column align-items-center justify-content-center">
-                                        <div class="area_total_modal_addtocart mb-3  d-flex justify-content-between w-100">
-                                            <span>مجموع کل :</span>
-                                            <span> 250000 تومان</span>
-                                        </div>
-                                        <a href="#" class="btn btn-custom  btn-block btn-add-to-cart btn-animate1">
-                                            پرداخت
-                                        </a>
-                                    </div>
+                                <div class="box-add-to-cart-header" id="showListProduct" >
+                                  
                                 </div>
                             </div>
                             <div class="area-widget-header-fixed d-block d-lg-none">
@@ -858,6 +796,28 @@
         //    $("#overlay").fadeOut(300);
         //    $(form)[0].reset();
         //}
+        $(function () {
+            shopCountProduct();
+        });
+        function shopCountProduct() {
+            $.get("/api/Shop", function (res) {
+                $("#countShopCart").html(res);
+            });
+        }
+        function AddToCart(id) {
+            $.get("/api/Shop/" + id, function (res) {
+                $("#countShopCart").html(res);
+                shopCountProduct();
+            });
+        }
+
+        function showListProduct() {
+            shopCountProduct();
+            $.get("/ShopCart/ShowListProduct", function (res) {
+                $("#showListProduct").html(res);
+            });
+        }
+      
     </script>
 
 
@@ -867,9 +827,9 @@
 
 
     @*<script src="~/Validate/jquery.validate.min.js"></script>
-    <script src="~/Validate/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/Validate/jquery.validate.unobtrusive.js"></script>
-    <script src="~/Validate/jquery.unobtrusive-ajax.min.js"></script>*@
+        <script src="~/Validate/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/Validate/jquery.validate.unobtrusive.js"></script>
+        <script src="~/Validate/jquery.unobtrusive-ajax.min.js"></script>*@
 
     @RenderSection("Scripts", false)
 

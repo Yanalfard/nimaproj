@@ -9,7 +9,6 @@
 
         <div class="owl-carousel slider_baner-homepage" id="slider_header">
             @await Component.InvokeAsync("SliderHomeComponent")
-
         </div>
     </section>
     <section class="mb-5 pb-sm-3  pb-lg-4 pb-xl-5">
@@ -38,59 +37,9 @@
     @await Component.InvokeAsync("BlogsHomeComponent")
 
     <!-- #endregion Products -->
+    <!-- #region Blogs -->
+    @await Component.InvokeAsync("BrandHomeComponent")
 
+    <!-- #endregion Products -->
 
-
-
-    <section class="mb-4  mb-lg-5">
-        <div class="container">
-            <div class="row justify-content-center mb-5">
-                <h2 class="wow  fadeInUp title-site">
-                    برندها
-                    <span>برندها</span>
-                </h2>
-            </div>
-            <div class="row ">
-                <div class="col-12">
-                    <div class="wow flipInX owl-carousel slider_brand" data-wow-duration="2s">
-                        <div class="item_slider_brand" data-wow-duration="2s">
-                            <img src="~/galeb/img/img15.png" class="img-fluid" alt="تصویر برند" />
-
-                        </div>
-                        <div class="item_slider_brand">
-                            <img src="~/galeb/img/img16.png" class="img-fluid" alt="تصویر برند" />
-                        </div>
-
-                        <div class="item_slider_brand">
-                            <img src="~/galeb/img/img17.png" class="img-fluid" alt="تصویر برند" />
-                        </div>
-
-                        <div class="item_slider_brand">
-                            <img src="~/galeb/img/img18.png" class="img-fluid" alt="تصویر برند" />
-                        </div>
-
-                        <div class="item_slider_brand">
-                            <img src="~/galeb/img/img19.png" class="img-fluid" alt="تصویر برند" />
-                        </div>
-
-                        <div class="item_slider_brand">
-                            <img src="~/galeb/img/img20.png" class="img-fluid" alt="تصویر برند" />
-                        </div>
-
-                        <div class="item_slider_brand">
-                            <img src="~/galeb/img/img21.png" class="img-fluid" alt="تصویر برند" />
-                        </div>
-
-                        <div class="item_slider_brand">
-                            <img src="~/galeb/img/img22.png" class="img-fluid" alt="تصویر برند" />
-                        </div>
-
-                        <div class="item_slider_brand">
-                            <img src="~/galeb/img/img24.png" class="img-fluid" alt="تصویر برند" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 </main>

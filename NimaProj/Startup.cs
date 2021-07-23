@@ -77,7 +77,7 @@ namespace NimaProj
                 app.UseHsts();
             }
             app.UseAuthorization();
-            //app.UseSession();
+            app.UseSession();
             app.UseAuthentication();
             app.UseStaticFiles();
             app.UseHttpsRedirection();

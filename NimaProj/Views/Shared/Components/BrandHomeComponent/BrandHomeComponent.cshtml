@@ -1,0 +1,25 @@
+﻿@model IEnumerable<TblBrand>
+
+
+    <section class="mb-4  mb-lg-5">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <h2 class="wow  fadeInUp title-site">
+                    برندها
+                    <span>برندها</span>
+                </h2>
+            </div>
+            <div class="row ">
+                <div class="col-12">
+                    <div class="wow flipInX owl-carousel slider_brand" data-wow-duration="2s">
+                        @foreach (var item in Model)
+                        {
+                            <div class="item_slider_brand" data-wow-duration="2s">
+                                <img src="~/Images/Brand/thumb/@item.ImageUrl" class="img-fluid" alt=" @item.Name" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

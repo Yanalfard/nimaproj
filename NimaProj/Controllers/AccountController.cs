@@ -33,11 +33,11 @@ namespace NimaProj.Controllers
             {
                 if (User.Identity.IsAuthenticated)
                 {
-                    if (User.FindFirstValue(ClaimTypes.Role).ToString() != "user")
+                    if (User.FindFirstValue(ClaimTypes.Role).ToString() == "user")
                     {
                         return Redirect("/User");
                     }
-                    else if (User.FindFirstValue(ClaimTypes.Role).ToString() != "admin")
+                    else if (User.FindFirstValue(ClaimTypes.Role).ToString() == "admin")
                     {
                         return Redirect("/Admin");
                     }

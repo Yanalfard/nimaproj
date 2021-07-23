@@ -11,7 +11,7 @@ using NimaProj.Utilities;
 namespace NimaProj.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[PermissionChecker("admin,employee")]
+    [PermissionChecker("admin")]
     public class PropertyController : Controller
     {
         Core _core = new Core();

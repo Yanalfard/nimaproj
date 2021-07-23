@@ -11,11 +11,6 @@ namespace DataLayer.Models
     [Table("TblDiscount")]
     public partial class TblDiscount
     {
-        public TblDiscount()
-        {
-            TblOrders = new HashSet<TblOrder>();
-        }
-
         [Key]
         public int DiscountId { get; set; }
         public int Discount { get; set; }
@@ -24,8 +19,5 @@ namespace DataLayer.Models
         public string Name { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime ValidTill { get; set; }
-
-        [InverseProperty(nameof(TblOrder.Discount))]
-        public virtual ICollection<TblOrder> TblOrders { get; set; }
     }
 }

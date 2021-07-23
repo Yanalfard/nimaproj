@@ -14,7 +14,7 @@ using NimaProj;
 namespace NimaProj.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[PermissionChecker("admin,employee")]
+    [PermissionChecker("admin")]
     public class BlogController : Controller
     {
         Core _core = new Core();

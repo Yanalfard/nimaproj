@@ -1,0 +1,136 @@
+﻿@model IEnumerable<ShopCartItemVm>
+
+@{
+    ViewData["Title"] = "سبد خرید";
+}
+
+<main class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="area-topbar-shop d-md-flex justify-content-between align-items-center mb-5 ">
+                    <div class="box-select-sort d-flex mb-4 mb-md-0">
+                        <nav aria-label="breadcrumb" class="mb-4 mb-lg-3">
+                            <ol class="breadcrumb breadcrumb-singleProduct ">
+                                <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                                <li class="breadcrumb-item"><a href="#">سبد خرید</a></li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    @if (Model.Any())
+    {
+        <section class="mb-5 pb-sm-2 pb-md-3  pb-lg-4 pb-xl-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-xl-8">
+                        <div class="area-table-cart-shop area-table-shop mb-5">
+                            <table class="table table-shop">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">حذف</th>
+                                        <th scope="col">تصویر</th>
+                                        <th scope="col">محصول</th>
+                                        <th scope="col"> قیمت (تومان)</th>
+                                        <th scope="col">تعداد</th>
+                                        <th scope="col"> جمع</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+
+                                                <a href="#" onclick="window.location.href = '/ShopCart/UpDownCount/@item.ProductID?command=delete&&ReturnUrl=' + window.location.href" class="remove-product">
+                                                    <i class="fal fa-times"></i>
+                                                </a>
+                                            </td>
+
+                                            <td>
+
+                                                <div class="product-thumbnail">
+                                                    <a href="/ViewProduct/@item.ProductID/@item.Name.Replace(" ","-")"><img src="~/Images/ProductMain/thumb/@item.ImageName"></a>
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <div class="name-product">
+                                                    <a href="#">
+                                                        <h3>@item.Name</h3>
+                                                    </a>
+
+                                                </div>
+
+                                            </td>
+
+                                            <td class="cell-product-price">
+                                                <div class="product-price">
+                                                    @item.Price
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="input-number-wrapper d-flex justify-content-center align-items-center">
+                                                    <span style="cursor:pointer" class="quanti-invitati-op increase" onclick="window.location.href = '/ShopCart/UpDownCount/@item.ProductID?command=up&&ReturnUrl=' + window.location.href">+</span>
+                                                    <input readonly class="input-number-custtom" type="text" value="@item.Count">
+                                                    <span style="cursor:pointer" class="quanti-invitati-op decrease" onclick="window.location.href = '/ShopCart/UpDownCount/@item.ProductID?command=down&&ReturnUrl=' + window.location.href">-</span>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="product-subtotal">
+                                                    @item.Sum
+
+                                                </div>
+                                            </td>
+
+                                        </tr>
+
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xl-4">
+                        <div class="box-cart-total ">
+                            <h2>جمع سبد خرید</h2>
+                            <div class="details-cart-total">
+                                <div class="cart-subtotal d-flex justify-content-between align-items-center  mb-4">
+                                    <span>مجموع</span>
+
+                                    <span class="subtotal">@Model.Sum(i => i.Sum) تومان</span>
+                                </div>
+                                <hr>
+                                <div class="cart-shipping d-flex justify-content-between align-items-center  mb-4">
+                                    <span>هزینه ارسال</span>
+
+                                    <span class="subtotal"> رایگان</span>
+                                </div>
+
+                                <hr>
+                                <div class="cart-total  d-flex justify-content-between align-items-center mb-4">
+                                    <span> مجموع کل سبد خرید</span>
+
+                                    <span class="payable">@Model.Sum(i => i.Sum)  تومان</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="area-btn-checkout  mt-4">
+                            <a href="/ShopCart/Checkout" class="btn-animate1 border-0">ادامه جهت تسویه حساب</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+
+</main>

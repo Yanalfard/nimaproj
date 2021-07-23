@@ -11,7 +11,7 @@ using ReflectionIT.Mvc.Paging;
 namespace NimaProj.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[PermissionChecker("admin,employee")]
+    [PermissionChecker("admin")]
     public class SpecialOfferController : Controller
     {
         Core _core = new Core();

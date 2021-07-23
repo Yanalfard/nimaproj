@@ -42,8 +42,8 @@ namespace DataLayer.Models
         public string SearchText { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsOfflineOrder { get; set; }
+        [Required(ErrorMessage = "برند را انتخاب کنید")]
         public int? BrandId { get; set; }
-
 
         [ForeignKey(nameof(BrandId))]
         [InverseProperty(nameof(TblBrand.TblProducts))]
