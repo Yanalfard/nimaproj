@@ -1,0 +1,130 @@
+﻿@model ConfigVm
+@{
+    ViewData["Title"] = "تماس با ما";
+}
+
+
+<main class="content">
+    @if (Context.Request.Query["SendMessage"].ToString() == "true")
+    {
+        <div class="alert alert-success">
+            <p class="help-block">پیام شما ارسال شد </p>
+        </div>
+    }
+    <div class="col-12">
+        <div class="area-topbar-shop d-md-flex justify-content-between align-items-center mb-5 ">
+            <div class="box-select-sort d-flex mb-4 mb-md-0">
+                <nav aria-label="breadcrumb" class="mb-4 mb-lg-3">
+                    <ol class="breadcrumb breadcrumb-singleProduct ">
+                        <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                        <li class="breadcrumb-item active">درباره ما</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+    <section class="mb-5 pb-sm-2 pb-md-3  pb-lg-4 pb-xl-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <div class="area-information-contact pt-3">
+                        <div class="item-info-contact ">
+                            <div class="title-info-contact">
+                                <h2><i class="fad fa-home ml-2"></i>آدرس ما</h2>
+                            </div>
+                            <div class="text-info-contact">
+                                <p class="mb-0">
+                                    @Html.Raw(Model.Address)
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="item-info-contact ">
+                            <div class="title-info-contact">
+                                <h2><i class="fad fa-phone-alt ml-2"></i> شماره تلفن</h2>
+                            </div>
+                            <div class="text-info-contact">
+                                <p class="mb-0">
+                                    موبایل :
+                                    @Html.Raw(Model.TellMobile)
+                                </p>
+                                <p class="mb-0">
+                                    تلفن :
+                                    @Html.Raw(Model.TellHome)
+                                </p>
+                            </div>
+                        </div>
+                        <div class="item-info-contact">
+                            <div class="title-info-contact">
+                                <h2><i class="fad fa-envelope ml-2"></i> ایمیل </h2>
+                            </div>
+                            <div class="text-info-contact">
+                                <p class="mb-0">
+                                    @Html.Raw(Model.Email)
+                                </p>
+                            </div>
+                        </div>
+                        <div class="item-info-contact border-bottom-0">
+                            <div class="title-info-contact mb-3">
+                                <h2> ما را فالو کنید</h2>
+                            </div>
+                            <div class="area-socialIcon d-flex ">
+                                <a href="@Model.Inista" target="_blank" class="icon instegram">
+                                    <span class="tooltip-site">instegram</span>
+                                </a>
+                                <a href="https://api.whatsapp.com/send?phone=@(Model.Whatsapp)" target="_blank" class="icon fa-whatsapp">
+                                    <span class="tooltip-site">Whatsapp</span>
+                                </a>
+                                <a href="@Model.Telegram" target="_blank" class="icon fa-telegram-plane">
+                                    <span class="tooltip-site">Telegram</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-12 col-md-8">
+                    <div class="area-form-wrap contact mb-5 mb-lg-0">
+                        <div class="area-form-contact">
+                            <h3 class="h4 mb-4 title-contact">تماس با ما</h3>
+                            <!-- Default form contact -->
+                            <form class="form-row" action="Contact" method="post">
+                                <!-- Name -->
+                                <div class="form-group mb-4 col-12 col-md-6">
+                                    <input type="text" required
+                                           class="form-control" id="Name" name="Name" placeholder="نام را وارد کنید *">
+                                </div>
+                                <!-- phone -->
+                                <div class="form-group mb-4 col-12 col-md-6">
+                                    <input type="tel" required
+                                           class="form-control" id="TellNo"
+                                           placeholder="شماره تلفن را وارد کنید *" name="TellNo">
+                                </div> <!-- phone -->
+                                <!-- Message -->
+
+                                <div class="form-group mb-4 col-12">
+                                    <textarea class="form-control" required name="Message" id="Message" rows="8"
+                                              placeholder="نظر شما *"></textarea>
+
+                                </div>
+                                <!-- Send button -->
+                                <button type="submit" class="btn-animate1 mt-4">ارسال</button>
+                            </form>
+                            <!-- Default form contact -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="mb-5 pb-sm-2 pb-md-3  pb-lg-4 pb-xl-5">
+        <div id="map_container">
+            <div class="map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1703.7925805820778!2d48.60410884139667!3d31.34282784423714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fc3db80c48e6a2b%3A0x863189351cf418f7!2z2KfYs9iq2KfZhiDYrtmI2LLYs9iq2KfZhtiMINin2YfZiNin2LLYjCDYrtuM2KfYqNin2YYgNyDYtNix2YLbjNiMINin24zYsdin2YY!5e0!3m2!1sfa!2s!4v1616518445732!5m2!1sfa!2s"
+                        style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+</main>

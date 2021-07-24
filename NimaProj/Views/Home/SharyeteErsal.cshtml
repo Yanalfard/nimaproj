@@ -1,0 +1,25 @@
+﻿@model TblConfig
+@{
+    ViewData["Title"] = " شرایط ارسال و عودت";
+}
+
+
+<main class="content">
+    <div class="col-12">
+        <div class="area-topbar-shop d-md-flex justify-content-between align-items-center mb-5 ">
+            <div class="box-select-sort d-flex mb-4 mb-md-0">
+                <nav aria-label="breadcrumb" class="mb-4 mb-lg-3">
+                    <ol class="breadcrumb breadcrumb-singleProduct ">
+                        <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                        <li class="breadcrumb-item active"> شرایط ارسال و عودت</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12">
+        @Html.Raw(Model.Value)
+    </div>
+
+</main>

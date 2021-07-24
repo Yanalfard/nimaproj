@@ -1,0 +1,27 @@
+﻿@model IEnumerable<TblCatagory>
+
+<div class="serv-megamenu serv-megamenu-Style1">
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-3">
+                <a class="title_megamenu" href="/Product/@item.CatagoryId/@item.Name.Replace(" ","-")">@item.Name</a>
+                @if (item.InverseParent.Any())
+                {
+                    <ul>
+                        @foreach (var j in item.InverseParent)
+                        {
+                            <li>
+                                <a href="/Product/@j.CatagoryId/@j.Name.Replace(" ","-")">
+                                    @j.Name
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                }
+            </div>
+        }
+    </div>
+</div>

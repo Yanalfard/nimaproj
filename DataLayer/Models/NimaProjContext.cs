@@ -116,6 +116,11 @@ namespace DataLayer.Models
                     .HasConstraintName("FK_TblComment_TblComment");
             });
 
+            modelBuilder.Entity<TblContactU>(entity =>
+            {
+                entity.Property(e => e.ContactUsId).ValueGeneratedOnAdd();
+            });
+
             modelBuilder.Entity<TblOfflineOrder>(entity =>
             {
                 entity.HasKey(e => e.OnlineOrderId)

@@ -7,16 +7,14 @@
 
             @if (item.InverseParent.Any())
             {
-                <a asp-controller="Product"
-                   asp-action="Index"
-                   asp-route-id="@item.CatagoryId" asp-route-name="@item.Name"> @item.Name <i class="fal fa-angle-left"></i></a>
+                <a href="/Product/@item.CatagoryId/@item.Name.Replace(" ","-")"> @item.Name <i class="fal fa-angle-left"></i></a>
 
                 <ul class="sub-menu">
 
                     @foreach (var j in item.InverseParent)
                     {
                         <li>
-                            <a href="/Product/@item.CatagoryId/@item.Name.Replace(" ","-")"> @j.Name </a>
+                            <a href="/Product/@j.CatagoryId/@j.Name.Replace(" ","-")"> @j.Name </a>
                         </li>
                     }
                 </ul>

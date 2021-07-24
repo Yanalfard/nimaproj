@@ -1,11 +1,10 @@
 ﻿@model IEnumerable<TblBlog>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = ViewBag.name;
 }
 <main class="content">
     <div class="container">
 
-        <div class="row">
             <div class="col-12">
                 <div class="area-topbar-shop d-md-flex justify-content-between align-items-center mb-5 ">
                     <div class="box-select-sort d-flex mb-4 mb-md-0">
@@ -21,7 +20,6 @@
 
             </div>
 
-        </div>
 
 
         <div class="row">

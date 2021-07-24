@@ -1,0 +1,27 @@
+﻿@model ConfigVm
+<div class="contenet_widget_footer">
+    <ul class="mb-3">
+        <li>
+            <span> آدرس: ۴۴۵ @Model.Address.</span>
+        </li>
+        <li>
+            <span> شماره تماس: @Model.TellHome</span>
+        </li>
+        <li>
+            <span> ایمیل: @Model.Email</span>
+        </li>
+    </ul>
+
+    <div class="area-socialIcon d-flex ">
+        <a href="@Model.Inista" class="icon instegram">
+            <span class="tooltip-site">instegram</span>
+        </a>
+        <a href="https://api.whatsapp.com/send?phone=@(Model.Whatsapp)" class="icon fa-whatsapp">
+            <span class="tooltip-site">linkedin</span>
+        </a>
+        <a href="@Model.Telegram" class="icon fa-telegram-plane">
+            <span class="tooltip-site">Twitter</span>
+        </a>
+
+    </div>
+</div>

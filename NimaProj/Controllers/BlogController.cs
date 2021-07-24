@@ -20,7 +20,7 @@ namespace NimaProj.Controllers
             TblClient selectUser = _core.Client.GetById(userId);
             return selectUser;
         }
-        [Route("Blog/{id}/{name}")]
+        [Route("Blog/{id?}/{name?}")]
         public IActionResult Index(int page = 1, int id = 0, string name = "")
         {
 
@@ -33,7 +33,7 @@ namespace NimaProj.Controllers
             }
             else
             {
-                ViewBag.name = "مقاله ها";
+                ViewBag.name = "همه مقاله ها";
                 list.AddRange(_core.Blog.Get(orderBy: i => i.OrderByDescending(i => i.BlogId)));
             }
             //    return View(PagingList.Create(list, 2, page));

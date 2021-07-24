@@ -33,7 +33,7 @@ namespace NimaProj.Controllers
             }
             else
             {
-                ViewBag.name = "محصولات";
+                ViewBag.name = "همه محصولات";
                 list.AddRange(_core.Product.Get(i => i.IsDeleted == false,
                     orderBy: i => i.OrderByDescending(i => i.ProductId)));
             }

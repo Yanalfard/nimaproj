@@ -112,18 +112,11 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="d-flex align-items-center ">
-                            <div class="email ">
-                                <a href="mailto:contact@servin.com">
-                                    <span>contact@servin.com</span>
-                                    <i class="far fa-envelope"></i>
-                                </a>
-                            </div>
-                            <div class="phone">
-                                <a href="tel:09156522323">
-                                    <span>09156522323</span>
-                                    <i class="fal fa-phone-alt"></i>
-                                </a>
-                            </div>
+                            <!-- #region Contact Header-->
+                            @await Component.InvokeAsync("ContactHeaderComponent")
+
+                            <!-- #endregion Contact Header -->
+                           
                         </div>
                     </div>
                     <div class="col-6">
@@ -145,12 +138,6 @@
                                     </a>
                                 </div>
                             }
-                            <ul class="serv-socialicon d-flex align-items-center">
-                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                                <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -161,7 +148,7 @@
                 <div class="row" style="position: relative;">
                     <div class="col-4 col-lg-2 order-2 order-lg-1 d-flex justify-content-center justify-content-lg-start">
                         <div class="area-logo">
-                            <a href="index.html"><img src="~/galeb/img/logo.png" class="img-fluid" /></a>
+                            <a href="/"><img src="~/Logo.png" class="img-fluid" /></a>
                         </div>
                     </div>
                     <div class="col-4 col-lg-8 order-1 order-lg-2 d-flex align-items-center col-main_menu">
@@ -189,169 +176,20 @@
                                     <a href="shop-left-sidebar.html">
                                         محصولات<i class="fa fa-angle-down" aria-hidden="true"></i>
                                     </a>
-                                    <div class="serv-megamenu serv-megamenu-Style1">
-                                        <div class="row">
-                                            <div class="col-3">
-                                                <a class="title_megamenu" href="#">آرایشی</a>
-                                                <ul>
-                                                    <li>
-                                                        <a href="#">
-                                                            آرایش صورت
-                                                        </a>
-                                                    </li>
-                                                    <li><a href="#">آرایش لب</a></li>
-                                                    <li><a href="#">آرایش چشم و ابرو</a></li>
-                                                    <li><a href="#">آرایش ناخن</a></li>
-                                                    <li><a href="#"> آرایش مو</a></li>
-                                                    <li><a href="#">پاک کننده های آرایشی</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-3">
-                                                <a class="title_megamenu" href="#">عطر و آدکلان</a>
-                                                <ul>
-                                                    <li><a href="#"> بادی اسپلش</a></li>
-                                                    <li><a href="#">عطر جیبی</a></li>
-                                                    <li><a href="#">اسپری و مام مردانه</a></li>
-                                                    <li><a href="#">اسپری و مام زنانه</a></li>
-                                                    <li><a href="#">عطر زنانه</a></li>
-                                                    <li><a href="#">ادکلان مردانه</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-3">
-                                                <a class="title_megamenu" href="#">مراقبتی</a>
-                                                <ul>
-                                                    <li><a href="#">مراقبت چشم</a></li>
-                                                    <li><a href="#">مراقبت صورت</a></li>
-                                                    <li><a href="#">مراقبت لب</a></li>
-                                                    <li><a href="#">مراقبت ناخن</a></li>
-                                                    <li><a href="#"> مراقبت بدن</a></li>
-                                                    <li><a href="#">مراقبت مو</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-3 ">
-                                                <a class="title_megamenu" href="#">بهداشت و سلامت</a>
-                                                <ul>
-                                                    <li><a href="#">بهداشت دهان و دندان</a></li>
-                                                    <li><a href="#">بهداشت بانوان</a></li>
-                                                    <li><a href="#">بهداشت عمومی</a></li>
-                                                    <li><a href="#">بهداشت آقایان</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <!-- #region Category Product -->
+                                    @await Component.InvokeAsync("CatagoryProductListInMenuHomeComponent")
+
+                                    <!-- #endregion Category Product -->
                                 </li>
                                 <li class="container-mega-menu">
-                                    <a href="shop-left-sidebar.html">
-                                        فروشگاه<i class="fa fa-angle-down" aria-hidden="true"></i>
+                                    <a href="/About">
+                                        درباره ما
                                     </a>
-                                    <div class="serv-megamenu">
-                                        <div class="row mb-3">
-                                            <div class="col-12 d-flex mb-3">
-                                                <div class="mega-menu-col col-4">
-                                                    <a class="title_megamenu" href="#">صفحات محصول</a>
-                                                    <ul>
-                                                        <li>
-                                                            <a href="shop-product-detail.html">
-                                                                پیش فرض
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-product-detail-right-sidebar.html">
-                                                                نوار کناری
-                                                                سمت راست
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-product-detail-left-sidebar.html">
-                                                                نوار کناری
-                                                                سمت چپ
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-product-detail-with-icons.html">
-                                                                جزئیات محصول
-                                                                با آیکن ها
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-product-detail-with-sticy-addtocart.html">
-                                                                جزئیات
-                                                                محصول با سبد خرید شناور
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="mega-menu-col col-4">
-                                                    <a class="title_megamenu" href="#">صفحات دیگر</a>
-                                                    <ul>
-                                                        <li><a href="cart.html"> سبد خرید</a></li>
-                                                        <li><a href="checkout.html">بررسی</a></li>
-                                                        <li><a href="wishlist.html">لیست مورد علاقه</a></li>
-                                                        <li><a href="account.html">حساب کاربری</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="mega-menu-col col-4">
-                                                    <a class="title_megamenu" href="#">طرح بندی صفحه خرید</a>
-                                                    <ul>
-                                                        <li><a href="shop-list.html">نمای لیستی فروشگاه</a></li>
-                                                        <li>
-                                                            <a href="shop-list-right-sidebar.html">
-                                                                لیستی نوار کناری سمت
-                                                                راست
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-list-left-sidebar.html">
-                                                                لیستی نوار کناری سمت
-                                                                چپ
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-left-sidebar.html">
-                                                                شبکه ای نوار کناری سمت
-                                                                چپ
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-right-sidebar .html">
-                                                                شبکه ای نوار کناری سمت
-                                                                راست
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-four-column-filter-drawer.html">
-                                                                چهار ستون با
-                                                                فیلتر کشویی
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-four-column-filter_offcanvas.html">
-                                                                چهار ستون
-                                                                با فیلتر کشویی خارجی
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <a href="shop-left-sidebar.html">
-                                                    <img class="img-fluid"
-                                                         src="~/galeb/img/short-hair-asian-young-beautiful-woman-applying-cosmetic-powder-brush_1150-13018.jpg"
-                                                         alt="تصویر مگامنو">
-                                                </a>
-                                            </div>
-                                            <div class="col-4">
-                                                <a href="shop-left-sidebar.html">
-                                                    <img class="img-fluid" src="~/galeb/img/Z4xAUT.jpg" alt="تصویر مگامنو" />
-                                                </a>
-                                            </div>
-                                            <div class="col-4">
-                                                <a href="shop-left-sidebar.html">
-                                                    <img class="img-fluid" src="~/galeb/img/apUKWu.jpg" alt="تصویر مگامنو" />
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                </li>
+                                <li class="container-mega-menu">
+                                    <a href="/Contact">
+                                        تماس با ما
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -364,13 +202,13 @@
                                     <span aria-hidden="true">×</span>
                                 </button>
                                 <div class="area-logo">
-                                    <a href="index.html"><img src="~/galeb/img/logo.png" class="img-fluid" /></a>
+                                    <a href="/"><img src="~/Logo.png" class="img-fluid" /></a>
                                 </div>
                             </div>
                             <div class="area_menu_mobile menu-top-menu-container" id="accordian">
                                 <ul class="menu-multi-level">
                                     <li>
-                                        <a href="index.html">صفحه اصلی</a>
+                                        <a href="/">صفحه اصلی</a>
                                     </li>
                                     <li class="menu-item-has-children">
                                         <a href="#">صفحات </a>
@@ -671,9 +509,8 @@
                             </div>
                             <div class="contenet_widget_footer">
                                 <ul>
-                                    <li><a href="#">درباره ما</a></li>
-                                    <li><a href="#">شرایط استفاده</a></li>
-                                    <li><a href="#">راهنمای سفارش و خرید</a></li>
+                                    <li><a href="/About">درباره ما</a></li>
+                                    <li><a href="/OrderDetails">راهنمای سفارش و خرید</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -689,10 +526,8 @@
                             </div>
                             <div class="contenet_widget_footer">
                                 <ul>
-                                    <li><a href="#">سفارش های من</a></li>
-                                    <li><a href="#">لیست علاقه مندی ها</a></li>
-                                    <li><a href="#">پیگیری سفارش</a></li>
-                                    <li><a href="#">مشخصات کاربری من</a></li>
+                                    <li><a href="/User/Home">سفارش های من</a></li>
+                                    <li><a href="/User/Account/Info">مشخصات کاربری من</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -704,9 +539,8 @@
                             </div>
                             <div class="contenet_widget_footer">
                                 <ul>
-                                    <li><a href="#">شرایط ارسال و عودت</a></li>
-                                    <li><a href="#">پرسش های متداول</a></li>
-                                    <li><a href="#">رعایت حریم خصوصی</a></li>
+                                    <li><a href="/SharyeteErsal">شرایط ارسال و عودت</a></li>
+                                    <li><a href="/RegularQuestion">پرسش های متداول</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -716,34 +550,8 @@
                             <div class="title_widget_footer mb-3">
                                 تماس با ما
                             </div>
-                            <div class="contenet_widget_footer">
-                                <ul class="mb-3">
-                                    <li>
-                                        <span> آدرس: ۴۴۵ کوه عدن جاده، کوه بهشت، اوکلند.</span>
-                                    </li>
-                                    <li>
-                                        <span> شماره تماس: 2135642512</span>
-                                    </li>
-                                    <li>
-                                        <span> ایمیل: digistore@exmple.com</span>
-                                    </li>
-                                </ul>
-
-                                <div class="area-socialIcon d-flex ">
-                                    <a href="http://www.facebook.com" class="icon facebook">
-                                        <span class="tooltip-site">Facebook</span>
-                                    </a>
-                                    <a href="http://www.github.com" class="icon instegram">
-                                        <span class="tooltip-site">instegram</span>
-                                    </a>
-                                    <a href="http://www.dribble.com" class="icon linkedin">
-                                        <span class="tooltip-site">linkedin</span>
-                                    </a>
-                                    <a href="http://www.twitter.com" class="icon twitter">
-                                        <span class="tooltip-site">Twitter</span>
-                                    </a>
-                                </div>
-                            </div>
+                            @await Component.InvokeAsync("ContactFooterComponent")
+                         
                         </div>
                     </div>
                 </div>
