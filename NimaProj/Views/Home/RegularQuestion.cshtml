@@ -19,10 +19,52 @@
 
     </div>
     <div class="col-12">
-        @foreach (var item in Model)
-        {
 
-        }
+        <div class="account-content content-comment-account">
+
+
+            <div class="header-tab-content-account  mb-4">
+                <h1 class="title-tabcontent-account mb-3 mb-sm-0">
+                    سوالات متداول
+
+                </h1>
+            </div>
+            @if (Model.Any())
+            {
+                <div class="main-content-account">
+                    <div id="accordionone" class="area-Orders-account ">
+
+                        @foreach (var item in Model)
+                        {
+                            <div class="card card-Orders-account mb-3">
+                                <div class="card-header">
+                                    <div class="header-content-orders  d-sm-flex align-items-center justify-content-between"
+                                         data-toggle="collapse" data-target="#onlineOrder_@item.RegularQuestionId"
+                                         aria-expanded="false" aria-controls="onlineOrder_@item.RegularQuestionId" id="headingfour">
+                                        <div class="id-product-order item-header-orders">@item.Question</div>
+                                    </div>
+                                </div>
+                                <div id="onlineOrder_@item.RegularQuestionId" class="collapse collapse-content-orders"
+                                     aria-labelledby="headingfour" data-parent="#accordionfour">
+                                    <div class="card-body">
+                                        <div class="area-content-orders d-sm-flex align-items-center justify-content-between mb-12 mb-sm-12">
+
+                                            <div class="d-flex flex-row flex-sm-column justify-content-center align-items-center">
+                                                جواب :
+                                                <span>@item.Answer</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                    </div>
+                </div>
+            }
+
+        </div>
     </div>
 
 </main>

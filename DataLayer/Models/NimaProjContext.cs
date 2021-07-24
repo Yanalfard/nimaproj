@@ -54,6 +54,7 @@ namespace DataLayer.Models
         //            }
         //        }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
@@ -114,11 +115,6 @@ namespace DataLayer.Models
                     .WithMany(p => p.InverseParent)
                     .HasForeignKey(d => d.ParentId)
                     .HasConstraintName("FK_TblComment_TblComment");
-            });
-
-            modelBuilder.Entity<TblContactU>(entity =>
-            {
-                entity.Property(e => e.ContactUsId).ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<TblOfflineOrder>(entity =>

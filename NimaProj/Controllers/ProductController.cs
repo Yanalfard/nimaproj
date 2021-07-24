@@ -21,7 +21,7 @@ namespace NimaProj.Controllers
             return selectUser;
         }
         [Route("Product/{id?}/{name?}")]
-        public IActionResult Index(int page = 1, int? id = 0, string name = "",string nameSearch="")
+        public IActionResult Index(int page = 1, int? id = 0, string name = "", string nameSearch = "")
         {
 
             List<TblProduct> list = new List<TblProduct>();
@@ -71,6 +71,10 @@ namespace NimaProj.Controllers
                     addComment.ClientId = 1;
                     addComment.DateCreated = DateTime.Now;
                     addComment.ParentId = comment.ParentId;
+                    if (comment.ProductId == null)
+                    {
+                        addComment.IsBlog = true;
+                    }
                     if (User.Identity.IsAuthenticated)
                     {
                         if (User.Claims.Last().Value != "admin")

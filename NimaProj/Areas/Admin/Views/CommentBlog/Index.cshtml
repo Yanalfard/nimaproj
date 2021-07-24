@@ -1,0 +1,100 @@
+﻿@model IEnumerable<DataLayer.Models.TblComment>
+@{
+    ViewData["Title"] = "نظرات مقاله";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@using NimaProj.Utilities;
+<div class="row flex-div">
+    <div class="col-md-12 flex-div pb-3 pt-3">
+        <div class="card flex-div border-0 main-shadow">
+            <div id="card-table mt-4" class="card-body flex-div">
+                <div class="table-responsive flex">
+                    <table class="table fixed">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>نام کاربری</th>
+                                <th>تاریخ ثبت</th>
+                                <th>وضعیت</th>
+                                <th>جزئیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Client.Name</td>
+                                    <td>@item.DateCreated.Value.AllToShamsi()</td>
+                                    <td>
+                                        @if (item.IsValid)
+                                        {
+                                            <span class="text-success">تایید شده</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger">تایید نشده</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="جزئیات">
+                                            <a onclick="Information(@item.CommentId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="information-circle-outline"></a>
+                                        </span>
+                                        @if (!item.IsValid)
+                                        {
+                                            <span data-placement="top" data-toggle="tooltip" title="" data-original-title="تایید نظر">
+                                                <a onclick="Success(@item.CommentId)" class="text-success" uk-icon="checkmark-circle-outline"></a>
+                                            </span>
+                                        }
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="حذف نظر">
+                                            <a onclick="Delete(@item.CommentId)" class="text-danger" uk-icon="trash"></a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white">
+                <nav aria-label="Page navigation example">
+                    @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+@section Script{
+    <script>
+
+        function Information(Id) {
+            $(".modal-content").html("");
+            $.get("/Admin/CommentProduct/Info/" + Id, function (result) {
+                $(".modal-content").html(result);
+            });
+        }
+
+        function Success(Id) {
+            $.post("/Admin/CommentProduct/ChangeStatus/" + Id, function () {
+                window.location.reload();
+            });
+        }
+
+        function Delete(id) {
+            if (confirm('آیا از حذف پیام مورد نظر مطمئن هستید؟')) {
+                $.post("/Admin/CommentProduct/Delete/" + id, function (result) {
+                    if (result == "true") {
+                        window.location.reload();
+                    } else {
+                        UIkit.notification({ message: result });
+                    }
+                });
+            } else {
+                // Do nothing!
+            }
+
+        }
+
+    </script>
+}
+

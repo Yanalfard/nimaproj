@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.Models
 {
-    [Keyless]
     public partial class TblContactU
     {
+        [Key]
         public int ContactUsId { get; set; }
         [Required]
         [StringLength(50)]

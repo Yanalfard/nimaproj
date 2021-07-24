@@ -57,7 +57,7 @@
     <script>
         function Info(id) {
             $.get("/Admin/ContactUs/Info/" + id, function (result) {
-                $(".modal-content").html();
+                $(".modal-content").html(result);
             });
         }
     </script>

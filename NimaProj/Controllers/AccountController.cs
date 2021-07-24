@@ -157,7 +157,7 @@ namespace NimaProj.Controllers
                         db.Client.Add(addUser);
                         db.Save();
                         string message = addUser.Auth;
-                        await Sms.SendSms(addUser.TellNo, message, "GhasrMobileRegister");
+                        await Sms.SendSms(addUser.TellNo, message, "AsamedcoRegister");
                         return await Task.FromResult(Redirect("/Verify/" + addUser.TellNo));
                     }
                     else
@@ -262,7 +262,7 @@ namespace NimaProj.Controllers
                     {
                         TblClient forgotPassword = db.Client.Get().FirstOrDefault(i => i.TellNo == forget.TellNo);
                         string message = forgotPassword.Auth;
-                        await Sms.SendSms(forgotPassword.TellNo, message, "GhasrMobileForget");
+                        await Sms.SendSms(forgotPassword.TellNo, message, "AsamedcoForget");
                         return await Task.FromResult(Redirect("/ChangePassword/" + forgotPassword.TellNo));
                     }
                     else

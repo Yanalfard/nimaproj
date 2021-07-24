@@ -7,199 +7,73 @@
 
     <div class="header-tab-content-account  mb-4">
         <h1 class="title-tabcontent-account mb-3 mb-sm-0">
-            دیدگاهها
+            سفارش های آفلاین
 
         </h1>
-
     </div>
-    <div class="main-content-account">
+    @if (Model.Any())
+    {
+        <div class="main-content-account">
+            <div id="accordionone" class="area-Orders-account ">
 
-
-        <div class="box-comments">
-            <div class="item-comment d-flex   mb-4">
-                <div class="profile-commentsproduct ml-3">
-                    <a href="#">
-                        <img src="~/galeb/img/img12.jpg">
-                    </a>
-                </div>
-                <div class="comments-product-content">
-                    <div class="comments-product-headerContent  mb-3">
-                        <div class="star_rating-item-comment d-flex ">
-                            <div class="star_rating ml-3 ">
-                                <span class="star-icon star-icon-active">
-                                    <i class="far fa-star"></i>
-                                </span>
-                                <span class="star-icon star-icon-active">
-                                    <i class="far fa-star"></i>
-                                </span>
-                                <span class="star-icon star-icon-active">
-                                    <i class="far fa-star"></i>
-                                </span>
-                                <span class="star-icon star-icon-active">
-                                    <i class="far fa-star"></i>
-                                </span>
-                                <span class="star-icon star-icon-active">
-                                    <i class="far fa-star"></i>
-                                </span>
+                @foreach (var item in Model)
+                {
+                    <div class="card card-Orders-account mb-3">
+                        <div class="card-header">
+                            <div class="header-content-orders  d-sm-flex align-items-center justify-content-between"
+                                 data-toggle="collapse" data-target="#onlineOrder_@item.OnlineOrderId"
+                                 aria-expanded="false" aria-controls="onlineOrder_@item.OnlineOrderId" id="headingfour">
+                                <div class="id-product-order item-header-orders">شماره سفارش: @item.OnlineOrderId</div>
+                                <div class="date-order item-header-orders">
+                                    <i class="fal fa-clock ml-1"></i>@item.DateSubmited.Value.ToShortDateString()
+                                </div>
+                                @if (item.IsRead)
+                                {
+                                    <div class="stutus-order stutus-order-success item-header-orders">
+                                        تائید
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="stutus-order stutus-order-blue item-header-orders">
+                                        درحال
+                                        پردازش
+                                    </div>
+                                }
+                                <div class="price-product-order item-header-orders">
+                                    <span>
+                                        نام محصول:
+                                    </span>
+                                    @item.Product.Name 
+                                </div>
                             </div>
                         </div>
-                        <div class="d-flex align-items-center">
-                            <div class="profile-comments-status-approved ml-3">
-                                تایید شده
-                            </div>
+                        <div id="onlineOrder_@item.OnlineOrderId" class="collapse collapse-content-orders"
+                             aria-labelledby="headingfour" data-parent="#accordionfour">
+                            <div class="card-body">
+                                <div class="area-content-orders d-sm-flex align-items-center justify-content-between mb-12 mb-sm-12">
 
-                            <div class="dropdown">
-                                <button type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                    <i class="far fa-ellipsis-v"></i>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">حذف نظر</a>
-                                    <a class="dropdown-item" href="#">ویرایش نظر</a>
+                                    <div class="d-flex flex-row flex-sm-column justify-content-center align-items-center">
+                                        موضوع:
+                                        <span>@item.Title</span>
+                                    </div>
+                                </div>
+                                <div class="area-details-bottom-orders d-sm-flex justify-content-between align-items-center  border-top py-4">
 
+                                    <div class="details-bottom-content-orders details-bottom-content ml-12">
+                                        <span>توضیحات : </span>
+                                        <span>@item.Body </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <p class="mb-4">
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-                        استفاده
-                        از
-                        طراحان
-                        گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان
-                        که
-                        لازم
-                        است، و
-                        برای شرایط
-                    </p>
-                </div>
-            </div>
 
-            <div class="item-comment d-flex   mb-4">
-                <div class="profile-commentsproduct ml-3">
-                    <a href="#">
-                        <img src="~/galeb/img/img11.jpg">
-                    </a>
-                </div>
-                <div class="comments-product-content">
-                    <div class="comments-product-headerContent  mb-3">
-                        <div class="star_rating-item-comment d-flex">
-                            <div class="star_rating ml-3 ">
-                                <span class="star-icon star-icon-active">
-                                    <i class="far fa-star"></i>
-                                </span>
-                                <span class="star-icon star-icon-active">
-                                    <i class="far fa-star"></i>
-                                </span>
-                                <span class="star-icon star-icon-active">
-                                    <i class="far fa-star"></i>
-                                </span>
-                                <span class="star-icon star-icon-active">
-                                    <i class="far fa-star"></i>
-                                </span>
-                                <span class="star-icon star-icon-active">
-                                    <i class="far fa-star"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <div class="profile-comments-status-approved ml-3">
-                                تایید شده
-                            </div>
+                }
 
-                            <div class="dropdown">
-                                <button type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                    <i class="far fa-ellipsis-v"></i>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">حذف نظر</a>
-                                    <a class="dropdown-item" href="#">ویرایش نظر</a>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="mb-4">
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-                        استفاده
-                        از
-                        طراحان
-                        گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان
-                        که
-                        لازم
-                        است، و
-                        برای شرایط
-                    </p>
-                </div>
-            </div>
-
-            <div class="item-comment d-flex   mb-4">
-                <div class="profile-commentsproduct ml-3">
-                    <a href="#">
-                        <img src="~/galeb/img/img9.jpg">
-                    </a>
-                </div>
-                <div class="comments-product-content">
-                    <div class="comments-product-headerContent  mb-3">
-                        <div class="star_rating-item-comment d-flex">
-                            <div class="star_rating ml-3 ">
-                                <span class="star-icon star-icon-active">
-                                    <i class="far fa-star"></i>
-                                </span>
-                                <span class="star-icon star-icon-active">
-                                    <i class="far fa-star"></i>
-                                </span>
-                                <span class="star-icon star-icon-active">
-                                    <i class="far fa-star"></i>
-                                </span>
-                                <span class="star-icon star-icon-active">
-                                    <i class="far fa-star"></i>
-                                </span>
-                                <span class="star-icon star-icon-active">
-                                    <i class="far fa-star"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <div class="profile-comments-status-approved ml-3">
-                                تایید شده
-                            </div>
-
-                            <div class="dropdown">
-                                <button type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                    <i class="far fa-ellipsis-v"></i>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">حذف نظر</a>
-                                    <a class="dropdown-item" href="#">ویرایش نظر</a>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="mb-4">
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-                        استفاده
-                        از
-                        طراحان
-                        گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان
-                        که
-                        لازم
-                        است، و
-                        برای شرایط
-                    </p>
-                </div>
             </div>
         </div>
-        <div class="area-btnOldComment  text-center pt-1">
-            <a class="btn-style2" href="#">نمایش دیدگاههای قدیمی تر</a>
-        </div>
-    </div>
+    }
 
 </div>
 

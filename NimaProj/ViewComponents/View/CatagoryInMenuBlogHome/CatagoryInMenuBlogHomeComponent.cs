@@ -14,7 +14,7 @@ namespace NimaProj.ViewComponents.View.CatagoryInMenuBlogHome
         private Core _core = new Core();
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            List<TblCatagory> list = _core.Catagory.Get(i => i.IsBlog == true).ToList();
+            List<TblCatagory> list = _core.Catagory.Get(i => i.IsBlog == true && i.Parent == null).ToList();
             return await Task.FromResult((IViewComponentResult)View("~/Views" +
                 "/Shared/Components/CatagoryInMenuBlogHomeComponent/" +
                 "CatagoryInMenuBlogHomeComponent.cshtml"

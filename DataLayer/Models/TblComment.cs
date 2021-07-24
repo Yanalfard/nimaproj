@@ -27,6 +27,7 @@ namespace DataLayer.Models
         [Column(TypeName = "datetime")]
         public DateTime? DateCreated { get; set; }
         public int? ParentId { get; set; }
+        public bool IsBlog { get; set; }
 
         [ForeignKey(nameof(ClientId))]
         [InverseProperty(nameof(TblClient.TblComments))]

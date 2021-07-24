@@ -5,12 +5,7 @@
 
 
 <main class="content">
-    @if (Context.Request.Query["SendMessage"].ToString() == "true")
-    {
-        <div class="alert alert-success">
-            <p class="help-block">پیام شما ارسال شد </p>
-        </div>
-    }
+  
     <div class="col-12">
         <div class="area-topbar-shop d-md-flex justify-content-between align-items-center mb-5 ">
             <div class="box-select-sort d-flex mb-4 mb-md-0">
@@ -26,6 +21,7 @@
     </div>
 
     <section class="mb-5 pb-sm-2 pb-md-3  pb-lg-4 pb-xl-5">
+      
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-4">
@@ -86,6 +82,12 @@
 
                 </div>
                 <div class="col-12 col-md-8">
+                    @if (Context.Request.Query["SendMessage"].ToString() == "true")
+                    {
+                        <div class="alert alert-success">
+                            <p class="help-block">پیام شما ارسال شد </p>
+                        </div>
+                    }
                     <div class="area-form-wrap contact mb-5 mb-lg-0">
                         <div class="area-form-contact">
                             <h3 class="h4 mb-4 title-contact">تماس با ما</h3>

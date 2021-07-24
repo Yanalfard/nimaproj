@@ -1,0 +1,31 @@
+﻿@model IEnumerable<TblCatagory>
+<ul class="sub-menu">
+    @foreach (TblCatagory item in Model)
+    {
+        @if (item.InverseParent.Any())
+        {
+            <li class="menu-item-has-children">
+                <a>
+                    @item.Name
+                </a>
+
+                @foreach (var j in item.InverseParent)
+                {
+
+                    <ul class="sub-menu">
+                        <li><a href="/Blog/@j.CatagoryId/@j.Name.Replace(" ","-")"> @j.Name </a></li>
+                    </ul>
+                }
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="/Blog/@item.CatagoryId/@item.Name.Replace(" ","-")">
+                    @item.Name
+                </a>
+            </li>
+        }
+
+    }
+</ul>

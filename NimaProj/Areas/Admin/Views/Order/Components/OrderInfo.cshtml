@@ -1,0 +1,120 @@
+﻿@model DataLayer.Models.TblOrder
+
+@using NimaProj.Utilities
+
+<div class="modal-header">
+    <h6 class="modal-title" id="modalCenterTitle">
+        جزئیات سفارش
+    </h6>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div id="card-table" class="card-body flex-div">
+        <div class="form-row ">
+            <div class="form-group col-md-4">
+                <label>کد سفارش:</label>
+                <span>#@Model.OrdeId</span>
+            </div>
+            <div class="form-group col-md-4">
+                <label>نام مشتری:</label>
+                <span>@Model.Client.Name</span>
+            </div>
+            <div class="form-group col-md-4">
+                <label>شماره تماس:</label>
+                <span>@Model.Client.TellNo</span>
+            </div>
+            <div class="form-group col-md-4">
+                <label>تاریخ ثبت سفارش:</label>
+                <span>@Model.DateSubmited.AllToShamsi()</span>
+            </div>
+            <div class="form-group col-md-4">
+                <label>وضعیت سفارش: </label>
+
+                @if (Model.Status == 0)
+                {
+                    <span class="text-warning">در حال آماده سازی</span>
+                }
+                else if (Model.Status == 1)
+                {
+                    <span class="text-info">ارسال شده</span>
+                }
+                else if (Model.Status == 2)
+                {
+                    <span class="text-success">تکمیل شده</span>
+                }
+            </div>
+            <div class="form-group col-md-4">
+                <label>وضعیت پرداخت: </label>
+                @if (Model.IsFinaly)
+                {
+                    <span class="text-success">پرداخت شده</span>
+                }
+                else
+                {
+                    <span class="text-warning">پرداخت نشده</span>
+                }
+            </div>
+
+            <div class="form-group col-md-4">
+                <label>وضعیت ارسال: </label>
+
+                @if (Model.Status == -1)
+                {
+                    <span>لغو ارسال </span>
+                }
+                else if (Model.Status == 0)
+                {
+                    <span>در حال پردازش</span>
+                }
+                else if (Model.Status == 1)
+                {
+                    <span> ارسال شده </span>
+                }
+
+
+
+            </div>
+            <div class="form-group col-md-4">
+                <label>هزینه ارسال:</label>
+                <span>@Model.SendPrice</span>
+            </div>
+            <div class="form-group col-md-4">
+                <label>آدرس خریدار:</label>
+                <span>@Model.Address</span>
+            </div>
+            <div class="form-group col-md-4">
+                <label>مبلغ کل سفارش:</label>
+                <span>@Model.FinalPrice.ToString("#,0")</span>
+            </div>
+
+        </div>
+        <div class="table-responsive flex">
+            <hr />
+            <table class="table fixed">
+                <thead class="thead-light">
+                    <tr>
+                        <th>نام محصول</th>
+                        <th>تعداد</th>
+                        <th>قیمت</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.TblOrderDetails)
+                    {
+                        <tr>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Count</td>
+                            <td>
+
+                                <span>@item.Price.ToString("#,0")</span>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
