@@ -1,14 +1,18 @@
 ﻿@model IEnumerable<TblOfflineOrder>
 @{
-    ViewData["Title"] = "فاکتورها";
+    ViewData["Title"] = "سفارش های آفلاین";
 }
 <div class="account-content content-comment-account">
-
+    @if (Context.Request.Query["Resetinfo"].ToString() == "true")
+    {
+        <div class="alert alert-success">
+            <p class="help-block">سارش شما ثبت شد</p>
+        </div>
+    }
 
     <div class="header-tab-content-account  mb-4">
         <h1 class="title-tabcontent-account mb-3 mb-sm-0">
             سفارش های آفلاین
-
         </h1>
     </div>
     @if (Model.Any())
@@ -44,7 +48,7 @@
                                     <span>
                                         نام محصول:
                                     </span>
-                                    @item.Product.Name 
+                                    @item.Product.Name
                                 </div>
                             </div>
                         </div>

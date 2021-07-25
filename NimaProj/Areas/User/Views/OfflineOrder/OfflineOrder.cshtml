@@ -1,0 +1,43 @@
+﻿@model TblOfflineOrder
+@{
+    ViewData["Title"] = "ثبت سفارش";
+}
+
+<div class="account-content content-comment-account">
+   
+
+    <div class="header-tab-content-account  mb-4">
+        <h1 class="title-tabcontent-account mb-3 mb-sm-0">
+            ثبت سفارش
+        </h1>
+    </div>
+    <div class="main-content-account">
+        <div class="area-Orders-account ">
+            <form class="form-row" action="/User/OfflineOrder/OfflineOrder" method="post">
+                <input type="hidden" asp-for="ProductId" value="@Model.ProductId" readonly/>
+                <!-- Name -->
+                <div class="form-group mb-4 col-12 col-md-6">
+                    <input type="text" required
+                           class="form-control" value="@ViewBag.Product" readonly>
+                </div>
+                <!-- phone -->
+                <div class="form-group mb-4 col-12 col-md-6">
+                    <input type="text" required
+                           class="form-control" asp-for="Title" name="Title" placeholder="موضوع  را وارد کنید *">
+                </div>
+                <!-- phone -->
+                <!-- Message -->
+
+                <div class="form-group mb-4 col-12">
+                    <textarea class="form-control" asp-for="Body" required name="Body" id="Body" rows="8"
+                              placeholder="سفارش شما *"></textarea>
+                </div>
+                <!-- Send button -->
+                <button type="submit" class="btn-animate1 mt-4">ثبت سفارش</button>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+

@@ -9,7 +9,6 @@ namespace DataLayer.ViewModels
     {
         [Required(ErrorMessage = "لطفا لینک ایمیل را وارد کنید")]
         public string Email { get; set; }
-
         [Required(ErrorMessage = "لطفا لینک تلگرم را وارد کنید")]
         public string Telegram { get; set; }
         [Required(ErrorMessage = "لطفا لینک تلگرم را وارد کنید")]
@@ -22,51 +21,18 @@ namespace DataLayer.ViewModels
         public string Address { get; set; } 
         [Required(ErrorMessage = "لطفا آدرس واتساب را وارد کنید")]
         public string Whatsapp { get; set; }
-
-
-
-        [Required(ErrorMessage = "لطفا تماس با ما را کامل کنید")]
-        public string TamasBaMa { get; set; }
-
-        [Required(ErrorMessage = "لطفا تماس با ما کوتاه را کامل کنید")]
-        public string ShortTamasBaMa { get; set; }
-
+        [Required(ErrorMessage = "لطفا  شرایط ارسال  را وارد کنید")]
+        public string SharyeteErsal { get; set; }
+        [Required(ErrorMessage = "لطفا  شرایط خرید  را وارد کنید")]
+        public string OrderDetails { get; set; }
         [Required(ErrorMessage = "لطفا درباره ما را کامل کنید")]
-        public string DarbareyeMa { get; set; }
+        public string DarBareyeMa { get; set; }
 
-        [Required(ErrorMessage = "لطفا توضیحات نمایندگی را کامل کنید")]
-        public string StoreDescription { get; set; }
 
-        [Required(ErrorMessage = "لطفا سقف هزینه ارسال رایگان را وارد کنید")]
-        public string SagfePost { get; set; }
 
-        [Required(ErrorMessage = "لطفا متن خرید نهایی را وارد کنید")]
-        public string FinalTextKharid { get; set; }
 
-        [Required(ErrorMessage = "لطفا درباره ما کوتاه را وارد کنید")]
-        public string ShortDarbareyeMa { get; set; }
 
-        [Required(ErrorMessage = "لطفا لینک اینستا را وارد کنید")]
-        public string LinkInsta { get; set; }
 
-        [Required(ErrorMessage = "لطفا لینک تلگرم را وارد کنید")]
-        public string LinkTelegram { get; set; }
-
-        [Required(ErrorMessage = "لطفا لینک تلگرم را وارد کنید")]
-        public string LinkEmail { get; set; }
-
-        [Required(ErrorMessage = "لطفا لینک تلگرم را وارد کنید")]
-        public string Linkwhatsapp { get; set; }
-
-        [Required(ErrorMessage = "لطفا قوانین را وارد کنید")]
-        public string Gavanin { get; set; }
-
-        [Required(ErrorMessage = "لطفا توضیح خرید اقساطی را وارد کنید")]
-        public string KharidAgsady { get; set; }
-
-        [Required(ErrorMessage = "لطفا توضیح خرید اقساطی را وارد کنید")]
-        public string SharayeteAghsati { get; set; }
-        public string TextModelMessage { get; set; }
 
     }
 }

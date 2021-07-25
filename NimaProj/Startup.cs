@@ -76,6 +76,9 @@ namespace NimaProj
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            #region  404 error
+            app.UseStatusCodePagesWithReExecute("/Error");
+            #endregion
             app.UseAuthorization();
             app.UseSession();
             app.UseAuthentication();

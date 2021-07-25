@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace NimaProj.Areas.User.Controllers
 {
     [Area("User")]
-    [PermissionChecker("user")]
+    [PermissionChecker("user,admin")]
     public class HomeController : Controller
     {
         private Core _core = new Core();

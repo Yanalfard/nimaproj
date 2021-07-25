@@ -18,12 +18,6 @@ namespace GhasreMobile.Controllers
     public class ShopCartController : Controller
     {
         Core db = new Core();
-        TblClient SelectUser()
-        {
-            int userId = Convert.ToInt32(User.Claims.First().Value);
-            TblClient selectUser = db.Client.GetById(userId);
-            return selectUser;
-        }
         public async Task<IActionResult> ShowListProduct()
         {
             try
@@ -229,7 +223,8 @@ namespace GhasreMobile.Controllers
                     addOrder.Status = 0;
                     addOrder.PostalCode = postalCode;
                     addOrder.SendPrice = 0;
-                    addOrder.ClientId = SelectUser().ClientId;
+                    int userId = Convert.ToInt32(User.Claims.First().Value);
+                    addOrder.ClientId = Main.SelectUser(userId).ClientId;
                     db.Order.Add(addOrder);
                     db.Save();
                     foreach (var item in sessions)

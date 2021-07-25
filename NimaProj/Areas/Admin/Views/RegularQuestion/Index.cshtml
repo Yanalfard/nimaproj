@@ -51,10 +51,10 @@
 
             <!--end list region-->
             <div class="card-footer bg-white">
-                    <nav aria-label="Page navigation example">
-                        @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
-                    </nav>
-                </div>
+                <nav aria-label="Page navigation example">
+                    @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
+                </nav>
+            </div>
         </div>
     </div>
 </div>
@@ -93,7 +93,7 @@
                 // Do nothing!
             }
 
-           
+
         }
 
     </script>

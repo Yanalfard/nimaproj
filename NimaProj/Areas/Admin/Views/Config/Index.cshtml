@@ -1,0 +1,98 @@
+﻿@model DataLayer.ViewModels.ConfigVm
+@{
+    ViewData["Title"] = "تنظیمات سایت";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row flex-div">
+    <div class="col-md-12 flex-div pb-3 pt-3">
+        <div class="card flex-div border-0 main-shadow">
+            <div class="card-header bg-white">
+            </div>
+            <div id="card-table" class="card-body flex-div">
+                <form class="form-row mt-3 fixed overflow-auto" asp-action="Index" asp-controller="Config" asp-area="Admin"
+                      data-ajax="true"
+                      data-ajax-method="POST"
+                      data-ajax-mode="replace"
+                      data-ajax-complete="EndCatagoryCreate()"
+                      data-ajax-update="#ajaxresult">
+                    <div class="form-group col-lg-12 mt-lg-3">
+                        <label> شرایط ارسال :</label>
+                        <textarea asp-for="SharyeteErsal" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
+                        <br /><span class="text-danger" asp-validation-for="SharyeteErsal"></span>
+                    </div>
+                    <div class="form-group col-lg-12 mt-lg-3">
+                        <label> شرایط خرید :</label>
+                        <textarea asp-for="OrderDetails" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
+                        <br /><span class="text-danger" asp-validation-for="OrderDetails"></span>
+                    </div>
+                    <div class="form-group col-lg-12 mt-lg-3">
+                        <label> درباره ما:</label>
+                        <textarea asp-for="DarBareyeMa" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
+                        <br /><span class="text-danger" asp-validation-for="DarBareyeMa"></span>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label>آدرس</label>
+                        <input asp-for="Address" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left">
+                        <br /><span class="text-danger" asp-validation-for="Address"></span>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label>تلگرام</label>
+                        <input asp-for="Telegram" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left">
+                        <br /><span class="text-danger" asp-validation-for="Telegram"></span>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label>اینیستا</label>
+                        <input asp-for="Inista" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left">
+                        <br /><span class="text-danger" asp-validation-for="Inista"></span>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label>واتساب</label>
+                        <input asp-for="Whatsapp" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left">
+                        <br /><span class="text-danger" asp-validation-for="Whatsapp"></span>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label>شماره تلفن</label>
+                        <input asp-for="TellHome" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left">
+                        <br /><span class="text-danger" asp-validation-for="TellHome"></span>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label>موبایل</label>
+                        <input asp-for="TellMobile" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left">
+                        <br /><span class="text-danger" asp-validation-for="TellMobile"></span>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label>ایمیل</label>
+                        <input asp-for="Email" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left">
+                        <br /><span class="text-danger" asp-validation-for="Email"></span>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-success btn-sm text-white">ثبت تغییرات<span class="icon-holder uk-margin-small-right" uk-icon="create-outline"></span></button>
+                </form>
+            </div>
+
+            <div class="card-footer bg-white text-left">
+                <nav aria-label="Page navigation example">
+                    @*@await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })*@
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Script{
+    <script src="~/js/bootstrap-tagsinput.js"></script>
+    <script src="~/js/Auto_Formatting_Currency.js"></script>
+    <script>
+        $(function () {
+            $('#SharyeteErsal').ckeditor();
+            $('#OrderDetails').ckeditor();
+            $('#DarBareyeMa').ckeditor();
+        });
+
+
+    </script>
+    <script src="~/Validate/jquery.validate.min.js"></script>
+    <script src="~/Validate/jquery.validate.unobtrusive.js"></script>
+}

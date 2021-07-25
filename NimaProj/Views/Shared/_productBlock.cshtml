@@ -41,9 +41,9 @@
         <div class="price_card_product mb-2">
             @if (Model.IsOfflineOrder)
             {
-                <span>
+                <a href="/User/OfflineOrder/OfflineOrder/@Model.ProductId">
                     سفارش گیری
-                </span>
+                </a>
             }
             else
             {
