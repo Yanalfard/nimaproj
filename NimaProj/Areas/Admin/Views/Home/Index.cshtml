@@ -34,17 +34,6 @@
                                 </div>
                             </div>
                         </a>
-                        <a href="/Admin/Store" class="col-md-3">
-                            <div class="user-box alert alert-info px-3 p-3 rounded shadow">
-                                <span uk-icon="storefront"></span>
-                                <div class="user-title mb-3 mt-3">
-                                    <span class="icon-pic-primary">نمایندگی ها</span>
-                                </div>
-                                <div class="user-count">
-                                    <span class="icon-pic-primary font-weight-bold">@Model.AgenciesCount</span>
-                                </div>
-                            </div>
-                        </a>
                         <a href="/Admin/Brand" class="col-md-3">
                             <div class="user-box alert alert-info px-3 p-3 rounded shadow">
                                 <span uk-icon="pricetag"></span>
@@ -88,32 +77,8 @@
                                 </div>
                             </div>
                         </a>
-                        <a href="/Admin/Fractional" class="col-md-3">
-                            <div class="user-box alert alert-primary p-3 rounded shadow">
-                                <span class="icon-holder">
-                                    <i uk-icon="flash-off"></i>
-                                </span>
-                                <div class="user-title mb-3 mt-3">
-                                    <span class="icon-pic-success">سفارشات اقساطی </span>
-                                </div>
-                                <div class="user-count">
-                                    <span class="icon-pic-primary font-weight-bold">@Model.AllOrderFractionalCount</span>
-                                </div>
-                            </div>
-                        </a>
-                        @*<a href="/Admin/Order/AllOrder" class="col-md-3">
-            <div class="user-box alert alert-danger px-3 p-3 rounded shadow">
-                <span uk-icon="trash-bin"></span>
-                <div class="user-title mb-3 mt-3">
-                    <span class="icon-pic-primary">سفارشات لغو شده</span>
-                </div>
-                <div class="user-count">
-                    <span class="icon-pic-primary font-weight-bold">@Model.OrderCancelCount</span>
-                </div>
-            </div>
-        </a>*@
-
-                        <a href="/Admin/OnlineOrder" class="col-md-3">
+                       
+                        <a href="/Admin/OfflineOrder" class="col-md-3">
                             <div class="user-box alert alert-warning px-3 p-3 rounded shadow">
                                 <span uk-icon="cart"></span>
                                 <div class="user-title mb-3 mt-3">
@@ -134,17 +99,6 @@
                 </div>
                 <div class="card-body user-content">
                     <div class="row">
-                        <a href="/Admin/Topic" class="col-md-3 text-dark">
-                            <div class="user-box alert alert-success p-3 rounded shadow">
-                                <span uk-icon="clipboard"></span>
-                                <div class="user-title mb-3 mt-3">
-                                    <span class="icon-pic-success">تالار گفتگو</span>
-                                </div>
-                                <div class="user-count">
-                                    <span class="icon-pic-primary font-weight-bold">@Model.AllTopicCount</span>
-                                </div>
-                            </div>
-                        </a>
                         <a href="/Admin/Blog" class="col-md-3">
                             <div class="user-box alert alert-warning px-3 p-3 rounded shadow">
                                 <span uk-icon="newspaper-outline"></span>
@@ -153,17 +107,6 @@
                                 </div>
                                 <div class="user-count">
                                     <span class="icon-pic-warning font-weight-bold">@Model.AllPostCount</span>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="/Admin/Notification" class="col-md-3">
-                            <div class="user-box alert alert-info px-3 p-3 rounded shadow">
-                                <span uk-icon="paper-plane"></span>
-                                <div class="user-title mb-3 mt-3">
-                                    <span class="icon-pic-primary">پیام های ارسال شده برای کاربران</span>
-                                </div>
-                                <div class="user-count">
-                                    <span class="icon-pic-primary font-weight-bold">@Model.AllNotificationCount</span>
                                 </div>
                             </div>
                         </a>

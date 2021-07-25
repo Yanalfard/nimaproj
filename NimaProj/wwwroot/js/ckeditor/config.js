@@ -10,27 +10,22 @@ CKEDITOR.editorConfig = function( config ) {
     config.contentsLangDirection = 'rtl';
     config.language = 'fa';
 
-    config.filebrowserImageUploadUrl = '/UploadImage/UploadImages';
+    config.filebrowserImageUploadUrl = '/file-upload';
 
- //   config.toolbar =
- //[
- //  [
- //    'SourceBold',
- //    'Italic',
- //    'Underline',
- //    'Strike',
- //    '-',
- //    'Subscript',
- //    'SuperscriptNumberedList',
- //    'BulletedList',
- //    '-',
- //    'Outdent',
- //    'Indent/Styles',
- //    'Format',
- //    'Font',
- //    'FontSize',
- //    'Image'
 
- //  ]
- //];
+    config.toolbar_MyToolbar =
+        [
+            { name: 'document', items: ['Source', '-', 'Save', 'NewPage', 'DocProps', 'Preview', 'Print', '-', 'Templates'] },
+            { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'] },
+            { name: 'editing', items: ['Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker', 'Scayt'] },
+            { name: 'forms', items: ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField'] },
+            { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'] },
+            { name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
+            { name: 'colors', items: ['TextColor', 'BGColor'] },
+            '/',
+            { name: 'insert', items: ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe'] },
+            { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl'] },
+            { name: 'styles', items: ['Styles', 'Format', 'Font', 'FontSize'] }
+
+        ];
 };

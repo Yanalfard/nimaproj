@@ -41,7 +41,7 @@
                                 <span class="title">داشبورد</span>
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
+                        @*<li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
                                     <i uk-icon="eye"></i>
@@ -50,9 +50,9 @@
                                 <span class="arrow" uk-icon="chevron-forward">
                                 </span>
                             </a>
-                            @*@await Component.InvokeAsync("VisitSiteAdmin")*@
+                            @await Component.InvokeAsync("VisitSiteAdmin")
 
-                        </li>
+                        </li>*@
                         @*@if (User.Claims.Last().Value == "admin")
         {
         }*@
@@ -412,6 +412,7 @@
 <script src="~/js/uikit-icons.js"></script>
 <link href="~/AdminStaticFile/DataPicker/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
 <script src="~/AdminStaticFile/script.js"></script>
+
 <script src="~/js/ckeditor/ckeditor.js"></script>
 <script src="~/js/ckeditor/adapters/jquery.js"></script>
 <script>

@@ -36,6 +36,8 @@
     <Folder Include="wwwroot\Images\Blogs\thumb\" />
     <Folder Include="wwwroot\Images\Brand\thumb\" />
     <Folder Include="wwwroot\Images\Catagory\thumb\" />
+    <Folder Include="wwwroot\Images\ImagesEditor\" />
+    <Folder Include="wwwroot\MyImages\" />
     <Folder Include="wwwroot\Images\ProductAlbum\thumb\" />
     <Folder Include="wwwroot\Images\ProductMain\thumb\" />
     <Folder Include="wwwroot\Images\User\thumb\" />
