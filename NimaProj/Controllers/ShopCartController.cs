@@ -61,7 +61,7 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
         }
         public async Task<IActionResult> Index()
@@ -107,7 +107,7 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
         }
         public async Task<IActionResult> Checkout()
@@ -153,7 +153,7 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
         }
         public async Task<IActionResult> UpDownCount(int id, string command, string ReturnUrl = "/")
@@ -200,7 +200,7 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
 
         }
@@ -268,10 +268,10 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
         }
-        public IActionResult OnlinePayment(int id)
+        public async Task<IActionResult> OnlinePayment(int id)
         {
             if (HttpContext.Request.Query["Status"] != "" &&
                 HttpContext.Request.Query["Status"].ToString().ToLower() == "ok" &&
@@ -289,11 +289,11 @@ namespace GhasreMobile.Controllers
                     db.Save();
                     ViewBag.code = res.RefId;
                     HttpContext.Session.Clear();
-                    return View();
+                    return await Task.FromResult(View());
                 }
             }
             ViewBag.IsFinaly = false;
-            return View();
+            return await Task.FromResult(View());
         }
     }
 }

@@ -17,78 +17,105 @@ namespace NimaProj.Areas.User.Controllers
     public class AccountController : Controller
     {
         private Core _core = new Core();
-        TblClient SelectUser()
+        public async Task<IActionResult> Index()
         {
-            int userId = Convert.ToInt32(User.Claims.First().Value);
-            TblClient selectUser = _core.Client.GetById(userId);
-            return selectUser;
-        }
-        public IActionResult Index()
-        {
-            return View();
-        }
-        public IActionResult Info()
-        {
-            InfoVm info = new InfoVm()
+            try
             {
-                Name = SelectUser().Name,
-                ImageUrl = SelectUser().MainImage
-            };
-            return View(info);
+                return await Task.FromResult(View());
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
+        }
+        public async Task<IActionResult> Info()
+        {
+            try
+            {
+                int userId = Convert.ToInt32(User.Claims.First().Value);
+                InfoVm info = new InfoVm()
+                {
+                    Name = Main.SelectUser(userId).Name,
+                    ImageUrl = Main.SelectUser(userId).MainImage
+                };
+                return await Task.FromResult(View(info));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
         [HttpPost]
         public async Task<IActionResult> Info(InfoVm info, IFormFile MainImage)
         {
-            if (ModelState.IsValid)
+            try
             {
-                TblClient updateUser = _core.Client.GetById(SelectUser().ClientId);
-
-                if (MainImage != null && MainImage.IsImages() && MainImage.Length < 3000000)
+                if (ModelState.IsValid)
                 {
-                    try
+                    int userId = Convert.ToInt32(User.Claims.First().Value);
+                    TblClient updateUser = _core.Client.GetById(Main.SelectUser(userId).ClientId);
+
+                    if (MainImage != null && MainImage.IsImages() && MainImage.Length < 3000000)
                     {
-                        var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/User/", info.ImageUrl);
-                        if (System.IO.File.Exists(imagePath))
+                        try
                         {
-                            System.IO.File.Delete(imagePath);
+                            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/User/", info.ImageUrl);
+                            if (System.IO.File.Exists(imagePath))
+                            {
+                                System.IO.File.Delete(imagePath);
+                            }
                         }
-                    }
-                    catch
-                    {
+                        catch
+                        {
 
-                    }
-                    info.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
-                    string saveDirectory = Path.Combine(
-                                            Directory.GetCurrentDirectory(), "wwwroot/Images/User/");
-                    string savePath = Path.Combine(saveDirectory, info.ImageUrl);
+                        }
+                        info.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
+                        string saveDirectory = Path.Combine(
+                                                Directory.GetCurrentDirectory(), "wwwroot/Images/User/");
+                        string savePath = Path.Combine(saveDirectory, info.ImageUrl);
 
-                    if (!Directory.Exists(saveDirectory))
-                    {
-                        Directory.CreateDirectory(saveDirectory);
-                    }
+                        if (!Directory.Exists(saveDirectory))
+                        {
+                            Directory.CreateDirectory(saveDirectory);
+                        }
 
-                    using (var stream = new FileStream(savePath, FileMode.Create))
-                    {
-                        await MainImage.CopyToAsync(stream);
+                        using (var stream = new FileStream(savePath, FileMode.Create))
+                        {
+                            await MainImage.CopyToAsync(stream);
+                        }
+                        /// #region resize Image
+                        ImageConvertor imgResizer = new ImageConvertor();
+                        string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/User/thumb", info.ImageUrl);
+                        imgResizer.Image_resize(savePath, thumbPath, 300);
+                        /// #endregion
                     }
-                    /// #region resize Image
-                    ImageConvertor imgResizer = new ImageConvertor();
-                    string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/User/thumb", info.ImageUrl);
-                    imgResizer.Image_resize(savePath, thumbPath, 300);
-                    /// #endregion
+                    updateUser.Name = info.Name;
+                    updateUser.MainImage = info.ImageUrl;
+                    _core.Client.Update(updateUser);
+                    _core.Save();
+                    return await Task.FromResult(Redirect("/User/Account/Info?Resetinfo=true"));
+
                 }
-                updateUser.Name = info.Name;
-                updateUser.MainImage = info.ImageUrl;
-                _core.Client.Update(updateUser);
-                _core.Save();
-                return await Task.FromResult(Redirect("/User/Account/Info?Resetinfo=true"));
-
+                return await Task.FromResult(View(info));
             }
-            return View(info);
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
-        public IActionResult ChangePassword()
+        public async Task<IActionResult> ChangePassword()
         {
-            return View();
+            try
+            {
+                return await Task.FromResult(View());
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ResetChangePasswordVm change)
@@ -97,7 +124,8 @@ namespace NimaProj.Areas.User.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    TblClient updateUser = _core.Client.GetById(SelectUser().ClientId);
+                    int userId = Convert.ToInt32(User.Claims.First().Value);
+                    TblClient updateUser = _core.Client.GetById(Main.SelectUser(userId).ClientId);
                     string pass = PasswordHelper.EncodePasswordMd5(change.OldPassword);
                     if (pass != updateUser.Password)
                     {
@@ -115,7 +143,7 @@ namespace NimaProj.Areas.User.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
 
         }
