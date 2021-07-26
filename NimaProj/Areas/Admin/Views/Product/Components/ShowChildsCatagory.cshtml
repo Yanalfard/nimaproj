@@ -3,7 +3,7 @@
 @foreach (var item in Model)
 {
     <li>
-        @if (!item.IsOnFirstPage)
+        @if (item.IsOnFirstPage)
         {
             <a class="uk-text-small uk-accordion-title">@item.Name</a>
         }

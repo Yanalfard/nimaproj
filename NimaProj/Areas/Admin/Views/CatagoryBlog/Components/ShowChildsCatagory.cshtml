@@ -27,7 +27,7 @@
 
                         foreach (var item in Model)
                         {
-                            <li class="list-group-item userId_@item.CatagoryId" >
+                            <li class="list-group-item userId_@item.CatagoryId catId_@item.CatagoryId" >
                                 <div class="row">
 
                                     <a class="col-xl-10 col-lg-10  col-sm-9 col-5">@item.Name</a>
@@ -56,7 +56,7 @@
     </div>
 </form>
 
-<script>
+@*<script>
     function Delete(id) {
         $.get("/Admin/Catagory/Delete/" + id, function (result) {
             if (result == "true") {
@@ -67,4 +67,4 @@
                 UIkit.notification('این دسته بندی نمیتواند حذف شود');
             }
         });
-</script>
+</script>*@

@@ -15,31 +15,44 @@ namespace NimaProj.Areas.User.Controllers
     public class OfflineOrderController : Controller
     {
         private Core _core = new Core();
-        TblClient SelectUser()
+        public async Task<IActionResult> Index()
         {
-            int userId = Convert.ToInt32(User.Claims.First().Value);
-            TblClient selectUser = _core.Client.GetById(userId);
-            return selectUser;
-        }
-        public IActionResult Index()
-        {
-            List<TblOfflineOrder> list = _core.OfflineOrder.Get(i => i.ClientId == SelectUser().ClientId, orderBy: i => i.OrderByDescending(i => i.DateSubmited)).ToList();
-            return View(list);
-        }
-        public IActionResult OfflineOrder(int id)
-        {
-            ViewBag.Product = _core.Product.GetById(id).Name;
-            return View(new TblOfflineOrder()
+            try
             {
-                ProductId = id
-            });
+                int userId = Convert.ToInt32(User.Claims.First().Value);
+                List<TblOfflineOrder> list = _core.OfflineOrder.Get(i => i.ClientId == Main.SelectUser(userId).ClientId, orderBy: i => i.OrderByDescending(i => i.DateSubmited)).ToList();
+                return await Task.FromResult(View(list));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+        }
+        public async Task<IActionResult> OfflineOrder(int id)
+        {
+            try
+            {
+                ViewBag.Product = _core.Product.GetById(id).Name;
+                return await Task.FromResult(View(new TblOfflineOrder()
+                {
+                    ProductId = id
+                }));
+
+            }
+            catch
+            {
+                return await Task.FromResult(View("Error"));
+            }
+
+
         }
         [HttpPost]
         public async Task<IActionResult> OfflineOrder(TblOfflineOrder offlineOrder)
         {
             try
             {
-                offlineOrder.ClientId = SelectUser().ClientId;
+                int userId = Convert.ToInt32(User.Claims.First().Value);
+                offlineOrder.ClientId = Main.SelectUser(userId).ClientId;
                 offlineOrder.DateSubmited = DateTime.Now;
                 _core.OfflineOrder.Add(offlineOrder);
                 _core.Save();
@@ -49,7 +62,6 @@ namespace NimaProj.Areas.User.Controllers
             {
                 return await Task.FromResult(Redirect("Error"));
             }
-
         }
     }
 }

@@ -15,14 +15,28 @@ namespace NimaProj.Areas.Admin.Controllers
     public class ContactUsController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index(int page = 1)
+        public async Task<IActionResult> Index(int page = 1)
         {
-            IEnumerable<TblContactU> contactUs = PagingList.Create(_core.ContactU.Get(), 40, page);
-            return View(contactUs);
+            try
+            {
+                IEnumerable<TblContactU> contactUs = PagingList.Create(_core.ContactU.Get(), 40, page);
+                return await Task.FromResult(View(contactUs));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
-        public IActionResult Info(int id)
+        public async Task<IActionResult> Info(int id)
         {
-            return ViewComponent("ContactUsInfoAdmin", new { id = id });
+            try
+            {
+                return await Task.FromResult(ViewComponent("ContactUsInfoAdmin", new { id = id }));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
     }
 }

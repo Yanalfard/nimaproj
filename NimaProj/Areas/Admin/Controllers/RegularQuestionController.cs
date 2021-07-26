@@ -16,53 +16,99 @@ namespace NimaProj.Areas.Admin.Controllers
     {
         Core _core = new Core();
 
-        public IActionResult Index(int page = 1)
+        public async Task<IActionResult> Index(int page = 1)
         {
-            IEnumerable<TblRegularQuestion> regularQuestions = PagingList.Create(_core.RegularQuestion.Get().OrderByDescending(rq=>rq.RegularQuestionId), 40, page);
-            return View(regularQuestions);
+
+            try
+            {
+                IEnumerable<TblRegularQuestion> regularQuestions = PagingList.Create(_core.RegularQuestion.Get().OrderByDescending(rq => rq.RegularQuestionId), 40, page);
+                return await Task.FromResult(View(regularQuestions));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return ViewComponent("CreateRegularQuestionAdmin");
+            try
+            {
+                return await Task.FromResult(ViewComponent("CreateRegularQuestionAdmin"));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
 
         [HttpPost]
-        public IActionResult Create(TblRegularQuestion regularQuestion)
+        public async Task<IActionResult> Create(TblRegularQuestion regularQuestion)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _core.RegularQuestion.Add(regularQuestion);
-                _core.Save();
-                return Redirect("/Admin/RegularQuestion");
+                if (ModelState.IsValid)
+                {
+                    _core.RegularQuestion.Add(regularQuestion);
+                    _core.Save();
+                    return Redirect("/Admin/RegularQuestion");
+                }
+                return await Task.FromResult(View(regularQuestion));
             }
-            return View(regularQuestion);
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return ViewComponent("EditRegularQuestionAdmin", new { id = id });
+            try
+            {
+                return await Task.FromResult(ViewComponent("EditRegularQuestionAdmin", new { id = id }));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
 
         [HttpPost]
-        public IActionResult Edit(TblRegularQuestion regularQuestion)
+        public async Task<IActionResult> Edit(TblRegularQuestion regularQuestion)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _core.RegularQuestion.Update(regularQuestion);
-                _core.Save();
-                return Redirect("/Admin/RegularQuestion");
+                if (ModelState.IsValid)
+                {
+                    _core.RegularQuestion.Update(regularQuestion);
+                    _core.Save();
+                    return Redirect("/Admin/RegularQuestion");
+                }
+                return await Task.FromResult(View(regularQuestion));
             }
-
-            return View(regularQuestion);
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
 
 
-        public IActionResult RegularQuestionInfo(int id)
+        public async Task<IActionResult> RegularQuestionInfo(int id)
         {
-            return ViewComponent("RegularQuestionInfoAdmin", new { id = id });
+            try
+            {
+                return await Task.FromResult(ViewComponent("RegularQuestionInfoAdmin", new { id = id }));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
 
         [HttpPost]
@@ -80,7 +126,7 @@ namespace NimaProj.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
-    
-    
+
+
     }
 }

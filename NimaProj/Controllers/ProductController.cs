@@ -14,49 +14,60 @@ namespace NimaProj.Controllers
     public class ProductController : Controller
     {
         private Core _core = new Core();
-        TblClient SelectUser()
-        {
-            int userId = Convert.ToInt32(User.Claims.First().Value);
-            TblClient selectUser = _core.Client.GetById(userId);
-            return selectUser;
-        }
         [Route("Product/{id?}/{name?}")]
-        public IActionResult Index(int page = 1, int? id = 0, string name = "", string nameSearch = "")
+        public async Task<IActionResult> Index(int page = 1, int? id = 0, string name = "", string nameSearch = "")
         {
+            try
+            {
 
-            List<TblProduct> list = new List<TblProduct>();
-            if (id != 0)
-            {
-                ViewBag.name = name;
-                list.AddRange(_core.Product.Get(i => (i.CatagoryId == id || i.Catagory.ParentId == id) && (i.IsDeleted == false),
-               orderBy: i => i.OrderByDescending(i => i.ProductId)));
+                List<TblProduct> list = new List<TblProduct>();
+                if (id != 0)
+                {
+                    ViewBag.name = name;
+                    list.AddRange(_core.Product.Get(i => (i.CatagoryId == id || i.Catagory.ParentId == id) && (i.IsDeleted == false),
+                   orderBy: i => i.OrderByDescending(i => i.ProductId)));
+                }
+                else
+                {
+                    ViewBag.name = "همه محصولات";
+                    list.AddRange(_core.Product.Get(i => i.IsDeleted == false,
+                        orderBy: i => i.OrderByDescending(i => i.ProductId)));
+                }
+                if (!string.IsNullOrEmpty(nameSearch))
+                {
+                    ViewBag.name = nameSearch;
+                    list = list.Where(i => i.Name.Contains(nameSearch) || i.SearchText.Contains(nameSearch)).ToList();
+                }
+                //    return View(PagingList.Create(list, 2, page));
+                return View(list);
             }
-            else
+            catch (Exception)
             {
-                ViewBag.name = "همه محصولات";
-                list.AddRange(_core.Product.Get(i => i.IsDeleted == false,
-                    orderBy: i => i.OrderByDescending(i => i.ProductId)));
+                return await Task.FromResult(Redirect("Error"));
             }
-            if (!string.IsNullOrEmpty(nameSearch))
-            {
-                ViewBag.name = nameSearch;
-                list = list.Where(i => i.Name.Contains(nameSearch) || i.SearchText.Contains(nameSearch)).ToList();
-            }
-            //    return View(PagingList.Create(list, 2, page));
-            return View(list);
+
 
         }
         [Route("ViewProduct/{id}/{name}")]
-        public IActionResult ProductView(int id, string name = "")
+        public async Task<IActionResult> ProductView(int id, string name = "")
         {
-            TblProduct selectedProduct = _core.Product.GetById(id);
-            List<TblProduct> list = _core.Product.Get(i => i.ProductId != id &&
-            i.CatagoryId == selectedProduct.CatagoryId ||
-              i.SearchText.Contains(selectedProduct.Name)).ToList();
-            list = list.Distinct().ToList();
-            ViewBag.listProducts = list;
-            list.ShuffleList();
-            return View(selectedProduct);
+            try
+            {
+                TblProduct selectedProduct = _core.Product.GetById(id);
+                List<TblProduct> list = _core.Product.Get(i => i.ProductId != id &&
+                i.CatagoryId == selectedProduct.CatagoryId ||
+                  i.SearchText.Contains(selectedProduct.Name)).ToList();
+                list = list.Distinct().ToList();
+                ViewBag.listProducts = list;
+                list.ShuffleList();
+                return await Task.FromResult(View(selectedProduct));
+
+            }
+            catch (Exception)
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
 
         public async Task<IActionResult> SendComment(SendCommentVm comment)
@@ -106,7 +117,7 @@ namespace NimaProj.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
         }
     }

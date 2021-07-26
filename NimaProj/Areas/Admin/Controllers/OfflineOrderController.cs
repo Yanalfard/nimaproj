@@ -15,14 +15,29 @@ namespace NimaProj.Areas.Admin.Controllers
     public class OfflineOrderController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index(int page = 1)
+        public async Task<IActionResult> Index(int page = 1)
         {
-            IEnumerable<TblOfflineOrder> contactUs = PagingList.Create(_core.OfflineOrder.Get(), 40, page);
-            return View(contactUs);
+            try
+            {
+                IEnumerable<TblOfflineOrder> contactUs = PagingList.Create(_core.OfflineOrder.Get(), 40, page);
+                return await Task.FromResult(View(contactUs));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+            
         }
-        public IActionResult Info(int id)
+        public async Task<IActionResult> Info(int id)
         {
-            return ViewComponent("OfflineOrderInfoAdmin", new { id = id });
+            try
+            {
+                return await Task.FromResult(ViewComponent("OfflineOrderInfoAdmin", new { id = id }));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
         public void DoneOrder(int id)
         {

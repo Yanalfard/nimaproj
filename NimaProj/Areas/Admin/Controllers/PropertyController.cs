@@ -15,10 +15,17 @@ namespace NimaProj.Areas.Admin.Controllers
     public class PropertyController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index(int page=1)
+        public async Task<IActionResult> Index(int page=1)
         {
-            IEnumerable<TblProperty> properties = PagingList.Create(_core.Property.Get().OrderByDescending(p=>p.PropertyId), 10, page);
-            return View(properties);
+            try
+            {
+                IEnumerable<TblProperty> properties = PagingList.Create(_core.Property.Get().OrderByDescending(p => p.PropertyId), 10, page);
+                return await Task.FromResult(View(properties));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
 
         public string Create(string Name)

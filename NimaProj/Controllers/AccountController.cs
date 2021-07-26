@@ -46,7 +46,7 @@ namespace NimaProj.Controllers
             }
             catch (Exception)
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
 
         }
@@ -100,7 +100,7 @@ namespace NimaProj.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
 
         }
@@ -125,7 +125,7 @@ namespace NimaProj.Controllers
             }
             catch (Exception)
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
         }
         [HttpPost]
@@ -169,7 +169,7 @@ namespace NimaProj.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
 
         }
@@ -185,7 +185,7 @@ namespace NimaProj.Controllers
             }
             catch (Exception)
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
         }
 
@@ -229,7 +229,7 @@ namespace NimaProj.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
         }
         [Route("ForgotPassword")]
@@ -241,7 +241,7 @@ namespace NimaProj.Controllers
             }
             catch (Exception)
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
 
         }
@@ -274,7 +274,7 @@ namespace NimaProj.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
         }
         [Route("ChangePassword/{tell}")]
@@ -289,7 +289,7 @@ namespace NimaProj.Controllers
             }
             catch (Exception)
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
 
         }
@@ -326,7 +326,7 @@ namespace NimaProj.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
 
         }
@@ -341,7 +341,7 @@ namespace NimaProj.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("404.html"));
+                return await Task.FromResult(Redirect("Error"));
             }
         }
 

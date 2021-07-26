@@ -16,15 +16,31 @@ namespace NimaProj.Areas.Admin.Controllers
     {
         Core _core = new Core();
         [HttpGet]
-        public IActionResult Index(int page = 1)
+        public async Task<IActionResult> Index(int page = 1)
         {
-            IEnumerable<TblComment> comments = PagingList.Create(_core.Comment.Get(i=>i.IsBlog).OrderByDescending(c => c.DateCreated), 30, page);
-            return View(comments);
+            try
+            {
+                IEnumerable<TblComment> comments = PagingList.Create(_core.Comment.Get(i => i.IsBlog).OrderByDescending(c => c.DateCreated), 30, page);
+                return await Task.FromResult(View(comments));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
 
-        public IActionResult Info(int id)
+        public async Task<IActionResult> Info(int id)
         {
-            return ViewComponent("CommentInfoAdmin", new { id = id });
+            try
+            {
+
+                return await Task.FromResult(ViewComponent("CommentInfoAdmin", new { id = id }));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
 
         public string Delete(int id)

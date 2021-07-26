@@ -17,114 +17,165 @@ namespace NimaProj.Areas.Admin.Controllers
     public class CatagoryController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index(int page = 1)
+        public async Task<IActionResult> Index(int page = 1)
         {
-            IEnumerable<TblCatagory> catagories = PagingList.Create(_core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false), 10, page);
-            return View(catagories);
+            try
+            {
+                IEnumerable<TblCatagory> catagories = PagingList.Create(_core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false), 10, page);
+                return await Task.FromResult(View(catagories));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
 
         [HttpGet]
-        public IActionResult Create(int? Id)
+        public async Task<IActionResult> Create(int? Id)
         {
-            return ViewComponent("CreateCatagoryAdmin", new { Id = Id });
+            try
+            {
+                return await Task.FromResult(ViewComponent("CreateCatagoryAdmin", new { Id = Id }));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TblCatagory catagory, IFormFile ImageUrl)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
-                {
-                    catagory.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
-                    string savePath = Path.Combine(
-                                            Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory", catagory.ImageUrl
-                                        );
-                    using (var stream = new FileStream(savePath, FileMode.Create))
-                    {
-                        await ImageUrl.CopyToAsync(stream);
-                    };
-                    /// #region resize Image
-                    ImageConvertor imgResizer = new ImageConvertor();
-                    string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory/thumb", catagory.ImageUrl);
-                    imgResizer.Image_resize(savePath, thumbPath, 300);
-                    /// #endregion
-                }
-                if (catagory.ParentId == null)
-                {
 
-                    _core.Catagory.Add(catagory);
-                    _core.Save();
-                    return Redirect("/Admin/Catagory");
-                }
-                else
+                if (ModelState.IsValid)
                 {
-                    catagory.IsOnFirstPage = true;
-                    _core.Catagory.Add(catagory);
-                    _core.Save();
-                    return Redirect("/Admin/Catagory");
+                    if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
+                    {
+                        catagory.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
+                        string savePath = Path.Combine(
+                                                Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory", catagory.ImageUrl
+                                            );
+                        using (var stream = new FileStream(savePath, FileMode.Create))
+                        {
+                            await ImageUrl.CopyToAsync(stream);
+                        };
+                        /// #region resize Image
+                        ImageConvertor imgResizer = new ImageConvertor();
+                        string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory/thumb", catagory.ImageUrl);
+                        imgResizer.Image_resize(savePath, thumbPath, 300);
+                        /// #endregion
+                    }
+                    if (catagory.ParentId == null)
+                    {
+
+                        _core.Catagory.Add(catagory);
+                        _core.Save();
+                        return Redirect("/Admin/Catagory");
+                    }
+                    else
+                    {
+                        TblCatagory update = _core.Catagory.GetById(catagory.ParentId);
+                        update.IsOnFirstPage = true;
+                        _core.Catagory.Update(update);
+                        _core.Catagory.Add(catagory);
+                        _core.Save();
+                        return Redirect("/Admin/Catagory");
+                    }
                 }
+                return await Task.FromResult(PartialView("Create", catagory));
             }
-            return PartialView("Create", catagory);
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
 
         [HttpGet]
-        public IActionResult Edit(int Id)
+        public async Task<IActionResult> Edit(int Id)
         {
-            return ViewComponent("EditCatagoryAdmin", new { Id = Id });
+            try
+            {
+                return await Task.FromResult(ViewComponent("EditCatagoryAdmin", new { Id = Id }));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(TblCatagory catagory, IFormFile ImageUrl)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
-                {
-                    try
-                    {
-                        var deleteImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory", catagory.ImageUrl);
-                        if (System.IO.File.Exists(deleteImagePath))
-                        {
-                            System.IO.File.Delete(deleteImagePath);
-                        }
-                        var deleteImagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory/thumb", catagory.ImageUrl);
-                        if (System.IO.File.Exists(deleteImagePath2))
-                        {
-                            System.IO.File.Delete(deleteImagePath2);
-                        }
-                    }
-                    catch
-                    {
 
-                    }
-                    catagory.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
-                    string savePath = Path.Combine(
-                                               Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory", catagory.ImageUrl
-                                           );
-                    using (var stream = new FileStream(savePath, FileMode.Create))
+                if (ModelState.IsValid)
+                {
+                    if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
                     {
-                        await ImageUrl.CopyToAsync(stream);
-                    };
-                    /// #region resize Image
-                    ImageConvertor imgResizer = new ImageConvertor();
-                    string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory/thumb", catagory.ImageUrl);
-                    imgResizer.Image_resize(savePath, thumbPath, 300);
-                    /// #endregion
+                        try
+                        {
+                            var deleteImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory", catagory.ImageUrl);
+                            if (System.IO.File.Exists(deleteImagePath))
+                            {
+                                System.IO.File.Delete(deleteImagePath);
+                            }
+                            var deleteImagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory/thumb", catagory.ImageUrl);
+                            if (System.IO.File.Exists(deleteImagePath2))
+                            {
+                                System.IO.File.Delete(deleteImagePath2);
+                            }
+                        }
+                        catch
+                        {
+
+                        }
+                        catagory.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
+                        string savePath = Path.Combine(
+                                                   Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory", catagory.ImageUrl
+                                               );
+                        using (var stream = new FileStream(savePath, FileMode.Create))
+                        {
+                            await ImageUrl.CopyToAsync(stream);
+                        };
+                        /// #region resize Image
+                        ImageConvertor imgResizer = new ImageConvertor();
+                        string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Catagory/thumb", catagory.ImageUrl);
+                        imgResizer.Image_resize(savePath, thumbPath, 300);
+                        /// #endregion
+                    }
+                    _core.Catagory.Update(catagory);
+                    _core.Save();
+                    return Redirect("/Admin/Catagory");
                 }
-                _core.Catagory.Update(catagory);
-                _core.Save();
-                return Redirect("/Admin/Catagory");
+                return await Task.FromResult(View(catagory));
             }
-            return View(catagory);
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
 
         [HttpGet]
-        public IActionResult ShowChilds(int Id)
+        public async Task<IActionResult> ShowChilds(int Id)
         {
-            return ViewComponent("ShowChildsCatagoryAdmin", new { Id = Id });
+            try
+            {
+                return await Task.FromResult(ViewComponent("ShowChildsCatagoryAdmin", new { Id = Id }));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
 
         public string Delete(int id)
@@ -147,6 +198,16 @@ namespace NimaProj.Areas.Admin.Controllers
                     if (System.IO.File.Exists(deleteImagePath2))
                     {
                         System.IO.File.Delete(deleteImagePath);
+                    }
+                    if (selectedCategory.ParentId != null)
+                    {
+                        if (!_core.Catagory.Any(i => i.ParentId == selectedCategory.ParentId && i.CatagoryId != selectedCategory.CatagoryId))
+                        {
+                            TblCatagory update = _core.Catagory.GetById(selectedCategory.ParentId);
+                            update.IsOnFirstPage = false;
+                            _core.Catagory.Update(update);
+                            _core.Save();
+                        }
                     }
                 }
                 _core.Catagory.DeleteById(id);

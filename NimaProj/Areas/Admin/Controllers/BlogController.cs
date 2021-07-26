@@ -18,22 +18,28 @@ namespace NimaProj.Areas.Admin.Controllers
     public class BlogController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index(int page = 1, string Search = null)
+        public async Task<IActionResult> Index(int page = 1, string Search = null)
         {
-
-            ViewBag.namBlog = Search;
-            if (!string.IsNullOrEmpty(Search))
+            try
             {
-                IEnumerable<TblBlog> blogs = PagingList.Create(_core.Blog.Get(b => b.Title.Contains(Search)), 30, page);
-
-                return View(blogs);
+                ViewBag.namBlog = Search;
+                if (!string.IsNullOrEmpty(Search))
+                {
+                    IEnumerable<TblBlog> blogs = PagingList.Create(_core.Blog.Get(b => b.Title.Contains(Search)), 30, page);
+                    return await Task.FromResult(View(blogs));
+                }
+                else
+                {
+                    IEnumerable<TblBlog> blogs = PagingList.Create(_core.Blog.Get().OrderByDescending(b => b.BlogId), 30, page);
+                    return await Task.FromResult(View(blogs));
+                }
             }
-            else
+            catch
             {
-                IEnumerable<TblBlog> blogs = PagingList.Create(_core.Blog.Get().OrderByDescending(b => b.BlogId), 30, page);
-
-                return View(blogs);
+                return await Task.FromResult(Redirect("Error"));
             }
+
+
         }
 
         [HttpGet]
@@ -88,65 +94,75 @@ namespace NimaProj.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> EditAsync(TblBlog blog, IFormFile MainImage)
         {
-            if (ModelState.IsValid)
+            try
             {
-                TblBlog Editblog = _core.Blog.GetById(blog.BlogId);
-                if (MainImage != null && MainImage.IsImages() && MainImage.Length < 3000000)
+                if (ModelState.IsValid)
                 {
-                    try
+                    TblBlog Editblog = _core.Blog.GetById(blog.BlogId);
+                    if (MainImage != null && MainImage.IsImages() && MainImage.Length < 3000000)
                     {
-                        var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs", Editblog.MainImage);
-
-                        if (System.IO.File.Exists(imagePath))
+                        try
                         {
-                            System.IO.File.Delete(imagePath);
+                            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs", Editblog.MainImage);
+
+                            if (System.IO.File.Exists(imagePath))
+                            {
+                                System.IO.File.Delete(imagePath);
+                            }
+
+
+                            var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs/thumb", Editblog.MainImage);
+
+                            if (System.IO.File.Exists(imagePath2))
+                            {
+                                System.IO.File.Delete(imagePath2);
+                            }
+
                         }
-
-
-                        var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs/thumb", Editblog.MainImage);
-
-                        if (System.IO.File.Exists(imagePath2))
+                        catch
                         {
-                            System.IO.File.Delete(imagePath2);
+
                         }
+                        blog.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
+                        string savePathAlbum = Path.Combine(
+                                            Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs", blog.MainImage
+                                        );
 
+                        using (var stream = new FileStream(savePathAlbum, FileMode.Create))
+                        {
+                            await MainImage.CopyToAsync(stream);
+                        }
+                        /// #region resize Image
+                        ImageConvertor imgResizer = new ImageConvertor();
+                        string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs/thumb", blog.MainImage);
+                        imgResizer.Image_resize(savePathAlbum, thumbPath, 300);
+                        /// #endregion
                     }
-                    catch
-                    {
 
-                    }
-                    blog.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
-                    string savePathAlbum = Path.Combine(
-                                        Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs", blog.MainImage
-                                    );
-
-                    using (var stream = new FileStream(savePathAlbum, FileMode.Create))
-                    {
-                        await MainImage.CopyToAsync(stream);
-                    }
-                    /// #region resize Image
-                    ImageConvertor imgResizer = new ImageConvertor();
-                    string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs/thumb", blog.MainImage);
-                    imgResizer.Image_resize(savePathAlbum, thumbPath, 300);
-                    /// #endregion
+                    Editblog.CatagoryId = blog.CatagoryId;
+                    Editblog.Title = blog.Title;
+                    Editblog.Description = blog.Description;
+                    Editblog.BodyHtml = blog.BodyHtml;
+                    Editblog.MainImage = blog.MainImage;
+                    _core.Blog.Update(Editblog);
+                    _core.Save();
+                    return await Task.FromResult(Redirect("/Admin/Blog"));
                 }
+                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == true);
 
-                Editblog.CatagoryId = blog.CatagoryId;
-                Editblog.Title = blog.Title;
-                Editblog.Description = blog.Description;
-                Editblog.BodyHtml = blog.BodyHtml;
-                Editblog.MainImage = blog.MainImage;
-                _core.Blog.Update(Editblog);
-                _core.Save();
-                return await Task.FromResult(Redirect("/Admin/Blog"));
+                return await Task.FromResult(View(blog));
             }
-            ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == true);
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
 
-            return await Task.FromResult(View(blog));
+
         }
 
         public void Delete(int id)
         {
+
             TblBlog blog = _core.Blog.GetById(id);
             var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs", blog.MainImage);
 

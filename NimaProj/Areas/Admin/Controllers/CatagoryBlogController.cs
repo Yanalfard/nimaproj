@@ -18,116 +18,165 @@ namespace NimaProj.Areas.Admin.Controllers
     public class CatagoryBlogController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index(int page = 1)
+        public async Task<IActionResult> Index(int page = 1)
         {
-            IEnumerable<TblCatagory> catagories = PagingList.Create(_core.Catagory.Get(c => c.ParentId == null && c.IsBlog == true), 10, page);
-            return View(catagories);
+            try
+            {
+                IEnumerable<TblCatagory> catagories = PagingList.Create(_core.Catagory.Get(c => c.ParentId == null && c.IsBlog == true), 10, page);
+                return await Task.FromResult(View(catagories));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
 
         [HttpGet]
-        public IActionResult Create(int? Id)
+        public async Task<IActionResult> Create(int? Id)
         {
-            return ViewComponent("CreateCatagoryBlogAdmin", new { Id = Id });
+            try
+            {
+                return await Task.FromResult(ViewComponent("CreateCatagoryBlogAdmin", new { Id = Id }));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TblCatagory catagory, IFormFile ImageUrl)
         {
-            if (ModelState.IsValid)
-            {
-                catagory.IsBlog = true;
-                if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
-                {
-                    catagory.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
-                    string savePath = Path.Combine(
-                                            Directory.GetCurrentDirectory(), "wwwroot/Images/CatagoryBlog", catagory.ImageUrl
-                                        );
-                    using (var stream = new FileStream(savePath, FileMode.Create))
-                    {
-                        await ImageUrl.CopyToAsync(stream);
-                    };
-                    /// #region resize Image
-                    ImageConvertor imgResizer = new ImageConvertor();
-                    string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/CatagoryBlog/thumb", catagory.ImageUrl);
-                    imgResizer.Image_resize(savePath, thumbPath, 300);
-                    /// #endregion
-                }
-                if (catagory.ParentId == null)
-                {
 
-                    _core.Catagory.Add(catagory);
-                    _core.Save();
-                    return Redirect("/Admin/CatagoryBlog");
-                }
-                else
+            try
+            {
+                if (ModelState.IsValid)
                 {
-                    catagory.IsOnFirstPage = true;
-                    _core.Catagory.Add(catagory);
-                    _core.Save();
-                    return Redirect("/Admin/CatagoryBlog");
+                    catagory.IsBlog = true;
+                    if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
+                    {
+                        catagory.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
+                        string savePath = Path.Combine(
+                                                Directory.GetCurrentDirectory(), "wwwroot/Images/CatagoryBlog", catagory.ImageUrl
+                                            );
+                        using (var stream = new FileStream(savePath, FileMode.Create))
+                        {
+                            await ImageUrl.CopyToAsync(stream);
+                        };
+                        /// #region resize Image
+                        ImageConvertor imgResizer = new ImageConvertor();
+                        string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/CatagoryBlog/thumb", catagory.ImageUrl);
+                        imgResizer.Image_resize(savePath, thumbPath, 300);
+                        /// #endregion
+                    }
+                    if (catagory.ParentId == null)
+                    {
+                        _core.Catagory.Add(catagory);
+                        _core.Save();
+                        return Redirect("/Admin/CatagoryBlog");
+                    }
+                    else
+                    {
+                        TblCatagory update = _core.Catagory.GetById(catagory.ParentId);
+                        update.IsOnFirstPage = true;
+                        _core.Catagory.Update(update);
+                        _core.Catagory.Add(catagory);
+                        _core.Save();
+                        return await Task.FromResult(Redirect("/Admin/CatagoryBlog"));
+                    }
                 }
+                return await Task.FromResult(PartialView("Create", catagory));
             }
-            return PartialView("Create", catagory);
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
 
         [HttpGet]
-        public IActionResult Edit(int Id)
+        public async Task<IActionResult> Edit(int Id)
         {
-            return ViewComponent("EditCatagoryBlogAdmin", new { Id = Id });
+            try
+            {
+                return await Task.FromResult(ViewComponent("EditCatagoryBlogAdmin", new { Id = Id }));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(TblCatagory catagory, IFormFile ImageUrl)
         {
-            if (ModelState.IsValid)
+            try
             {
-                catagory.IsBlog = true;
-                if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
+                if (ModelState.IsValid)
                 {
-                    try
+                    catagory.IsBlog = true;
+                    if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
                     {
-                        var deleteImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/CatagoryBlog", catagory.ImageUrl);
-                        if (System.IO.File.Exists(deleteImagePath))
+                        try
                         {
-                            System.IO.File.Delete(deleteImagePath);
+                            var deleteImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/CatagoryBlog", catagory.ImageUrl);
+                            if (System.IO.File.Exists(deleteImagePath))
+                            {
+                                System.IO.File.Delete(deleteImagePath);
+                            }
+                            var deleteImagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/CatagoryBlog/thumb", catagory.ImageUrl);
+                            if (System.IO.File.Exists(deleteImagePath2))
+                            {
+                                System.IO.File.Delete(deleteImagePath2);
+                            }
                         }
-                        var deleteImagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/CatagoryBlog/thumb", catagory.ImageUrl);
-                        if (System.IO.File.Exists(deleteImagePath2))
+                        catch
                         {
-                            System.IO.File.Delete(deleteImagePath2);
-                        }
-                    }
-                    catch
-                    {
 
+                        }
+                        catagory.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
+                        string savePath = Path.Combine(
+                                                   Directory.GetCurrentDirectory(), "wwwroot/Images/CatagoryBlog", catagory.ImageUrl
+                                               );
+                        using (var stream = new FileStream(savePath, FileMode.Create))
+                        {
+                            await ImageUrl.CopyToAsync(stream);
+                        };
+                        /// #region resize Image
+                        ImageConvertor imgResizer = new ImageConvertor();
+                        string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/CatagoryBlog/thumb", catagory.ImageUrl);
+                        imgResizer.Image_resize(savePath, thumbPath, 300);
+                        /// #endregion
                     }
-                    catagory.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
-                    string savePath = Path.Combine(
-                                               Directory.GetCurrentDirectory(), "wwwroot/Images/CatagoryBlog", catagory.ImageUrl
-                                           );
-                    using (var stream = new FileStream(savePath, FileMode.Create))
-                    {
-                        await ImageUrl.CopyToAsync(stream);
-                    };
-                    /// #region resize Image
-                    ImageConvertor imgResizer = new ImageConvertor();
-                    string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/CatagoryBlog/thumb", catagory.ImageUrl);
-                    imgResizer.Image_resize(savePath, thumbPath, 300);
-                    /// #endregion
+                    _core.Catagory.Update(catagory);
+                    _core.Save();
+                    return Redirect("/Admin/CatagoryBlog");
                 }
-                _core.Catagory.Update(catagory);
-                _core.Save();
-                return Redirect("/Admin/CatagoryBlog");
+                return await Task.FromResult(View(catagory));
+
             }
-            return View(catagory);
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
+
         }
 
         [HttpGet]
-        public IActionResult ShowChilds(int Id)
+        public async Task<IActionResult> ShowChilds(int Id)
         {
-            return ViewComponent("ShowChildsCatagoryBlogAdmin", new { Id = Id });
+            try
+            {
+                return await Task.FromResult(ViewComponent("ShowChildsCatagoryBlogAdmin", new { Id = Id }));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
 
         public string Delete(int id)
@@ -150,6 +199,16 @@ namespace NimaProj.Areas.Admin.Controllers
                     if (System.IO.File.Exists(deleteImagePath2))
                     {
                         System.IO.File.Delete(deleteImagePath);
+                    }
+                }
+                if (selectedCategory.ParentId != null)
+                {
+                    if (!_core.Catagory.Any(i => i.ParentId == selectedCategory.ParentId && i.CatagoryId != selectedCategory.CatagoryId))
+                    {
+                        TblCatagory update = _core.Catagory.GetById(selectedCategory.ParentId);
+                        update.IsOnFirstPage = false;
+                        _core.Catagory.Update(update);
+                        _core.Save();
                     }
                 }
                 _core.Catagory.DeleteById(id);

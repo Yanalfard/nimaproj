@@ -111,7 +111,7 @@
         function Delete(id) {
             if (confirm('آیا از حذف   مورد نظر مطمئن هستید؟')) {
                 $("#overlay").fadeIn(300);
-                $.get("/Admin/Catagory/Delete/" + id, function (result) {
+                $.get("/Admin/CatagoryBlog/Delete/" + id, function (result) {
                     if (result == "true") {
                         $("#overlay").fadeOut(300);
                         $('.catId_' + id).addClass('uk-text-danger');
@@ -121,6 +121,7 @@
                         UIkit.notification('این دسته بندی نمیتواند حذف شود');
                     }
                 });
+                $("#overlay").fadeOut(300);
             }
 
         }
