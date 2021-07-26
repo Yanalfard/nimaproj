@@ -19,7 +19,7 @@ namespace NimaProj.Areas.Admin.Controllers
     {
         Core _core = new Core();
         [HttpGet]
-        public IActionResult Index(ProductsInAdminVm productsInAdmin)
+        public async Task<IActionResult> Index(ProductsInAdminVm productsInAdmin)
         {
             try
             {
@@ -31,28 +31,26 @@ namespace NimaProj.Areas.Admin.Controllers
                 }
                 ViewBag.pageid = productsInAdmin.PageId;
                 ViewBag.Search = productsInAdmin.Search;
-                return View(PagingList.Create(data.OrderByDescending(b => b.ProductId), 20, productsInAdmin.PageId));
-
+                return await Task.FromResult(View(PagingList.Create(data.OrderByDescending(b => b.ProductId), 20, productsInAdmin.PageId)));
             }
             catch
             {
-                return Redirect("/");
+                return await Task.FromResult(Redirect("Error"));
             }
-
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             try
             {
                 ViewBag.Brands = _core.Brand.Get();
                 ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false);
-                return View();
+                return await Task.FromResult(View());
             }
             catch
             {
-                return RedirectToAction("Index");
+                return await Task.FromResult(Redirect("Error"));
             }
 
         }
@@ -66,7 +64,8 @@ namespace NimaProj.Areas.Admin.Controllers
 
             try
             {
-             
+                ViewBag.Brands = _core.Brand.Get();
+                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false);
                 if (ModelState.IsValid)
                 {
                     if (MainImage == null)
@@ -134,39 +133,43 @@ namespace NimaProj.Areas.Admin.Controllers
 
 
                 }
-                ViewBag.Brands = _core.Brand.Get();
-                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false);
+
                 return await Task.FromResult(View(product));
             }
             catch
             {
-                return RedirectToAction("Index");
+                return await Task.FromResult(Redirect("Error"));
             }
-
         }
 
 
         [HttpGet]
-        public IActionResult PropertyList()
+        public async Task<IActionResult> PropertyList()
         {
-            return ViewComponent("PropertyListAdmin");
+            try
+            {
+                return await Task.FromResult(ViewComponent("PropertyListAdmin"));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
-        public IActionResult AddProperty(int id)
+        public async Task<IActionResult> AddProperty(int id)
         {
             try
             {
                 ViewBag.id = id;
                 List<TblProperty> list = _core.ProductPropertyRel.Get(i => i.ProductId == id).Select(i => i.Property).ToList();
-                return View(_core.Product.GetById(id));
+                return await Task.FromResult(View(_core.Product.GetById(id)));
             }
             catch
             {
-                return RedirectToAction("Index");
+                return await Task.FromResult(Redirect("Error"));
             }
-
         }
         [HttpPost]
-        public IActionResult AddProperty(int id, List<int?> PropertyId, List<string> Value)
+        public async Task<IActionResult> AddProperty(int id, List<int?> PropertyId, List<string> Value)
         {
             try
             {
@@ -194,28 +197,27 @@ namespace NimaProj.Areas.Admin.Controllers
                         _core.Save();
                     }
                 }
-                return RedirectToAction("Index");
+                return await Task.FromResult(RedirectToAction("Index"));
             }
             catch
             {
-                return RedirectToAction("Index");
+                return await Task.FromResult(Redirect("Error"));
             }
 
         }
 
-        public IActionResult AddGallery(int id)
+        public async Task<IActionResult> AddGallery(int id)
         {
             try
             {
                 ViewBag.id = id;
                 List<TblProductImageRel> list = _core.ProductImageRel.Get(i => i.ProductId == id).ToList();
-                return View(list);
+                return await Task.FromResult(View(list));
             }
             catch
             {
-                return RedirectToAction("Index");
+                return await Task.FromResult(Redirect("Error"));
             }
-
         }
         [HttpPost]
         public async Task<IActionResult> AddGallery(int id, List<IFormFile> GalleryFile)
@@ -256,12 +258,11 @@ namespace NimaProj.Areas.Admin.Controllers
 
                     }
                 }
-
-                return RedirectToAction("Index");
+                return await Task.FromResult(RedirectToAction("Index"));
             }
             catch
             {
-                return RedirectToAction("Index");
+                return await Task.FromResult(Redirect("Error"));
             }
 
         }
@@ -283,28 +284,35 @@ namespace NimaProj.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             try
             {
                 ViewBag.Brands = _core.Brand.Get();
                 ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false);
-                return View(_core.Product.GetById(id));
+                return await Task.FromResult(View(_core.Product.GetById(id)));
             }
             catch
             {
-                return RedirectToAction("Index");
+                return await Task.FromResult(Redirect("Error"));
             }
-
         }
 
         [HttpPost]
-        public IActionResult DeleteProperty(int id)
+        public async Task<IActionResult> DeleteProperty(int id)
         {
-            TblProductPropertyRel rel = _core.ProductPropertyRel.GetById(id);
-            bool isDeleted = _core.ProductPropertyRel.Delete(rel);
-            _core.Save();
-            return Ok(isDeleted);
+            try
+            {
+                TblProductPropertyRel rel = _core.ProductPropertyRel.GetById(id);
+                bool isDeleted = _core.ProductPropertyRel.Delete(rel);
+                _core.Save();
+                return await Task.FromResult(Ok(isDeleted));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
 
         [HttpPost]
@@ -315,7 +323,8 @@ namespace NimaProj.Areas.Admin.Controllers
         {
             try
             {
-              
+                ViewBag.Brands = _core.Brand.Get();
+                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false);
                 if (ModelState.IsValid)
                 {
                     TblProduct EditProduct = _core.Product.GetById(product.ProductId);
@@ -375,35 +384,46 @@ namespace NimaProj.Areas.Admin.Controllers
                     _core.Save();
                     return await Task.FromResult(Redirect("/Admin/Product"));
                 }
-                ViewBag.Brands = _core.Brand.Get();
-                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null && c.IsBlog == false);
-                return View(product);
+                return await Task.FromResult(View(product));
             }
             catch
             {
-                return RedirectToAction("Index");
+                return await Task.FromResult(Redirect("Error"));
             }
 
 
         }
 
         [HttpGet]
-        public IActionResult StopSales(bool id)
+        public async Task<IActionResult> StopSales(bool id)
         {
-            List<TblProduct> products = _core.Product.Get().ToList();
-            foreach (TblProduct i in products)
+            try
             {
-                i.IsDeleted = id;
-                _core.Product.Update(i);
+                List<TblProduct> products = _core.Product.Get().ToList();
+                foreach (TblProduct i in products)
+                {
+                    i.IsDeleted = id;
+                    _core.Product.Update(i);
+                }
+                _core.Save();
+                return await Task.FromResult(Redirect("/Admin/Product"));
             }
-
-            _core.Save();
-            return Redirect("/Admin/Product");
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
 
-        public IActionResult SpecialOffer(int id)
+        public async Task<IActionResult> SpecialOffer(int id)
         {
-            return ViewComponent("SpecialOfferAddAdmin", new { id = id });
+            try
+            {
+                return await Task.FromResult(ViewComponent("SpecialOfferAddAdmin", new { id = id }));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
 
         public string Delete(int id)

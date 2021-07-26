@@ -17,104 +17,148 @@ namespace NimaProj.Areas.Admin.Controllers
     public class BrandController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index(int page = 1)
+        public async Task<IActionResult> Index(int page = 1)
         {
-            IEnumerable<TblBrand> catagories = PagingList.Create(_core.Brand.Get(), 10, page);
-            return View(catagories);
+            try
+            {
+                IEnumerable<TblBrand> catagories = PagingList.Create(_core.Brand.Get(), 10, page);
+                return await Task.FromResult(View(catagories));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
 
         [HttpGet]
-        public IActionResult Create(int? Id)
+        public async Task<IActionResult> Create(int? Id)
         {
-            return ViewComponent("CreateBrandAdmin", new { Id = Id });
+            try
+            {
+                return await Task.FromResult(ViewComponent("CreateBrandAdmin", new { Id = Id }));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TblBrand brand, IFormFile ImageUrl)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
+                if (ModelState.IsValid)
                 {
-                    brand.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
-                    string savePath = Path.Combine(
-                                            Directory.GetCurrentDirectory(), "wwwroot/Images/Brand", brand.ImageUrl
-                                        );
-                    using (var stream = new FileStream(savePath, FileMode.Create))
+                    if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
                     {
-                        await ImageUrl.CopyToAsync(stream);
-                    };
-                    /// #region resize Image
-                    ImageConvertor imgResizer = new ImageConvertor();
-                    string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Brand/thumb", brand.ImageUrl);
-                    imgResizer.Image_resize(savePath, thumbPath, 300);
-                    /// #endregion
-                }
+                        brand.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
+                        string savePath = Path.Combine(
+                                                Directory.GetCurrentDirectory(), "wwwroot/Images/Brand", brand.ImageUrl
+                                            );
+                        using (var stream = new FileStream(savePath, FileMode.Create))
+                        {
+                            await ImageUrl.CopyToAsync(stream);
+                        };
+                        /// #region resize Image
+                        ImageConvertor imgResizer = new ImageConvertor();
+                        string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Brand/thumb", brand.ImageUrl);
+                        imgResizer.Image_resize(savePath, thumbPath, 300);
+                        /// #endregion
+                    }
+                    _core.Brand.Add(brand);
+                    _core.Save();
+                    return await Task.FromResult(Redirect("/Admin/Brand"));
 
-                _core.Brand.Add(brand);
-                _core.Save();
-                return Redirect("/Admin/Brand");
+                }
+                return await Task.FromResult(PartialView("Create", brand));
             }
-            return PartialView("Create", brand);
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
 
         [HttpGet]
-        public IActionResult Edit(int Id)
+        public async Task<IActionResult> Edit(int Id)
         {
-            return ViewComponent("EditBrandAdmin", new { Id = Id });
+            try
+            {
+                return await Task.FromResult(ViewComponent("EditBrandAdmin", new { Id = Id }));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(TblBrand brand, IFormFile ImageUrl)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
+                if (ModelState.IsValid)
                 {
-                    try
+                    if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
                     {
-                        var deleteImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Brand", brand.ImageUrl);
-                        if (System.IO.File.Exists(deleteImagePath))
+                        try
                         {
-                            System.IO.File.Delete(deleteImagePath);
+                            var deleteImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Brand", brand.ImageUrl);
+                            if (System.IO.File.Exists(deleteImagePath))
+                            {
+                                System.IO.File.Delete(deleteImagePath);
+                            }
+                            var deleteImagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Brand/thumb", brand.ImageUrl);
+                            if (System.IO.File.Exists(deleteImagePath2))
+                            {
+                                System.IO.File.Delete(deleteImagePath2);
+                            }
                         }
-                        var deleteImagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Brand/thumb", brand.ImageUrl);
-                        if (System.IO.File.Exists(deleteImagePath2))
+                        catch
                         {
-                            System.IO.File.Delete(deleteImagePath2);
-                        }
-                    }
-                    catch
-                    {
 
+                        }
+                        brand.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
+                        string savePath = Path.Combine(
+                                                   Directory.GetCurrentDirectory(), "wwwroot/Images/Brand", brand.ImageUrl
+                                               );
+                        using (var stream = new FileStream(savePath, FileMode.Create))
+                        {
+                            await ImageUrl.CopyToAsync(stream);
+                        };
+                        /// #region resize Image
+                        ImageConvertor imgResizer = new ImageConvertor();
+                        string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Brand/thumb", brand.ImageUrl);
+                        imgResizer.Image_resize(savePath, thumbPath, 300);
+                        /// #endregion
                     }
-                    brand.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
-                    string savePath = Path.Combine(
-                                               Directory.GetCurrentDirectory(), "wwwroot/Images/Brand", brand.ImageUrl
-                                           );
-                    using (var stream = new FileStream(savePath, FileMode.Create))
-                    {
-                        await ImageUrl.CopyToAsync(stream);
-                    };
-                    /// #region resize Image
-                    ImageConvertor imgResizer = new ImageConvertor();
-                    string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Brand/thumb", brand.ImageUrl);
-                    imgResizer.Image_resize(savePath, thumbPath, 300);
-                    /// #endregion
+                    _core.Brand.Update(brand);
+                    _core.Save();
+                    return Redirect("/Admin/Brand");
                 }
-                _core.Brand.Update(brand);
-                _core.Save();
-                return Redirect("/Admin/Brand");
+                return await Task.FromResult(View(brand));
             }
-            return View(brand);
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
 
         [HttpGet]
-        public IActionResult ShowChilds(int Id)
+        public async Task<IActionResult> ShowChilds(int Id)
         {
-            return ViewComponent("ShowChildsBrandAdmin", new { Id = Id });
+            try
+            {
+                return await Task.FromResult(ViewComponent("ShowChildsBrandAdmin", new { Id = Id }));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
 
         public string Delete(int id)

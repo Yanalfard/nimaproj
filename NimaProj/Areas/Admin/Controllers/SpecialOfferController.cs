@@ -15,24 +15,38 @@ namespace NimaProj.Areas.Admin.Controllers
     public class SpecialOfferController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index(int page = 1)
+        public async Task<IActionResult> Index(int page = 1)
         {
-            IEnumerable<TblSpecialOffer> SpecialOffers = PagingList.Create(_core.SpecialOffer.Get().OrderByDescending(so => so.SpecialOfferId), 40, page);
-            return View(SpecialOffers);
+            try
+            {
+                IEnumerable<TblSpecialOffer> SpecialOffers = PagingList.Create(_core.SpecialOffer.Get().OrderByDescending(so => so.SpecialOfferId), 40, page);
+                return await Task.FromResult(View(SpecialOffers));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
 
-        public IActionResult CreateSpecialOffer(TblSpecialOffer specialOffer, int Till)
+        public async Task<IActionResult> CreateSpecialOffer(TblSpecialOffer specialOffer, int Till)
         {
-            if (ModelState.IsValid)
+            try
             {
-                TblSpecialOffer NewspecialOffer = new TblSpecialOffer();
-                NewspecialOffer.ProductId = specialOffer.ProductId;
-                NewspecialOffer.ValidTill = DateTime.Now.AddDays(Till);
-                _core.SpecialOffer.Add(NewspecialOffer);
-                _core.Save();
-                return Redirect("/Admin/Product");
+                if (ModelState.IsValid)
+                {
+                    TblSpecialOffer NewspecialOffer = new TblSpecialOffer();
+                    NewspecialOffer.ProductId = specialOffer.ProductId;
+                    NewspecialOffer.ValidTill = DateTime.Now.AddDays(Till);
+                    _core.SpecialOffer.Add(NewspecialOffer);
+                    _core.Save();
+                    return Redirect("/Admin/Product");
+                }
+                return await Task.FromResult(View(specialOffer));
             }
-            return View(specialOffer);
+            catch
+            {
+                return await Task.FromResult(Redirect("Error"));
+            }
         }
 
         [HttpPost]
