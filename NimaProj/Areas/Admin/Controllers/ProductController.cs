@@ -197,7 +197,7 @@ namespace NimaProj.Areas.Admin.Controllers
                         _core.Save();
                     }
                 }
-                return await Task.FromResult(RedirectToAction("Index"));
+                return await Task.FromResult(Redirect("/Admin/Product"));
             }
             catch
             {
