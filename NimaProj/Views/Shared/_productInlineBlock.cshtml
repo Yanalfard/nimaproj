@@ -12,7 +12,7 @@
                 }
                 else
                 {
-                   <img src="~/Images/ProductMain/thumb/@Model.MainImage" class="img2-product img-fluid" />
+                    <img src="~/Images/ProductMain/thumb/@Model.MainImage" class="img2-product img-fluid" />
                 }
 
             </div>
@@ -37,7 +37,7 @@
                 @if (Model.IsOfflineOrder)
                 {
                     <a class="price mb-0" href="/User/OfflineOrder/OfflineOrder/@Model.ProductId">
-                        سفارش گیری
+                        ثبت سفارش
                     </a>
                 }
                 else
@@ -57,7 +57,7 @@
             <div class="d-flex align-items-center">
                 <a href="/User/OfflineOrder/OfflineOrder/@Model.ProductId"
                    class="btn-animate1">
-                    سفارش گیری   <i class="fal fa-cart-arrow-down mr-3"></i>
+                    ثبت سفارش  <i class="fal fa-cart-arrow-down mr-3"></i>
                 </a>
             </div>
         }

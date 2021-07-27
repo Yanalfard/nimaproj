@@ -39,7 +39,13 @@
                                         <span data-placement="top" data-toggle="tooltip" title="" data-original-title="جزئیات">
                                             <a onclick="Information(@item.CommentId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="information-circle-outline"></a>
                                         </span>
-                                        @if (!item.IsValid)
+                                        @if (item.IsValid)
+                                        {
+                                            <span data-placement="top" data-toggle="tooltip" title="" data-original-title="رد نظر">
+                                                <a onclick="Success(@item.CommentId)" class="text-danger" uk-icon="ban-outline"></a>
+                                            </span>
+                                        }
+                                        else
                                         {
                                             <span data-placement="top" data-toggle="tooltip" title="" data-original-title="تایید نظر">
                                                 <a onclick="Success(@item.CommentId)" class="text-success" uk-icon="checkmark-circle-outline"></a>
