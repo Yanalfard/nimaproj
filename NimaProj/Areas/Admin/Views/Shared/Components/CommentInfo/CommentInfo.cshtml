@@ -23,11 +23,11 @@
                 <label>وضعیت: </label>
                 @if (Model.IsValid)
                 {
-                <span class="text-success">تایید شده</span>
+                    <span class="text-success">تایید شده</span>
                 }
                 else
                 {
-                <span class="text-warning">تایید نشده</span>
+                    <span class="text-warning">تایید نشده</span>
                 }
             </div>
             <div class="form-group col-12">
@@ -35,6 +35,16 @@
                 <div class="bg-light p-3 uk-border-rounded">
                     @Model.Body
                 </div>
+            </div>
+            <div class="form-group col-12">
+                @if (Model.IsValid)
+                {
+                    <a onclick="Success(@Model.CommentId)" class="btn btn-danger btn-sm text-white">رد پیام</a>
+                }
+                else
+                {
+                    <a onclick="Success(@Model.CommentId)" class="btn btn-success btn-sm text-white">تائید پیام</a>
+                }
             </div>
         </div>
     </div>
