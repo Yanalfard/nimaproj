@@ -27,12 +27,9 @@ namespace DataLayer.ViewModels
         public string OrderDetails { get; set; }
         [Required(ErrorMessage = "لطفا درباره ما را کامل کنید")]
         public string DarBareyeMa { get; set; }
-
-
-
-
-
-
+        public bool IsTelegram { get; set; }
+        public bool IsInista { get; set; }
+        public bool IsWhatsapp { get; set; }
 
     }
 }

@@ -13,15 +13,22 @@
     </ul>
 
     <div class="area-socialIcon d-flex ">
-        <a href="@Model.Inista" class="icon instegram">
-            <span class="tooltip-site">Instegram</span>
-        </a>
-        <a href="https://api.whatsapp.com/send?phone=@(Model.Whatsapp)" class="icon fa-whatsapp">
-            <span class="tooltip-site">Whatsapp</span>
-        </a>
-        <a href="@Model.Telegram" class="icon fa-telegram-plane">
-            <span class="tooltip-site">Telegram</span>
-        </a>
-
+        @if (Model.IsInista)
+        {
+            <a href="@Model.Inista" class="icon instegram">
+                <span class="tooltip-site">Instegram</span>
+            </a>
+        }
+        @if (Model.IsWhatsapp)
+        {
+            <a href="https://api.whatsapp.com/send?phone=@(Model.Whatsapp)" class="icon fa-whatsapp">
+                <span class="tooltip-site">Whatsapp</span>
+            </a>
+        }
+        @if (Model.IsTelegram)
+        {<a href="@Model.Telegram" class="icon fa-telegram-plane">
+                <span class="tooltip-site">Telegram</span>
+            </a>
+        }
     </div>
 </div>
