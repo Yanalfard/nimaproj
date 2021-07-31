@@ -34,6 +34,9 @@ namespace NimaProj.Areas.Admin.Controllers
                 config.SharyeteErsal = configs.Where(c => c.Key == "SharyeteErsal").Single().Value;
                 config.OrderDetails = configs.Where(c => c.Key == "OrderDetails").Single().Value;
                 config.DarBareyeMa = configs.Where(c => c.Key == "DarBareyeMa").Single().Value;
+                config.IsInista = Convert.ToBoolean(configs.Where(c => c.Key == "IsInista").Single().Value);
+                config.IsTelegram = Convert.ToBoolean(configs.Where(c => c.Key == "IsTelegram").Single().Value);
+                config.IsWhatsapp = Convert.ToBoolean(configs.Where(c => c.Key == "IsWhatsapp").Single().Value);
                 return await Task.FromResult(View(config));
             }
             catch
@@ -60,6 +63,9 @@ namespace NimaProj.Areas.Admin.Controllers
                     TblConfig ConfigLinkSharyeteErsal = configs.Where(c => c.Key == "SharyeteErsal").Single();
                     TblConfig ConfigLinkOrderDetails = configs.Where(c => c.Key == "OrderDetails").Single();
                     TblConfig ConfigLinkDarBareyeMa = configs.Where(c => c.Key == "DarBareyeMa").Single();
+                    TblConfig ConfigLinkIsInista = configs.Where(c => c.Key == "IsInista").Single();
+                    TblConfig ConfigLinkIsTelegram = configs.Where(c => c.Key == "IsTelegram").Single();
+                    TblConfig ConfigLinkIsWhatsapp = configs.Where(c => c.Key == "IsWhatsapp").Single();
 
                     ConfigLinkEmail.Value = configVm.Email;
                     ConfigLinkTelegram.Value = configVm.Telegram;
@@ -71,6 +77,9 @@ namespace NimaProj.Areas.Admin.Controllers
                     ConfigLinkSharyeteErsal.Value = configVm.SharyeteErsal;
                     ConfigLinkOrderDetails.Value = configVm.OrderDetails;
                     ConfigLinkDarBareyeMa.Value = configVm.DarBareyeMa;
+                    ConfigLinkIsInista.Value = configVm.IsInista.ToString();
+                    ConfigLinkIsTelegram.Value = configVm.IsTelegram.ToString();
+                    ConfigLinkIsWhatsapp.Value = configVm.IsWhatsapp.ToString();
                     _core.Config.Update(ConfigLinkEmail);
                     _core.Config.Update(ConfigLinkTelegram);
                     _core.Config.Update(ConfigLinkInista);
@@ -81,6 +90,9 @@ namespace NimaProj.Areas.Admin.Controllers
                     _core.Config.Update(ConfigLinkSharyeteErsal);
                     _core.Config.Update(ConfigLinkOrderDetails);
                     _core.Config.Update(ConfigLinkDarBareyeMa);
+                    _core.Config.Update(ConfigLinkIsInista);
+                    _core.Config.Update(ConfigLinkIsTelegram);
+                    _core.Config.Update(ConfigLinkIsWhatsapp);
                     _core.Save();
                     return await Task.FromResult(Redirect("/Admin/Config"));
 

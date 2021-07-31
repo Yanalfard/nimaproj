@@ -28,6 +28,9 @@ namespace NimaProj.ViewComponents.View.ContactFooter
             config.Telegram = selectedAll.Where(c => c.Key == "Telegram").FirstOrDefault().Value;
             config.Inista = selectedAll.Where(c => c.Key == "Inista").FirstOrDefault().Value;
             config.Whatsapp = selectedAll.Where(c => c.Key == "Whatsapp").FirstOrDefault().Value;
+            config.IsInista = Convert.ToBoolean(selectedAll.Where(c => c.Key == "IsInista").FirstOrDefault().Value);
+            config.IsTelegram = Convert.ToBoolean(selectedAll.Where(c => c.Key == "IsTelegram").FirstOrDefault().Value);
+            config.IsWhatsapp = Convert.ToBoolean(selectedAll.Where(c => c.Key == "IsWhatsapp").FirstOrDefault().Value);
             return await Task.FromResult((IViewComponentResult)View("~/Views" +
                 "/Shared/Components/ContactFooterComponent/" +
                 "ContactFooterComponent.cshtml"

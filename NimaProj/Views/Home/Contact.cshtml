@@ -5,7 +5,7 @@
 
 
 <main class="content">
-  
+
     <div class="col-12">
         <div class="area-topbar-shop d-md-flex justify-content-between align-items-center mb-5 ">
             <div class="box-select-sort d-flex mb-4 mb-md-0">
@@ -21,7 +21,7 @@
     </div>
 
     <section class="mb-5 pb-sm-2 pb-md-3  pb-lg-4 pb-xl-5">
-      
+
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-4">
@@ -67,15 +67,23 @@
                                 <h2> ما را فالو کنید</h2>
                             </div>
                             <div class="area-socialIcon d-flex ">
-                                <a href="@Model.Inista" target="_blank" class="icon instegram">
-                                    <span class="tooltip-site">instegram</span>
-                                </a>
-                                <a href="https://api.whatsapp.com/send?phone=@(Model.Whatsapp)" target="_blank" class="icon fa-whatsapp">
-                                    <span class="tooltip-site">Whatsapp</span>
-                                </a>
-                                <a href="@Model.Telegram" target="_blank" class="icon fa-telegram-plane">
-                                    <span class="tooltip-site">Telegram</span>
-                                </a>
+                                @if (Model.IsInista)
+                                {
+                                    <a href="@Model.Inista" target="_blank" class="icon instegram">
+                                        <span class="tooltip-site">instegram</span>
+                                    </a>
+                                }
+                                @if (Model.IsWhatsapp)
+                                {<a href="https://api.whatsapp.com/send?phone=@(Model.Whatsapp)" target="_blank" class="icon fa-whatsapp">
+                                        <span class="tooltip-site">Whatsapp</span>
+                                    </a>
+                                }
+                                @if (Model.IsTelegram)
+                                {
+                                    <a href="@Model.Telegram" target="_blank" class="icon fa-telegram-plane">
+                                        <span class="tooltip-site">Telegram</span>
+                                    </a>
+                                }
                             </div>
                         </div>
                     </div>
@@ -122,11 +130,11 @@
         </div>
     </section>
     @*<section class="mb-5 pb-sm-2 pb-md-3  pb-lg-4 pb-xl-5">
-        <div id="map_container">
-            <div class="map">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1703.7925805820778!2d48.60410884139667!3d31.34282784423714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fc3db80c48e6a2b%3A0x863189351cf418f7!2z2KfYs9iq2KfZhiDYrtmI2LLYs9iq2KfZhtiMINin2YfZiNin2LLYjCDYrtuM2KfYqNin2YYgNyDYtNix2YLbjNiMINin24zYsdin2YY!5e0!3m2!1sfa!2s!4v1616518445732!5m2!1sfa!2s"
-                        style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <div id="map_container">
+                <div class="map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1703.7925805820778!2d48.60410884139667!3d31.34282784423714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fc3db80c48e6a2b%3A0x863189351cf418f7!2z2KfYs9iq2KfZhiDYrtmI2LLYs9iq2KfZhtiMINin2YfZiNin2LLYjCDYrtuM2KfYqNin2YYgNyDYtNix2YLbjNiMINin24zYsdin2YY!5e0!3m2!1sfa!2s!4v1616518445732!5m2!1sfa!2s"
+                            style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
             </div>
-        </div>
-    </section>*@
+        </section>*@
 </main>
