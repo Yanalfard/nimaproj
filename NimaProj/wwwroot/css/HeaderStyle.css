@@ -1,0 +1,17 @@
+﻿@media screen and (min-width: 1200px) {
+  .item_slider-baner-homepage, .slider_baner-homepage {
+    height: 100vh !important; } }
+
+header {
+  background-color: transparent !important;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+
+.serv-navbar {
+  background-color: transparent !important; }
+  .serv-navbar .container {
+    background-color: transparent !important; }
