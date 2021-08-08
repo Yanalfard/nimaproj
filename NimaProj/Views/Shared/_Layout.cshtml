@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="~/galeb/css/animate.min.css">
 
     <link href="~/css/Load.css" rel="stylesheet" />
-    <link href="~/css/HeaderStyle.min.css" rel="stylesheet" />
+
 </head>
 
 <body id="body-homepage">
@@ -63,7 +63,7 @@
             </form>
         </div>
     </div>
-    <header>
+    <header class="my-site-header">
         <div class="topbar-site d-none d-lg-block">
             <div class="container">
                 <div class="row">
@@ -362,6 +362,19 @@
         }
 
     </script>
+    <script>
+            $(window).on("scroll", function () {
+                if ($(window).scrollTop() > 50) {
+                    $("#myCategory").addClass("MoveTop");
+
+                }
+                else {
+                    //remove the background property so it comes transparent again (defined in your css)
+                    $("#myCategory").removeClass("MoveTop");
+                }
+            });
+        </script>
+
 
 
 
