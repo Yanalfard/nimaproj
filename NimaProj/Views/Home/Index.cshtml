@@ -5,13 +5,9 @@
 
 <link href="~/css/HeaderStyle.min.css" rel="stylesheet" />
 <main class="content homepage">
-    <section class="mb-5">
+    @await Component.InvokeAsync("SliderHomeComponent")
 
-        <div class="owl-carousel slider_baner-homepage" id="slider_header">
-            @await Component.InvokeAsync("SliderHomeComponent")
-        </div>
-    </section>
-    <section class="mb-5 pb-sm-3  pb-lg-4 pb-xl-5" >
+    <section class="mb-5 pb-sm-3  pb-lg-4 pb-xl-5">
         <div class="container" id="myCategory">
             <div class="row col-md-9 category-box-new">
                 @await Component.InvokeAsync("CatagoryHomeComponent")
