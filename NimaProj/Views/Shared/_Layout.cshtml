@@ -63,7 +63,7 @@
             </form>
         </div>
     </div>
-    <header class="my-site-header">
+    <header class="my-site-header" id="my-header">
         <div class="topbar-site d-none d-lg-block">
             <div class="container">
                 <div class="row">
@@ -363,19 +363,29 @@
 
     </script>
     <script>
-            $(window).on("scroll", function () {
-                if ($(window).scrollTop() > 50) {
-                    $("#myCategory").addClass("MoveTop");
+        $(window).on("scroll", function () {
+            if ($(window).scrollTop() > 50) {
+                $("#myCategory").addClass("MoveTop");
 
-                }
-                else {
-                    //remove the background property so it comes transparent again (defined in your css)
-                    $("#myCategory").removeClass("MoveTop");
-                }
-            });
-        </script>
+            }
+            else {
+                //remove the background property so it comes transparent again (defined in your css)
+                $("#myCategory").removeClass("MoveTop");
+            }
+        });
+    </script>
 
+    <script>
+        $(window).on("scroll", function () {
+            if ($(window).scrollTop() > 50) {
+                $("#my-header").addClass("active-header");
 
+            } else {
+                //remove the background property so it comes transparent again (defined in your css)
+                $("#my-header").removeClass("active-header");
+            }
+        });
+    </script>
 
 
 
