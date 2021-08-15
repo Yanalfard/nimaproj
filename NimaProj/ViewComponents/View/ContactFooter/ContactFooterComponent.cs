@@ -15,10 +15,6 @@ namespace NimaProj.ViewComponents.View.ContactFooter
         private Core _core = new Core();
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            List<TblCatagory> list = _core.Catagory.Get(i => i.IsBlog == false).ToList();
-
-
-
             List<TblConfig> selectedAll = _core.Config.Get().ToList();
             ConfigVm config = new ConfigVm();
             config.Email = selectedAll.Where(c => c.Key == "Email").FirstOrDefault().Value;

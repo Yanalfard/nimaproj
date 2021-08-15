@@ -7,6 +7,8 @@ using DataLayer.Models;
 using DataLayer.ViewModels;
 using Services.Services;
 using NimaProj.Utilities;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace NimaProj.Areas.Admin.Controllers
 {
@@ -34,6 +36,9 @@ namespace NimaProj.Areas.Admin.Controllers
                 config.SharyeteErsal = configs.Where(c => c.Key == "SharyeteErsal").Single().Value;
                 config.OrderDetails = configs.Where(c => c.Key == "OrderDetails").Single().Value;
                 config.DarBareyeMa = configs.Where(c => c.Key == "DarBareyeMa").Single().Value;
+                config.BackImgHomeUnder = configs.Where(c => c.Key == "BackImgHomeUnder").Single().Value;
+                config.BackImgHomeOn = configs.Where(c => c.Key == "BackImgHomeOn").Single().Value;
+                config.BackTextHomeOn = configs.Where(c => c.Key == "BackTextHomeOn").Single().Value;
                 config.IsInista = Convert.ToBoolean(configs.Where(c => c.Key == "IsInista").Single().Value);
                 config.IsTelegram = Convert.ToBoolean(configs.Where(c => c.Key == "IsTelegram").Single().Value);
                 config.IsWhatsapp = Convert.ToBoolean(configs.Where(c => c.Key == "IsWhatsapp").Single().Value);
@@ -46,7 +51,7 @@ namespace NimaProj.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(ConfigVm configVm)
+        public async Task<IActionResult> Index(ConfigVm configVm, IFormFile ImageUrl, IFormFile ImageUrl2)
         {
             try
             {
@@ -66,6 +71,9 @@ namespace NimaProj.Areas.Admin.Controllers
                     TblConfig ConfigLinkIsInista = configs.Where(c => c.Key == "IsInista").Single();
                     TblConfig ConfigLinkIsTelegram = configs.Where(c => c.Key == "IsTelegram").Single();
                     TblConfig ConfigLinkIsWhatsapp = configs.Where(c => c.Key == "IsWhatsapp").Single();
+                    TblConfig ConfigLinkBackImgHomeUnder = configs.Where(c => c.Key == "BackImgHomeUnder").Single();
+                    TblConfig ConfigLinkBackImgHomeOn = configs.Where(c => c.Key == "BackImgHomeOn").Single();
+                    TblConfig ConfigLinkBackTextHomeOn = configs.Where(c => c.Key == "BackTextHomeOn").Single();
 
                     ConfigLinkEmail.Value = configVm.Email;
                     ConfigLinkTelegram.Value = configVm.Telegram;
@@ -80,6 +88,56 @@ namespace NimaProj.Areas.Admin.Controllers
                     ConfigLinkIsInista.Value = configVm.IsInista.ToString();
                     ConfigLinkIsTelegram.Value = configVm.IsTelegram.ToString();
                     ConfigLinkIsWhatsapp.Value = configVm.IsWhatsapp.ToString();
+                    ConfigLinkBackTextHomeOn.Value = configVm.BackTextHomeOn;
+                    if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
+                    {
+                        try
+                        {
+                            var deleteImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/BackImageInHome", ConfigLinkBackImgHomeUnder.Value);
+                            if (System.IO.File.Exists(deleteImagePath))
+                            {
+                                System.IO.File.Delete(deleteImagePath);
+                            }
+                        }
+                        catch
+                        {
+
+                        }
+                        ConfigLinkBackImgHomeUnder.Value = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
+                        string savePath = Path.Combine(
+                                                Directory.GetCurrentDirectory(), "wwwroot/Images/BackImageInHome", ConfigLinkBackImgHomeUnder.Value
+                                            );
+                        using (var stream = new FileStream(savePath, FileMode.Create))
+                        {
+                            await ImageUrl.CopyToAsync(stream);
+                        };
+                    }
+                    if (ImageUrl2 != null && ImageUrl2.IsImages() && ImageUrl2.Length < 3000000)
+                    {
+                        try
+                        {
+                            var deleteImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/BackImageInHome", ConfigLinkBackImgHomeOn.Value);
+                            if (System.IO.File.Exists(deleteImagePath))
+                            {
+                                System.IO.File.Delete(deleteImagePath);
+                            }
+                        }
+                        catch
+                        {
+
+                        }
+                        ConfigLinkBackImgHomeOn.Value = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl2.FileName);
+                        string savePath = Path.Combine(
+                                                Directory.GetCurrentDirectory(), "wwwroot/Images/BackImageInHome", ConfigLinkBackImgHomeOn.Value
+                                            );
+                        using (var stream = new FileStream(savePath, FileMode.Create))
+                        {
+                            await ImageUrl2.CopyToAsync(stream);
+                        };
+                    }
+                    _core.Config.Update(ConfigLinkBackTextHomeOn);
+                    _core.Config.Update(ConfigLinkBackImgHomeOn);
+                    _core.Config.Update(ConfigLinkBackImgHomeUnder);
                     _core.Config.Update(ConfigLinkEmail);
                     _core.Config.Update(ConfigLinkTelegram);
                     _core.Config.Update(ConfigLinkInista);
