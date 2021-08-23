@@ -1,14 +1,28 @@
 ﻿@model IEnumerable<TblBannerAndSlide>
 
-    @foreach (var item in Model)
-    {
-    <div class="item_slider-baner-homepage" style="background-image: url('/Images/Slider/@item.ImageUrl')">
-        <div class="content-slider ">
-            <h2 class=""> @item.Name</h2>
-            <a href="@item.Link" class="btn-animate1" target="_blank">
-                مشاهده<i class="fal fa-angle-left"></i>
-            </a>
-        </div>
-    </div>
+@if (Model.Any())
+{
+    <section class="mb-5">
+        <div class="owl-carousel slider_baner-homepage" id="slider_header">
+            @foreach (var item in Model)
+            {
+                <div class="item_slider-baner-homepage" style="background-image: url('/Images/Slider/@item.ImageUrl')">
+                    <div class="content-slider ">
+                        <h2 class=""> @item.Name</h2>
+                        <a href="@item.Link" class="btn-animate1" target="_blank">
+                            مشاهده<i class="fal fa-angle-left"></i>
+                        </a>
+                    </div>
+                </div>
 
-    }
+            }
+
+        </div>
+    </section>
+}
+else
+{
+    <div style="height:200px;">
+
+    </div>
+}

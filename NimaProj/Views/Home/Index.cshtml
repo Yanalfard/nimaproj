@@ -3,21 +3,22 @@
     ViewData["Title"] = "آرمان سلامت آریا";
 }
 
-
+<link href="~/css/HeaderStyle.min.css" rel="stylesheet" />
 <main class="content homepage">
-    <section class="mb-5 ">
+    @await Component.InvokeAsync("SliderHomeComponent")
 
-        <div class="owl-carousel slider_baner-homepage" id="slider_header">
-            @await Component.InvokeAsync("SliderHomeComponent")
-        </div>
-    </section>
     <section class="mb-5 pb-sm-3  pb-lg-4 pb-xl-5">
-        <div class="container">
-            <div class="row ">
+        <div class="container" id="myCategory">
+            <div class="row col-md-9 category-box-new">
                 @await Component.InvokeAsync("CatagoryHomeComponent")
             </div>
         </div>
     </section>
+
+    <!-- #region naw parallax photo section -->
+    @await Component.InvokeAsync("PhotoInHomeComponent")
+
+  
 
     <!-- #region mahsolate pishnahady -->
     @await Component.InvokeAsync("ProductSpecialHomeComponent")
@@ -43,3 +44,4 @@
     <!-- #endregion Products -->
 
 </main>
+

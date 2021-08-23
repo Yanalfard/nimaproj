@@ -30,6 +30,8 @@ namespace DataLayer.ViewModels
         public bool IsTelegram { get; set; }
         public bool IsInista { get; set; }
         public bool IsWhatsapp { get; set; }
-
+        public string BackImgHomeUnder { get; set; }
+        public string BackImgHomeOn { get; set; }
+        public string BackTextHomeOn { get; set; }
     }
 }

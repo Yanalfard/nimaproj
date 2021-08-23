@@ -11,6 +11,7 @@
             </div>
             <div id="card-table" class="card-body flex-div">
                 <form class="form-row mt-3 fixed overflow-auto" asp-action="Index" asp-controller="Config" asp-area="Admin"
+                      enctype="multipart/form-data"
                       data-ajax="true"
                       data-ajax-method="POST"
                       data-ajax-mode="replace"
@@ -74,13 +75,37 @@
                         <input asp-for="TellMobile" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left">
                         <br /><span class="text-danger" asp-validation-for="TellMobile"></span>
                     </div>
+
                     <div class="form-group col-lg-12">
                         <label>ایمیل</label>
                         <input asp-for="Email" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left">
                         <br /><span class="text-danger" asp-validation-for="Email"></span>
                     </div>
 
+                    <div class="form-group col-lg-12 mt-lg-3">
+                        <label> توضیحات مختصر متن روی عکس صفحه اصلی:</label>
+                        <textarea asp-for="BackTextHomeOn" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
+                        <br /><span class="text-danger" asp-validation-for="BackTextHomeOn"></span>
+                    </div>
 
+                    <div class="form-group col-lg-12 mt-lg-3">
+                        <img style="max-width:250px;margin:0 auto;display:block" src="~/Images/BackImageInHome/@Model.BackImgHomeUnder" alt="Alternate Text" />
+                    </div>
+                    <label class="mt-2">تصویر پست زمینه زیر متن در صفحه اصلی </label>
+                    <br />
+                    <div class="custom-file col-md-12">
+                        <input type="file" name="ImageUrl" id="ImageUrl" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" onchange="inputChanged(this)">
+                        <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">انتخاب تصویر</label>
+                    </div>
+                    <div class="form-group col-lg-12 mt-lg-3">
+                        <img style="max-width:250px;margin:0 auto;display:block" src="~/Images/BackImageInHome/@Model.BackImgHomeOn" alt="Alternate Text" />
+                    </div>
+                    <label class="mt-2">تصویر روی زمینه صفحه اصلی </label>
+                    <br />
+                    <div class="custom-file col-md-12">
+                        <input type="file" name="ImageUrl2" id="ImageUrl2" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" onchange="inputChanged(this)">
+                        <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">انتخاب تصویر</label>
+                    </div>
                     <button type="submit" class="btn btn-success btn-sm text-white">ثبت تغییرات<span class="icon-holder uk-margin-small-right" uk-icon="create-outline"></span></button>
                 </form>
             </div>

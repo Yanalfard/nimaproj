@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="@(ViewData["Description"] ?? "سایت خرید و فروش آنلاین گوشی های موبایل به صورت اقساطی")">
-    <meta name="keywords" content="@(ViewData["Keywords"] ?? "قصر موبایل، گوشی، تلفن، خرید، آنلاین، اقساطی")">
+    <meta name="keywords" content="@(ViewData["Keywords"] ?? "آرمان سلامت آریا، گوشی، تلفن، خرید، آنلاین، اقساطی")">
     <meta name="author" content="صدرا محمدی، ینال احمدزاده، مهدی سهندی">
 
     <title>@(ViewData["Title"] ?? " آرمان سلامت آریا")</title>
@@ -32,6 +32,12 @@
     <link rel="stylesheet" href="~/galeb/css/animate.min.css">
 
     <link href="~/css/Load.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f2eefe !important;
+          
+        }
+    </style>
 </head>
 
 <body id="body-homepage">
@@ -62,7 +68,7 @@
             </form>
         </div>
     </div>
-    <header>
+    <header class="my-site-header" id="my-header">
         <div class="topbar-site d-none d-lg-block">
             <div class="container">
                 <div class="row">
@@ -361,7 +367,30 @@
         }
 
     </script>
+    <script>
+        $(window).on("scroll", function () {
+            if ($(window).scrollTop() > 50) {
+                $("#myCategory").addClass("MoveTop");
 
+            }
+            else {
+                //remove the background property so it comes transparent again (defined in your css)
+                $("#myCategory").removeClass("MoveTop");
+            }
+        });
+    </script>
+
+    <script>
+        $(window).on("scroll", function () {
+            if ($(window).scrollTop() > 50) {
+                $("#my-header").addClass("active-header");
+
+            } else {
+                //remove the background property so it comes transparent again (defined in your css)
+                $("#my-header").removeClass("active-header");
+            }
+        });
+    </script>
 
 
 
