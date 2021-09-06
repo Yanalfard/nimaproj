@@ -3,6 +3,17 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="manifest" href="/manifest.json" />
+    <script src="/app.js"></script>
+    <script src="/sw.js"></script>
+
+
+    <link rel="apple-touch-icon" href="~/Images/Icon/icon_96.png" />
+    <meta name="apple-mobile-web-app-status-bar" content="#f2eefe" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#f2eefe" />
+    <meta name="theme-color" content="#f2eefe" />
+
     <meta name="description" content="@(ViewData["Description"] ?? "سایت خرید و فروش آنلاین گوشی های موبایل به صورت اقساطی")">
     <meta name="keywords" content="@(ViewData["Keywords"] ?? "آرمان سلامت آریا، گوشی، تلفن، خرید، آنلاین، اقساطی")">
     <meta name="author" content="صدرا محمدی، ینال احمدزاده، مهدی سهندی">
@@ -35,7 +46,6 @@
     <style>
         body {
             background-color: #f2eefe !important;
-          
         }
     </style>
 </head>
@@ -296,6 +306,7 @@
                             @await Component.InvokeAsync("ContactFooterComponent")
 
                         </div>
+                        <button class="mt-3 btn btn-animate1 pl-4 pr-4 mr-1" onclick="promptInstall()">نصب در گوشی</button>
                     </div>
                 </div>
             </div>
@@ -325,7 +336,7 @@
 
 
 
-    <a class="scrollTo scroll-To-top " href=".topbar-site"></a>
+    <a class="scrollTo scroll-To-top " href=".topbar-site" style=" bottom: 5rem !important;"></a>
     <script src="~/galeb/js/jquery-3.5.0.min.js"></script>
     <script src="~/galeb/js/bootstrap.min.js"></script>
     <!--refrence carousel-->
@@ -392,7 +403,7 @@
         });
     </script>
 
-
+  
 
     @*<script src="~/Jquery/jquery-3.4.1.min.js"></script>*@
 
