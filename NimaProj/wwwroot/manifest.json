@@ -1,0 +1,57 @@
+﻿{
+  "dir": "rtl",
+  "lang": "fa",
+  "name": "Arman Salamat Aria",
+  "short_name": "ArmanSalamatAria",
+  "description": "Arman Salamat Aria PWA App",
+  "display": "standalone",
+  "start_url": "/",
+  "background_color": "#fff",
+  "theme_color": "#f2eefe",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+
+      "src": "/Images/Icon/icon_72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/Images/Icon/icon_96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/Images/Icon/icon_128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/Images/Icon/icon_144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/Images/Icon/icon_152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "/Images/Icon/icon_192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/Images/Icon/icon_384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/Images/Icon/icon_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
