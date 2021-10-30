@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.Models
 {
-    [Table("TblBrand")]
+    [Table("TblBrand", Schema = "dbo")]
     public partial class TblBrand
     {
         public TblBrand()
