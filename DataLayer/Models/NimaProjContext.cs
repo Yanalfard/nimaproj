@@ -40,15 +40,18 @@ namespace DataLayer.Models
         public virtual DbSet<TblRole> TblRoles { get; set; }
         public virtual DbSet<TblSpecialOffer> TblSpecialOffers { get; set; }
         public virtual DbSet<TblVisit> TblVisits { get; set; }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=185.55.224.183;Initial Catalog=asamedc1_NimaProj;User ID=asamedc1_Yanal;Password=2fjS9CYVYkgS5V8");
-            }
-        }
+=> optionsBuilder
+.UseLazyLoadingProxies()
+.UseSqlServer("Data Source=185.55.224.183;Initial Catalog=asamedc1_NimaProj;User ID=asamedc1_Yanal;Password=2fjS9CYVYkgS5V8");
+        //        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //        {
+        //            if (!optionsBuilder.IsConfigured)
+        //            {
+        //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        //                optionsBuilder.UseSqlServer("Data Source=185.55.224.183;Initial Catalog=asamedc1_NimaProj;User ID=asamedc1_Yanal;Password=2fjS9CYVYkgS5V8");
+        //            }
+        //        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

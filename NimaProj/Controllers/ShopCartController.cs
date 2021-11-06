@@ -253,7 +253,7 @@ namespace GhasreMobile.Controllers
 
                     var payment = new Payment((int)list.Sum(i => i.Sum));
                     var res = payment.PaymentRequest($"پرداخت فاکتور شماره {updateOrder.OrdeId}",
-                        "http://localhost:44340/ShopCart/OnlinePayment/" + updateOrder.OrdeId, "mehdi@sahandi.com", "09357035985");
+                        "https://asamedco.com//ShopCart/OnlinePayment/" + updateOrder.OrdeId, "mehdi@sahandi.com", "09357035985");
                     if (res.Result.Status == 100)
                     {
                         return Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + res.Result.Authority);
